@@ -1,6 +1,10 @@
 const express = require("express");
-const PORT = process.env.PORT || 80;
 const app = express();
+
+require("dotenv").config();
+
+const port = process.env.PORT || 80;
+const hostname = process.env.HOST_NAME || "localhost";
 
 app.use(express.json());
 
@@ -12,6 +16,6 @@ app.get("/test", (req, res) => {
   res.json({ test: "test api" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server đang chạy trên cổng ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server đang chạy trên cổng ${port}`);
 });
