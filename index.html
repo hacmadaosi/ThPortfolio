@@ -28,49 +28,52 @@
     <div id="auth-form" class="none">
       <!-- Đăng nhập -->
       <div id="login-form" class="auth-form-account">
-        <button id="close_login_form" class="close_x active-scale-0_97" style="color: black;">
+        <button id="close_login_form" class="close_x active-scale-0_97" >
           <i class="fa-solid fa-xmark"></i>
         </button>
         <h1 id="title-auth-form" class="mgb-30">Đăng nhập</h1>
         <!-- Nhập tên tên tài khoản -->
         <div  class="input-value">
-          <i class="fa-solid fa-user" style="color: black;"></i>
+          <i class="fa-solid fa-user" ></i>
           <input id="user-input" class="border-none" type="text" placeholder="Tên đăng nhập">
           <button id="clear-user-input" class="pd-0 border-none active-scale-0_97 pointer none">
-            <i class="fa-solid fa-circle-xmark" style="color: black;"></i>
+            <i class="fa-solid fa-circle-xmark" ></i>
           </button>
         </div>
         
         <!-- Nhập mật khẩu -->
         <div class="input-value">
-          <div>
-            <i class="fa-solid fa-lock" style="color: black;"></i>
+          <div id="lock-icon">
+            <i class="fa-solid fa-lock" ></i>
           </div >
+          <div id="unlock-icon" class="none">
+            <i  class="fa-solid fa-unlock"></i>
+          </div>
           <input id="pass-input" class="border-none" type="password" placeholder="Mật khẩu">
           <button id="show-pass" class="pd-0 border-none active-scale-0_97 pointer none">
-            <i class="fa-solid fa-eye" style="color: black;"></i>
+            <i class="fa-solid fa-eye" ></i>
           </button>
           <button id="hide-pass" class="pd-0 border-none active-scale-0_97 pointer none">
-            <i class="fa-solid fa-eye-slash" style="color: black;"></i>
+            <i class="fa-solid fa-eye-slash" ></i>
           </button>
         </div>
         <!-- Nhập xác nhận mật khẩu -->
         <div id="confirm-pass-textfield" class="input-value none">
           <div>
-            <i class="fa-solid fa-lock" style="color: black;"></i>
+            <i class="fa-solid fa-lock" ></i>
           </div >
           <input id="pass-confirm-input" class="border-none" type="password" placeholder="Xác nhận mật khẩu">
           <button id="show-confirm-pass" class="pd-0 border-none active-scale-0_97 pointer none">
-            <i class="fa-solid fa-eye" style="color: black;"></i>
+            <i class="fa-solid fa-eye" ></i>
           </button>
           <button id="hide-confirm-pass" class="pd-0 border-none active-scale-0_97 pointer none">
-            <i class="fa-solid fa-eye-slash" style="color: black;"></i>
+            <i class="fa-solid fa-eye-slash" ></i>
           </button>
         </div>
-        <p>
+        <p class="pointer active-scale-0_97">
           Quên mật khẩu?
         </p>
-        <button class="submit-button">
+        <button id="submit-button">
           Đăng nhập
         </button>
         <div class="divider">

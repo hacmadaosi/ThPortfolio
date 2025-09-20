@@ -15,9 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn_HideConfirmPass = document.getElementById("hide-confirm-pass");
   const input_ConfirmPass = document.getElementById("pass-confirm-input");
 
+  const icon_Lock = document.getElementById("lock-icon");
+  const icon_Unlock = document.getElementById("unlock-icon");
+
   const btn_CreateAccount = document.getElementById("create-account");
   const text_TitleAuthForm = document.getElementById("title-auth-form");
   const textfield_Confirm = document.getElementById("confirm-pass-textfield");
+  const btn_Submit = document.getElementById("submit-button");
+
   // Xử lý sự kiện người dùng nhấn nút đăng nhập
   btn_Login.addEventListener("click", () => {
     frm_Login.style.display = "flex";
@@ -62,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Xử lý sự kiện người dùng nhập xác nhận mật khẩu
   input_ConfirmPass.addEventListener("input", (event) => {
-    btn_ShowPass.style.display =
+    btn_ShowConfirmPass.style.display =
       event.target.value.length > 0 ? "block" : "none";
   });
 
@@ -74,14 +79,60 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Xử lý sự kiện người dùng ẩn xác nhận mật khẩu
-  btn_HidePass.addEventListener("click", () => {
+  btn_HideConfirmPass.addEventListener("click", () => {
     btn_ShowConfirmPass.style.display = "block";
     btn_HideConfirmPass.style.display = "none";
     input_ConfirmPass.type = "password";
   });
   // Xử lý sự kiện người dùng tạo tài khoản
   btn_CreateAccount.addEventListener("click", () => {
+    input_User.value = "";
+    input_ConfirmPass.value = "";
+    input_Pass.value = "";
+
     stateLogin = !stateLogin;
+
     text_TitleAuthForm.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
+    btn_CreateAccount.textContent = stateLogin
+      ? "Tạo tài khoản"
+      : "Quay lại đăng nhập";
+    btn_Submit.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
+    textfield_Confirm.style.display = stateLogin ? "none" : "flex";
+    icon_Lock.style.display = stateLogin ? "block" : "none";
+    icon_Unlock.style.display = stateLogin ? "none" : "block";
   });
+
+  btn_Submit.addEventListener("click", async () => {
+    if (stateLogin) {
+      // Xử lý sự kiện người dùng nhấn đăng nhập
+    } else {
+      // Xử lý sự kiện người dùng nhấn đăng ký
+      if (checkInput()) {
+        const userName = input_User.value;
+        const password = input_Pass.value;
+        data = { userName, password };
+        const res = await fetch("https://thportfolio.onrender.com/add-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        try {
+        } catch (err) {
+          alert(err);
+        }
+      }
+    }
+  });
+
+  const checkInput = () => {
+    if (input_Pass.value == "") {
+      console.log("Mật khẩu rỗng");
+      return false;
+    } else if (input_Pass.value != input_ConfirmPass.value) {
+      console.log("Mật khẩu không trùng nhau");
+      return false;
+    }
+    return true;
+  };
 });
