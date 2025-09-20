@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn_HideConfirmPass.style.display = "none";
     input_ConfirmPass.type = "password";
   });
+
   // Xử lý sự kiện người dùng tạo tài khoản
   btn_CreateAccount.addEventListener("click", () => {
     input_User.value = "";
@@ -110,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (checkInput()) {
         const userName = input_User.value;
         const password = input_Pass.value;
-        console.log(userName, password);
         try {
           data = { userName, password };
           const res = await fetch("https://thportfolio.onrender.com/add-user", {
@@ -118,10 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
           });
-          const result = await res.json();
-          console.log("Kết quả từ server:", result);
-          alert("Gửi dữ liệu thành công!");
+          btn_CreateAccount.click();
         } catch (err) {
+          console.log(err);
           alert(err);
         }
       }
