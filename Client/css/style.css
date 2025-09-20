@@ -1,16 +1,15 @@
+:root{
+    --main-color: #F2F8FC
+}
 *{
     margin: 0;
     font-family: 'Be VietNam Pro';
+    user-select: none;
 }
 .view{
     height: 100vh;
     width: auto;
     background-color: #F2F8FC;
-}
-.view:nth-child(2){
-    height: 100vh;
-    width: auto;
-    background-color: red;
 }
 
 #naviagtion-bar {
@@ -26,7 +25,7 @@
     display: flex;
     list-style: none;
     gap: 30px;
-        padding: 0;
+    padding: 0;
 
 }
 #menu li > a  {
@@ -61,7 +60,7 @@
     outline: none;
 }
 #center-content{
-    user-select: none;
+    
     margin-top: 25vh;
     display: flex;
     padding: 0 100px;
@@ -100,10 +99,92 @@
     transition: 0.2s;
 }
 
-button:hover {
+
+#bottom-content button:hover {
     background-color: darkred;
 }
 
-button:active {
+
+#bottom-content button:active {
     transform: scale(0.97); 
+}
+
+#auth-form {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#login-form {
+    display: flex;
+    flex-direction: column;
+    width: 40vh;
+    height: 60vh;
+    padding: 100px 50px 20px;
+    background-color: var(--main-color);
+    border-radius: 10px;
+}
+.input-value {
+    display: flex;
+    padding: 5px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid black;
+    gap: 10px;
+    background-color: var(--main-color);
+    align-items: center;
+}
+.input-value input {
+    outline: none;
+    flex-grow: 1;
+    background-color: var(--main-color);
+}
+
+#login-form p {
+    font-size: 0.75rem;
+    margin-left: auto;
+    color: #808080
+}
+#login-btn-auth_form{
+    border-radius: 5px;
+    margin: 30px 0;
+    padding: 10px 40px;
+    font-weight: bold;
+    border: 1px solid white;
+    background-color: deepskyblue;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#login-btn-auth_form:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0, 191, 255, 0.25);
+}
+#login-btn-auth_form:active {
+    transform: scale(0.97); 
+}
+.divider {
+  display: flex;
+  align-items: center;
+  color: black; 
+  margin: 20px 0; 
+  font-size: 0.75rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex-grow: 1; 
+  height: 1px;
+  background-color: black; 
+}
+
+.divider::before {
+  margin-right: 15px;
+}
+
+.divider::after {
+  margin-left: 15px;
 }
