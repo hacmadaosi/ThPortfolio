@@ -1,8 +1,8 @@
 .none {
     display: none;
 }
-.mgb-40{
-    margin-bottom: 40px;
+.mgb-30{
+    margin-bottom: 30px;
 }
 .border-none{
     border: none;
@@ -15,4 +15,17 @@
 }
 .inline-block{
     display: inline-block;
+}
+
+.active-scale-0_97:active {
+    transform: scale(0.97); 
+}
+.pd-0{
+    padding: 0;
+}
+.border-none{
+    border: none;
+}
+.pointer{
+    cursor: pointer;
 }
