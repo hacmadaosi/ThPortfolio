@@ -36,6 +36,7 @@ async function loadConfig() {
 
 const initFirebase = async () => {
   const config = await loadConfig();
+
   if (!config) {
     alert("Không lấy được Firebase config");
     return;
