@@ -110,14 +110,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (checkInput()) {
         const userName = input_User.value;
         const password = input_Pass.value;
-        data = { userName, password };
-        const res = await fetch("https://thportfolio.onrender.com/add-user", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-
+        console.log(userName, password);
         try {
+          data = { userName, password };
+          const res = await fetch("https://thportfolio.onrender.com/add-user", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          const result = await res.json();
+          console.log("Kết quả từ server:", result);
+          alert("Gửi dữ liệu thành công!");
         } catch (err) {
           alert(err);
         }
