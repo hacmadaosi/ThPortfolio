@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const fireBase_Service = require("./firebase_config.js");
+
 const app = express();
 
 require("dotenv").config();
@@ -23,6 +25,22 @@ app.get("/firebase-api", (req, res) => {
     appId: process.env.VITE_FIREBASE_APP_ID,
     measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID,
   });
+});
+
+app.post("/add-user", async (req, res) => {
+  const { userName, password } = req.body;
+  if (!userName || !password) {
+    return res.status(400).json({ message: "Thiếu tên hoặc email" });
+  }
+  try {
+    const newUser = await fireBase_Service.registerUser(userName, password);
+    // Trả về phản hồi
+    res
+      .status(200)
+      .json({ message: "Dữ liệu đã nhận thành công", data: req.body });
+  } catch (err) {
+    console.error("Lỗi khi tạo user:", err);
+  }
 });
 
 app.get("/test", (req, res) => {
