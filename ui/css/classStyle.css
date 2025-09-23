@@ -1,7 +1,9 @@
 .none {
     display: none;
 }
-
+.flex{
+    display: flex;
+}
 .border-none{
     border: none;
 }

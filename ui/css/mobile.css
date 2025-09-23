@@ -6,13 +6,13 @@
         box-sizing: border-box;
     }
     #menu-item{
+        display: none;
         position: fixed;
         flex-direction: column;
         background-color: white;
         top: 70px;
         left: 0;
         padding: 16px 5vh 20px 5vh;
-        display: none;
         gap: 20px;
     }
     #menu{
