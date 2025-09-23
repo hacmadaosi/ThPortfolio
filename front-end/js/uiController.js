@@ -26,6 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn_MobileMenu = document.getElementById("mobile-menu");
   const menu = document.getElementById("menu-item");
   const menu_Item = document.querySelectorAll("#menu li a");
+  const footer_Login = document.getElementById("footer-login-link");
+  // Sự kiện ấn đăng nhập ở footer
+  footer_Login.addEventListener("click", (e) => {
+  e.preventDefault(); 
+  if (stateMobile) {
+    menu.style.display = "none";
+  }
+  frm_Login.style.display = "flex";
+  frm_Login.style.transition = "opacity 0.2s ease";
+});
   // Xử lý sự kiện người dùng nhấn chọn
   menu_Item.forEach((item) => {
     item.addEventListener("click", () => {
