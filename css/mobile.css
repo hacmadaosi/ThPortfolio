@@ -48,9 +48,10 @@
     #center-content{
         display: flex;
         flex-direction: column;
-        margin-top: 10vh;
         gap: 50px;
         padding: 0 5vh;
+        padding-top: 25vh;
+
     }
     #center-content-right{
         font-size: 3rem;
