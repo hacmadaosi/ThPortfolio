@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   let stateLogin = true;
-  let stateMobile = window.innerWidth < 1000;
   const btn_Login = document.getElementById("login-button");
   const btn_Close_Login = document.getElementById("close_login_form");
   const frm_Login = document.getElementById("auth-form");
@@ -36,13 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // Xử lý sự kiện người mở navigation bar trên mobile
   btn_MobileMenu.addEventListener("click", () => {
-    menu.style.display = menu.style.display == "none" ? "flex" : "none";
+    // const currentDisplay = window.getComputedStyle(menu).display;
+    // menu.style.display = currentDisplay === "none" ? "flex" : "none";
+    menu.style.display = menu.style.display == "flex" ? "none" : "flex";
   });
   // Xử lý sự kiện người dùng nhấn nút đăng nhập
   btn_Login.addEventListener("click", () => {
-    if (stateMobile) {
-      menu.style.display = "none";
-    }
     frm_Login.style.display = "flex";
     frm_Login.style.transition = "opacity 0.2s ease";
   });
@@ -157,11 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   };
 
-  window.addEventListener("resize", () => {
-    stateMobile = window.innerWidth < 1000;
-    menu.style.display = stateMobile ? "none" : "flex";
-  });
-
   document.querySelectorAll("#menu a").forEach((link) => {
     link.addEventListener("click", function (e) {
       const targetId = this.getAttribute("href");
@@ -172,11 +165,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const targetEl = document.querySelector(targetId);
         if (targetEl) {
           targetEl.scrollIntoView({ behavior: "smooth" });
-
           // Xóa hash trong URL (chỉ giữ domain hoặc path gốc)
           window.history.replaceState(null, null, window.location.pathname);
         }
       }
     });
   });
+  // window.addEventListener("resize", () => {
+  //   if (window.innerWidth > 1000) {
+  //     menu.style.display = ""; // loại bỏ inline style → CSS áp dụng
+  //   } else {
+  //     menu.style.display = "none"; // mobile: ẩn menu
+  //   }
+  // });
 });
