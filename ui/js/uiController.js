@@ -14,13 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn_ShowConfirmPass = document.getElementById("show-confirm-pass");
   const btn_HideConfirmPass = document.getElementById("hide-confirm-pass");
   const input_ConfirmPass = document.getElementById("pass-confirm-input");
+  const input_Email = document.getElementById("email-textfield");
 
   const icon_Lock = document.getElementById("lock-icon");
   const icon_Unlock = document.getElementById("unlock-icon");
 
   const btn_CreateAccount = document.getElementById("create-account");
   const text_TitleAuthForm = document.getElementById("title-auth-form");
-  const textfield_Confirm = document.getElementById("confirm-pass-textfield");
+  const input_Confirm = document.getElementById("confirm-pass-textfield");
   const btn_Submit = document.getElementById("submit-button");
 
   const btn_MobileMenu = document.getElementById("mobile-menu");
@@ -107,15 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
     input_User.value = "";
     input_ConfirmPass.value = "";
     input_Pass.value = "";
-
+    input_Email.value = "";
     stateLogin = !stateLogin;
-
     text_TitleAuthForm.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
     btn_CreateAccount.textContent = stateLogin
       ? "Tạo tài khoản"
       : "Quay lại đăng nhập";
     btn_Submit.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
-    textfield_Confirm.style.display = stateLogin ? "none" : "flex";
+    input_Confirm.style.display = stateLogin ? "none" : "flex";
+    input_Email.style.display = stateLogin ? "none" : "flex";
     icon_Lock.style.display = stateLogin ? "block" : "none";
     icon_Unlock.style.display = stateLogin ? "none" : "block";
   });
@@ -126,11 +127,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       // Xử lý sự kiện người dùng nhấn đăng ký
       if (checkInput()) {
+        const email = input_Email.value;
         const userName = input_User.value;
         const password = input_Pass.value;
         try {
           data = { userName, password };
-          const res = await fetch("https://thportfolio.onrender.com/add-user", {
+          const res = await fetch("https://thportfolio.onrender.com/user/add", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
