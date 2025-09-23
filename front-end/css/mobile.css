@@ -1,81 +1,130 @@
-:root{
-    --main-color: #F2F8FC
+:root {
+  --main-color: #f2f8fc;
 }
-@media (max-width: 1000px){
-    *{
-        box-sizing: border-box;
-    }
-    #menu-item{
-        position: fixed;
-        flex-direction: column;
-        background-color: white;
-        top: 70px;
-        left: 0;
-        padding: 16px 5vh 20px 5vh;
-        display: none;
-        gap: 20px;
-    }
-    #menu{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    #mobile-menu{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 4vh;
-        height: 4vh;
-        border: 1px black solid;
-        border-radius: 5px;
-    }
-    #menu li > a  {
-        color: black;
-        text-decoration: none;
-    }
-    #right-menu{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+@media (max-width: 1000px) {
+  * {
+    box-sizing: border-box;
+  }
+  #menu-item {
+    position: fixed;
+    flex-direction: column;
+    background-color: white;
+    top: 70px;
+    left: 0;
+    padding: 16px 5vh 20px 5vh;
+    display: none;
+    gap: 20px;
+  }
+  #menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  #mobile-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4vh;
+    height: 4vh;
+    border: 1px black solid;
+    border-radius: 5px;
+  }
+  #menu li > a {
+    color: black;
+    text-decoration: none;
+  }
+  #right-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-    #search-bar input{
-        margin-right:  auto;
-    }
-    #login-button{
-       margin: 0;
-    } 
-    #center-content{
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-        padding: 0 5vh;
-        padding-top: 25vh;
-
-    }
-    #center-content-right{
-        font-size: 3rem;
-    }
-    #center-content-left h1{
-        font-size: 2rem;
-        margin-bottom: 10px;
-    }
-    #center-content-left p{
-        font-size: 0.7rem;
-    }
-    #naviagtion-bar{
-        display: flex;
-        justify-content: space-between;
-        transition: 1s;
-        gap: auto;
-    }
-    #logo{
-        margin-right: 0;
-    }
-    #bottom-content {
-        margin-top: 15vh;
-    }
-   .auth-form-account{
+  #search-bar input {
+    margin-right: auto;
+  }
+  #login-button {
+    margin: 0;
+  }
+  #center-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 0 5vh;
+    padding-top: 25vh;
+  }
+  #center-content-right {
+    font-size: 3rem;
+  }
+  #center-content-left h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  #center-content-left p {
+    font-size: 0.7rem;
+  }
+  #naviagtion-bar {
+    display: flex;
+    justify-content: space-between;
+    transition: 1s;
+    gap: auto;
+  }
+  #logo {
+    margin-right: 0;
+  }
+  #bottom-content {
+    margin-top: 15vh;
+  }
+  .auth-form-account {
     margin: 0 8px;
-   }
+  }
+}
+/* Chỉ áp dụng khi màn hình <= 1000px */
+@media (max-width: 1000px) {
+  /* Toàn bộ section Liên hệ */
+  #lienhe.contact {
+    padding: 2rem 2vh; /* Thu gọn padding cho vừa mobile */
+    border: none; /* Không dùng viền ngoài */
+  }
+
+  /* Tiêu đề "Liên hệ" */
+  #lienhe.contact h2 {
+    font-size: 1.5rem; /* Nhỏ hơn để vừa màn hình */
+    text-align: center; /* Canh giữa thay vì bên trái */
+  }
+
+  /* Form trong Liên hệ */
+  #lienhe .contact-form {
+    width: 100%; /* Form chiếm 100% chiều rộng mobile */
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  /* Nhóm input (Tiêu đề, Email) xếp dọc thay vì ngang */
+  #lienhe .form-group {
+    flex-direction: column; /* Đổi từ row sang column */
+    gap: 1rem; /* Giữa các ô input cách nhau 1rem */
+  }
+
+  /* Input text và email */
+  #lienhe .contact-form input[type="text"],
+  #lienhe .contact-form input[type="email"] {
+    width: 100%; /* Chiếm full chiều ngang */
+    font-size: 1rem; /* Chữ vừa phải */
+    padding: 0.8rem 1rem;
+  }
+
+  /* Textarea (Nội dung) */
+  #lienhe .contact-form textarea {
+    width: 100%; /* Full chiều ngang */
+    font-size: 1rem;
+    min-height: 120px; /* Thấp hơn cho mobile */
+  }
+
+  /* Nút Gửi */
+  #lienhe .contact-form .btn {
+    width: 100%; /* Nút full chiều ngang mobile */
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 }

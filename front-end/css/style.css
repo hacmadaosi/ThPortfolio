@@ -1,153 +1,151 @@
-:root{
-    --main-color: #F2F8FC
+:root {
+  --main-color: #f2f8fc;
 }
 
-*{
-    margin: 0;
-    font-family: 'Be VietNam Pro';
-    user-select: none;
-    box-sizing: border-box
+* {
+  margin: 0;
+  font-family: "Be VietNam Pro";
+  user-select: none;
+  box-sizing: border-box;
 }
 
-.view{
+/* .view{
     height: 100vh;
     width: auto;
     background-color: #F2F8FC;
-}
+} */
 
 #naviagtion-bar {
-    height: 70px;
-    width: 100%;
+  height: 70px;
+  width: 100%;
 
-    background-color: #fff;
-    display: flex;
-    font-size: 1rem;
-    align-items: center;
-    padding: 1rem 2rem;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-    position: fixed;
-    top: 0;
-    left: 0;
+  background-color: #fff;
+  display: flex;
+  font-size: 1rem;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 0;
+  left: 0;
 }
-#menu-item{
-    display: flex;
-    width: 100%;
+#menu-item {
+  display: flex;
+  width: 100%;
 }
-#menu{
-    margin-right: auto;
-    display: flex;
-    list-style: none;
-    gap: 30px;
-    padding: 0;
+#menu {
+  margin-right: auto;
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  padding: 0;
 }
-#menu li{
-    display: flex;
-    align-items: center;
+#menu li {
+  display: flex;
+  align-items: center;
 }
-#menu li > a:first-child(){
-    color: "deepskyblue";
+#menu li > a:first-child() {
+  color: "deepskyblue";
 }
-#menu li > a  {
-    color: black;
-    text-decoration: none;
+#menu li > a {
+  color: black;
+  text-decoration: none;
 }
-#menu li > a:hover  {
-    color: black;
-    border-bottom: 2px solid deepskyblue;
-    padding-bottom: 2px;
-}
-
-#right-menu{
-    display: flex;
-    gap: 15px
-}
-#search-button{
-    display: inline;
-    border: none;
-    background-color: transparent;
-}
-#search-button:hover{
-    text-decoration: underline;
-    font-style: italic;
+#menu li > a:hover {
+  color: black;
+  border-bottom: 2px solid deepskyblue;
+  padding-bottom: 2px;
 }
 
-#logo{
-    display: grid;
-    place-items: center;
-    width: 4vh;
-    height: 4vh;
-    margin-right: 20px;
+#right-menu {
+  display: flex;
+  gap: 15px;
+}
+#search-button {
+  display: inline;
+  border: none;
+  background-color: transparent;
+}
+#search-button:hover {
+  text-decoration: underline;
+  font-style: italic;
 }
 
-#login-button{
-    border-radius: 0.5rem;
-    font-size: 0.75rem;
-    padding: 0.5rem 1rem;
-    color: deepskyblue;
-    border: 1px solid deepskyblue;
-    background-color: transparent;
-    cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
+#logo {
+  display: grid;
+  place-items: center;
+  width: 4vh;
+  height: 4vh;
+  margin-right: 20px;
+}
 
+#login-button {
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  color: deepskyblue;
+  border: 1px solid deepskyblue;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
 }
 #search-bar {
-    border: solid 1px black;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  border: solid 1px black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 #search-bar input {
-    border: none;
-    background-color: transparent;
-    outline: none;
+  border: none;
+  background-color: transparent;
+  outline: none;
 }
-#center-content{
-    display: flex;
-    padding: 0 10vh;
-    padding-top: 25vh;
+#center-content {
+  display: flex;
+  padding: 0 10vh;
+  padding-top: 25vh;
+}
+#center-content-right {
+  display: flex;
+  flex: 2;
+  align-items: center;
+  justify-content: center;
+  font-size: 7.5rem;
+  font-weight: bold;
+  background-color: transparent;
+  text-shadow: 0px 0px 100px deepskyblue;
+  color: white;
+}
 
-}
-#center-content-right{
-    display: flex;
-    flex: 2; 
-    align-items: center;
-    justify-content: center;
-    font-size: 7.5rem;
-    font-weight: bold;
-    background-color: transparent;
-    text-shadow: 0px 0px 100px deepskyblue;
-    color: white;
-}
-
-#center-content-left{
-    flex: 1; 
+#center-content-left {
+  flex: 1;
 }
 #bottom-content {
-    margin-top: 20vh;
-    display: flex;
-    justify-content: center;
+  margin-top: 20vh;
+  display: flex;
+  justify-content: center;
 }
 
 #bottom-content button {
-    padding: 20px 50px;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    background-color: deepskyblue;
-    color: white;
-    border: 1px solid white;
-    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    transition: 0.2s;
+  padding: 20px 50px;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  background-color: deepskyblue;
+  color: white;
+  border: 1px solid white;
+  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 #bottom-content button:hover {
-    background-color: transparent;
-    border: 1px solid deepskyblue;
-    color: deepskyblue;
+  background-color: transparent;
+  border: 1px solid deepskyblue;
+  color: deepskyblue;
 }
 
 #auth-form {
@@ -160,67 +158,67 @@
 }
 
 .auth-form-account {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 60vh;
-    height: 90vh;
-    padding: 80px 4rem 20px;
-    background-color: var(--main-color);
-    border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 60vh;
+  height: 90vh;
+  padding: 80px 4rem 20px;
+  background-color: var(--main-color);
+  border-radius: 10px;
 }
 .input-value {
-    display: flex;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-bottom: 2px solid black;
-    gap: 10px;
-    background-color: var(--main-color);
-    align-items: center;
+  display: flex;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid black;
+  gap: 10px;
+  background-color: var(--main-color);
+  align-items: center;
 }
 .input-value input {
-    outline: none;
-    flex-grow: 1;
-    background-color: var(--main-color);
+  outline: none;
+  flex-grow: 1;
+  background-color: var(--main-color);
 }
 
 .auth-form-account p {
-    font-size: 0.75rem;
-    margin-left: auto;
-    color: #808080
+  font-size: 0.75rem;
+  margin-left: auto;
+  color: #808080;
 }
-#submit-button{
-    border-radius: 5px;
-    margin: 30px 0;
-    padding: 10px 40px;
-    font-weight: bold;
-    border: 1px solid white;
-    background-color: deepskyblue;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
+#submit-button {
+  border-radius: 5px;
+  margin: 30px 0;
+  padding: 10px 40px;
+  font-weight: bold;
+  border: 1px solid white;
+  background-color: deepskyblue;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
 }
 #submit-button:hover {
-    box-shadow: 0px 0px 10px 0px rgba(0, 191, 255, 0.25);
+  box-shadow: 0px 0px 10px 0px rgba(0, 191, 255, 0.25);
 }
 #submit-button:active {
-    transform: scale(0.97); 
+  transform: scale(0.97);
 }
 .divider {
   display: flex;
   align-items: center;
-  color: black; 
-  margin: 10px 0; 
+  color: black;
+  margin: 10px 0;
   font-size: 0.75rem;
 }
 
 .divider::before,
 .divider::after {
   content: "";
-  flex-grow: 1; 
+  flex-grow: 1;
   height: 1px;
-  background-color: black; 
+  background-color: black;
 }
 
 .divider::before {
@@ -231,35 +229,96 @@
   margin-left: 15px;
 }
 .close_x i {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.close_x{
-    position: absolute;
-    top: 0%;
-    right: 0%;
-    margin-top: 1rem;
-    margin-right: 1rem;
-    padding: 0.3rem;
-    border-radius: 50%;
-    background-color: transparent;
-    border: none;
+.close_x {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
 }
-.close_x:hover{
-    background-color: #fff;
-    cursor: pointer;
+.close_x:hover {
+  background-color: #fff;
+  cursor: pointer;
 }
-#create-account{
-    position: absolute;
-    bottom: 0%;
-    margin-bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%); 
-    padding: 0.5rem 2rem;
-    width: calc(100% - 8rem);
-    color: black;
-    background-color: transparent;
+#create-account {
+  position: absolute;
+  bottom: 0%;
+  margin-bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 2rem;
+  width: calc(100% - 8rem);
+  color: black;
+  background-color: transparent;
+}
+/*/* cua huy
+/* Liên hệ */
+.contact {
+  padding: 5rem 5vw;
+  background-color: var(--main-color);
+}
+
+.contact h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.contact-form {
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+.contact-form .form-group {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"] {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  border: 1px solid #000;
+  border-radius: 0.4rem;
+  font-size: 1.1rem;
+}
+
+.contact-form textarea {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 1px solid #000;
+  border-radius: 0.4rem;
+  font-size: 1.1rem;
+  resize: none;
+  margin-bottom: 1.5rem;
+  min-height: 180px;
+}
+
+.contact-form .btn {
+  float: right;
+  padding: 0.8rem 2.5rem;
+  border: 2px solid #000;
+  background-color: #fff;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.contact-form .btn:hover {
+  background-color: deepskyblue;
+  color: white;
+  border: 1px solid deepskyblue;
 }
