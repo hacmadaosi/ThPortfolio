@@ -261,64 +261,63 @@
   color: black;
   background-color: transparent;
 }
-/*/* cua huy
-/* Liên hệ */
+/* Liên hệ (chuẩn theo Figma)*/
 .contact {
-  padding: 5rem 5vw;
-  background-color: var(--main-color);
-}
-
-.contact h2 {
-  font-size: 2.2rem;
-  margin-bottom: 2rem;
-  text-align: left;
-}
-
-.contact-form {
-  max-width: 2000px;
-  margin: 0 auto;
+  width: 1700px; /* chiều rộng toàn bộ khung section Liên hệ */
+  height: 100%; /* chiều cao tối thiểu của section */
+  margin: 0 auto; /* căn giữa section trên màn hình */
+  padding: 30px 0; /* khoảng cách trên và dưới section */
+  margin-top: 30px;
 }
 
 .contact-form .form-group {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
+  display: flex; /* sắp xếp input nằm ngang */
+  gap: 30px; /* khoảng cách giữa các ô input */
+  margin-bottom: 30px; /* khoảng cách giữa các dòng form */
 }
 
 .contact-form input[type="text"],
 .contact-form input[type="email"] {
-  flex: 1;
-  padding: 1rem 1.2rem;
-  border: 1px solid #000;
-  border-radius: 0.4rem;
-  font-size: 1.1rem;
+  flex: 1; /* cho phép input co giãn đều nhau */
+  width: 1000px; /* chiều rộng mỗi ô input theo Figma */
+  height: 70px; /* chiều cao ô input */
+  border: 1px solid #000; /* viền đen 1px */
+  border-radius: 4px; /* bo góc nhẹ */
+  padding: 10px 30px; /* khoảng cách trong (trên - phải - dưới - trái) */
+  font-size: 16px; /* cỡ chữ trong input */
+  margin: 4px 0px 5px 0px;
 }
 
 .contact-form textarea {
   width: 100%;
-  padding: 1rem 1.2rem;
-  border: 1px solid #000;
-  border-radius: 0.4rem;
-  font-size: 1.1rem;
-  resize: none;
-  margin-bottom: 1.5rem;
-  min-height: 180px;
+  height: 300px; /* chiều rộng khung nhập nội dung */
+  /* chiều cao khung nhập nội dung */
+  border: 1px solid #000; /* viền đen 1px */
+  border-radius: 4px; /* bo góc */
+  padding: 12px; /* khoảng cách chữ so với viền */
+  font-size: 16px; /* cỡ chữ trong textarea */
+  resize: none; /* không cho thay đổi kích thước */
+  margin-bottom: 5px; /* khoảng cách với nút Gửi */
+  margin-top: 15px;
+  padding: 20px 30px;
 }
 
 .contact-form .btn {
-  float: right;
-  padding: 0.8rem 2.5rem;
-  border: 2px solid #000;
-  background-color: #fff;
-  border-radius: 0.4rem;
-  cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: bold;
-  transition: 0.2s;
+  margin: 0px 0px 0px 0px;
+  padding: auto; /* khoảng cách trong của nút (trên - phải - dưới - trái) */
+  border: 1px solid #000; /* viền đen 1px */
+  border-radius: 4px; /* bo góc nút */
+  font-size: 16px; /* cỡ chữ nút */
+  width: 120px; /* chiều rộng nút */
+  height: 46px; /* chiều cao nút */
+  font-weight: bold; /* chữ đậm */
+  background: #fff; /* nền trắng */
+  cursor: pointer; /* hiển thị con trỏ khi hover */
+  float: right; /* đẩy nút sang bên phải */
 }
-
-.contact-form .btn:hover {
-  background-color: deepskyblue;
-  color: white;
-  border: 1px solid deepskyblue;
+.contact-form .btn:hover,
+.contact-form .btn:active {
+  background: #007bff; /* xanh biển */
+  color: #fff; /* chữ trắng */
+  border: 1px solid #007bff; /* viền xanh */
 }
