@@ -1,6 +1,7 @@
 :root{
     --main-color: #F2F8FC
 }
+
 *{
     margin: 0;
     font-family: 'Be VietNam Pro';
@@ -15,57 +16,95 @@
 }
 
 #naviagtion-bar {
-    height: auto;
+    height: 70px;
     background-color: #fff;
     display: flex;
     font-size: 1rem;
     align-items: center;
     padding: 1rem 2rem;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);}
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+    
+}
+#menu-item{
+    display: flex;
+    width: 100%;
+}
 #menu{
     margin-right: auto;
     display: flex;
     list-style: none;
     gap: 30px;
     padding: 0;
-
+}
+#menu li{
+    display: flex;
+    align-items: center;
+}
+#menu li > a:first-child(){
+    color: "deepskyblue";
 }
 #menu li > a  {
     color: black;
     text-decoration: none;
 }
-#menu li:nth-last-child(1) > a{
-    color:deepskyblue
+#menu li > a:hover  {
+    color: black;
+    border-bottom: 2px solid deepskyblue;
+    padding-bottom: 2px;
 }
 
-#dang-nhap{
+#right-menu{
+    display: flex;
+    gap: 15px
+}
+#search-button{
+    display: inline;
+    border: none;
+    background-color: transparent;
+}
+#search-button:hover{
+    text-decoration: underline;
+    font-style: italic;
+}
+
+#logo{
+    display: grid;
+    place-items: center;
+    width: 4vh;
+    height: 4vh;
+    margin-right: 20px;
+}
+
+#login-button{
     border-radius: 0.5rem;
     font-size: 0.75rem;
     padding: 0.5rem 1rem;
     color: deepskyblue;
     border: 1px solid deepskyblue;
-    margin-left: 1rem;
     background-color: transparent;
     cursor: pointer;
     transition: 0.2s;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.25);
 
 }
-#tim-kiem {
+#search-bar {
     border: solid 1px black;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
 }
-#tim-kiem input {
+#search-bar input {
     border: none;
     background-color: transparent;
-    margin-left: 5px;
     outline: none;
 }
 #center-content{
-    
     margin-top: 25vh;
     display: flex;
-    padding: 0 100px;
+    padding: 0 10vh;
 }
 #center-content-right{
     display: flex;
@@ -101,25 +140,21 @@
     transition: 0.2s;
 }
 
-
 #bottom-content button:hover {
-    background-color: darkred;
-}
-
-
-#bottom-content button:active {
-    transform: scale(0.97); 
+    background-color: transparent;
+    border: 1px solid deepskyblue;
+    color: deepskyblue;
 }
 
 #auth-form {
   position: fixed;
-  /* display: flex; */
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 .auth-form-account {
     position: relative;
     display: flex;

@@ -1,9 +1,7 @@
 .none {
     display: none;
 }
-.mgb-30{
-    margin-bottom: 30px;
-}
+
 .border-none{
     border: none;
 }
@@ -20,12 +18,39 @@
 .active-scale-0_97:active {
     transform: scale(0.97); 
 }
-.pd-0{
-    padding: 0;
-}
+
 .border-none{
     border: none;
 }
 .pointer{
     cursor: pointer;
+}
+
+/* Font-size */
+.f-size-1-rem{
+    font-size: 1rem;
+}
+.f-size-2-rem{
+    font-size: 2rem;
+}
+/* Padding */
+.pd-0{
+    padding: 0;
+}
+.pdt-7_5{
+    padding-top: 7.5rem;
+}
+/* Margin */
+.mgb-2{
+    margin-bottom: 2rem;
+}
+.mgt-7_5{
+    margin-top: 7.5rem;
+}
+/* Margin-horizontal */
+.mr-horizontal-10{
+    margin: 0 10vh ;
+}
+.mr-horizontal-5{
+    margin: 0 5vh ;
 }

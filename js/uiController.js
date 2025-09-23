@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   let stateLogin = true;
-
-  const btn_Login = document.getElementById("dang-nhap");
+  let stateMobile = window.innerWidth < 1000;
+  const btn_Login = document.getElementById("login-button");
   const btn_Close_Login = document.getElementById("close_login_form");
   const frm_Login = document.getElementById("auth-form");
 
@@ -23,8 +23,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const textfield_Confirm = document.getElementById("confirm-pass-textfield");
   const btn_Submit = document.getElementById("submit-button");
 
+  const btn_MobileMenu = document.getElementById("mobile-menu");
+  const menu = document.getElementById("menu-item");
+  const menu_Item = document.querySelectorAll("#menu li a");
+  // Xử lý sự kiện người dùng nhấn chọn
+  menu_Item.forEach((item) => {
+    item.addEventListener("click", () => {
+      menu_Item.forEach((x) => (x.style.color = "black"));
+      item.style.color = "deepskyblue";
+    });
+  });
+  // Xử lý sự kiện người mở navigation bar trên mobile
+  btn_MobileMenu.addEventListener("click", () => {
+    menu.style.display = menu.style.display == "none" ? "flex" : "none";
+  });
   // Xử lý sự kiện người dùng nhấn nút đăng nhập
   btn_Login.addEventListener("click", () => {
+    if (stateMobile) {
+      menu.style.display = "none";
+    }
     frm_Login.style.display = "flex";
     frm_Login.style.transition = "opacity 0.2s ease";
   });
@@ -137,4 +154,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return true;
   };
+
+  window.addEventListener("resize", () => {
+    stateMobile = window.innerWidth < 1000;
+    menu.style.display = stateMobile ? "none" : "flex";
+  });
+
+  document.querySelectorAll("#menu a").forEach((link) => {
+    link.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+
+      if (targetId.startsWith("#")) {
+        e.preventDefault(); // Ngăn hash nhảy lên URL
+
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: "smooth" });
+
+          // Xóa hash trong URL (chỉ giữ domain hoặc path gốc)
+          window.history.replaceState(null, null, window.location.pathname);
+        }
+      }
+    });
+  });
 });

@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>ThPortfolio</title>
+      <link rel="icon" type="image/png" href="./resource/Logo.png">
+
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/classStyle.css" />
+    <link rel="stylesheet" href="./css/mobile.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -31,7 +34,7 @@
         <button id="close_login_form" class="close_x active-scale-0_97" >
           <i class="fa-solid fa-xmark"></i>
         </button>
-        <h1 id="title-auth-form" class="mgb-30">Đăng nhập</h1>
+        <h1 id="title-auth-form" class="mgb-2">Đăng nhập</h1>
         <!-- Nhập tên tên tài khoản -->
         <div  class="input-value">
           <i class="fa-solid fa-user" ></i>
@@ -86,35 +89,46 @@
         </button>
       </div>
     </div>
-    <div class="view">
+    <div id="#trang-chu" class="view">
       <div id="naviagtion-bar">
-        <div id="menu-mobile" class="none">
-          <i class="fa-solid fa-bars"></i>
+        <div id="mobile-menu" class="pointer none active-scale-0_97">
+          <i class="fa-solid fa-bars" style="color: black;"></i>
         </div>
-        <ul id="menu">
-          <li><a href="#">Trang Chủ</a></li>
-          <li><a href="#">Giới Thiệu</a></li>
-          <li><a href="#">Thành Viên</a></li>
-          <li><a href="#">Liên Hệ</a></li>
-          <li><a href="#">Templates</a></li>
-        </ul>
-        <div id="tim-kiem">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Tìm kiếm..." />
+        <a href="#trang-chu"><img id="logo" src="./resource/Logo.png" alt="Logo"></a>
+        <div id="menu-item">
+          <ul id="menu">
+            <li><a href="#trang-chu">Trang Chủ</a></li>
+            <li><a href="#gioi-thieu">Giới Thiệu</a></li>
+            <li><a href="#doi-phat-trien">Đội phát triển</a></li>
+            <li><a href="#lien-he">Liên Hệ</a></li>
+            <li><a href="#mau">Templates</a></li>
+          </ul>
+          <div id="right-menu">
+            <div id="search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="Tìm kiếm..." />
+              <button id="search-button" class="active-scale-0_97 pointer" >Tìm kiếm</button>
+            </div>
+            <button id="login-button" class="active-scale-0_97">Đăng Nhập</button>
+          </div>
+          
         </div>
-        <button id="dang-nhap" class="active-scale-0_97" type="button">Đăng nhập</button>
       </div>
       <div id="center-content">
         <div id="center-content-left">
-          <h1>Tạo điểm nhấn</br> chỉ với vài cú lick</h1>
+          <h1>Tạo điểm nhấn</br>trong vài thao tác</h1>
           <p>Website cung cấp các bản mẫu portfolio cho phép bạn tạo trang web cá nhân một cách nhanh chóng.</p>
         </div>
         <div id="center-content-right">ThPortfolio</div>
       </div>
       <div id="bottom-content">
-        <button>Bắt đầu ngay</button>
+        <button class="active-scale-0_97">Bắt đầu ngay</button>
       </div>
     </div>
-    <div class="view"></div>
+    <div id="gioi-thieu" class="view">
+      <h1 class="f-size-2-rem mr-horizontal-10 pdt-7_5">
+        Giới Thiệu
+      </h1>
+    </div>
   </body>
 </html>
