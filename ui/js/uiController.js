@@ -181,11 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-  // window.addEventListener("resize", () => {
-  //   if (window.innerWidth > 1000) {
-  //     menu.style.display = ""; // loại bỏ inline style → CSS áp dụng
-  //   } else {
-  //     menu.style.display = "none"; // mobile: ẩn menu
-  //   }
-  // });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1024) {
+    }
+  });
 });

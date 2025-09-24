@@ -31,7 +31,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div id="auth-form" class="none">
+    <!-- giao diện đăng nhập -->
+    <div class="hidden">
       <!-- Đăng nhập -->
       <div id="login-form" class="auth-form-account">
         <button id="close_login_form" class="close_x active-scale-0_97">
@@ -135,43 +136,58 @@
         </button>
       </div>
     </div>
-    <div id="naviagtion-bar">
-          <div id="mobile-menu" class="pointer none active-scale-0_97">
-            <i class="fa-solid fa-bars" style="color: black;"></i>
+    <!-- Navigationbar -->
+    <div id="naviagtion-bar" class="fixed px-8 py-4 flex gap-6 w-full items-center shadow-md ">
+      <!-- Nút mở menu trên mobile -->
+      <div class="lg:hidden block mr-auto">
+        <i class="fa-solid fa-bars" style="color: black;"></i>
+      </div>
+      <a href="#trang-chu"><img class="w-10 h-10 "  src="../resource/Logo.png" alt="Logo"></a>
+      <ul id="item-menu" class="flex gap-6 mr-auto hidden lg:flex">
+        <li><a href="#trang-chu" 
+          class="py-1 text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
+          Trang Chủ</a></li>
+        <li><a href="#gioi-thieu" 
+          class="py-1 text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
+          Giới Thiệu</a></li>
+        <li><a href="#doi-phat-trien" 
+          class="py-1 text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
+          Đội phát triển</a></li>
+        <li><a href="#lien-he" 
+          class="py-1 text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
+          Liên Hệ</a></li>
+        <li><a href="#mau" 
+          class="py-1 text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
+          Templates</a></li>
+      </ul>
+      <div id="search-bar" class="hidden lg:flex items-center border border-black px-4 py-2 rounded-lg gap-2 mr-4 text-xs">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input class="border-0 focus:outline-none" type="text" placeholder="Tìm kiếm..." />
+        <button id="search-button" 
+          class="active:scale-95 whitespace-nowrap transition-all duration-[200ms]">
+          Tìm kiếm</button>
+      </div>
+      <button id="login-button" 
+        class="hidden lg:flex text-sky-400 px-4 py-2 rounded-lg border border-sky-400 active:scale-95 whitespace-nowrap text-xs transition-all duration-[200ms]">
+          Đăng Nhập</button>
+      </div>
+      <!-- Trang chủ -->
+    <div id="trang-chu" class="h-screen">
+        <div class="lg:flex lg:pt-[35vh] pt-[20vh] lg:px-[10vh] px-[5vh] ">
+          <div class="">
+            <h1 class="font-bold lg:text-5xl mb-2 text-[2rem]">Tạo điểm nhấn</br>trong vài thao tác</h1>
+            <p class="font-light lg:text-xl text-[0.75rem]">Website cung cấp các bản mẫu portfolio cho phép bạn tạo trang web cá nhân một cách nhanh chóng.</p>
           </div>
-          <a href="#trang-chu"><img id="logo" src="../resource/Logo.png" alt="Logo"></a>
-          <div id="menu-item">
-            <ul>
-              <li><a href="#trang-chu">Trang Chủ</a></li>
-              <li><a href="#gioi-thieu">Giới Thiệu</a></li>
-              <li><a href="#doi-phat-trien">Đội phát triển</a></li>
-              <li><a href="#lien-he">Liên Hệ</a></li>
-              <li><a href="#mau">Templates</a></li>
-            </ul>
-            <div id="right-menu">
-              <div id="search-bar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Tìm kiếm..." />
-                <button id="search-button" class="active-scale-0_97 pointer" >Tìm kiếm</button>
-              </div>
-              <button id="login-button" class="active-scale-0_97">Đăng Nhập</button>
-            </div>
-            
-          </div>
-    </div>
-    <div id="trang-chu" class="view">
-        <div id="center-content">
-          <div id="center-content-left">
-            <h1 class="font-bold text-5xl mb-4">Tạo điểm nhấn</br>trong vài thao tác</h1>
-            <p>Website cung cấp các bản mẫu portfolio cho phép bạn tạo trang web cá nhân một cách nhanh chóng.</p>
-          </div>
-          <div id="center-content-right">ThPortfolio</div>
+          <div class="lg:text-[7.5rem] text-[3rem] font-bold flex items-center justify-center w-full text-white [text-shadow:0_0_100px_deepskyblue]" ><span>ThPortfolio</span></div>
         </div>
-        <div id="bottom-content">
-          <button class="active-scale-0_97">Bắt đầu ngay</button>
+        <div class="mt-[15vh] lg:mt-[20vh] flex width-full justify-center">
+          <button 
+          class="bg-sky-400 text-white font-bold px-12 border py-4 rounded-lg transition-all duration-[200ms] active:scale-95 active:bg-white active:text-black active:border-2 active:border-black">
+          Bắt đầu ngay
+        </button>
         </div>
     </div>
-    <div id="gioi-thieu" class="view none">
+    <div id="gioi-thieu" class="hidden">
       <h1 class="">Giới Thiệu</h1>
       <p>
         ThPortfolio được phát triển với mục tiêu trở thành nền tảng hỗ trợ lập
@@ -221,7 +237,7 @@
       </p>
     </div>
     <!-- Liên hệ -->
-    <div id="lien-he" class="view pd-horizontal-10">
+    <div id="lien-he" class="hidden">
       <h1 class="f-size-2-rem pdt-7_5">Liên Hệ</h1>
       <section id="lienhe" class="contact ">
         <div class="container">
@@ -248,10 +264,10 @@
         </div>
       </section>
     </div>
-    <div class="footer bg-dark text-white mt-2 py-3">
+    <div class="footer bg-dark text-white mt-2 py-3 hidden">
         <div class="footer-container">
           <div class="row pdt-3 ">
-            <div class="col-md-6 col-lg-4 mb-4 pt-4">
+            <div class="col-lg-6 col-lg-4 mb-4 pt-4">
               <h5 class="f-size-10-rem mb-3 ">Tiện ích</h5>
               <ul class="list-unstyled footer-links mb-0">
                 <li><a href="#" style="color:#808080" id="footer-login-link" class="text-decoration-none d-block py-2">Đăng nhập</a></li>
@@ -260,7 +276,7 @@
                 <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Templates</a></li>
               </ul>
             </div>
-            <div class="col-12 col-md-6 col-lg-8 d-flex flex-column justify-content-center align-items-md-end">
+            <div class="col-12 col-lg-6 col-lg-8 d-flex flex-column justify-content-center align-items-lg-end">
               <div class="footer-logo mb-2 d-flex align-items-center">
                   <img src="../resource/Logo.png"  alt="Logo" class="me-2" style="width:24px; height:24px;">
                   <span>ThPortfolio</span>
