@@ -29,13 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const footer_Login = document.getElementById("footer-login-link");
   // Sự kiện ấn đăng nhập ở footer
   footer_Login.addEventListener("click", (e) => {
-  e.preventDefault(); 
-  if (stateMobile) {
-    menu.style.display = "none";
-  }
-  frm_Login.style.display = "flex";
-  frm_Login.style.transition = "opacity 0.2s ease";
-});
+    e.preventDefault();
+    if (stateMobile) {
+      menu.style.display = "none";
+    }
+    frm_Login.style.display = "flex";
+    frm_Login.style.transition = "opacity 0.2s ease";
+  });
   // Xử lý sự kiện người dùng nhấn chọn
   menu_Item.forEach((item) => {
     item.addEventListener("click", () => {
@@ -134,12 +134,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Xử lý sự kiện người dùng nhấn đăng nhập
     } else {
       // Xử lý sự kiện người dùng nhấn đăng ký
-      if (checkInput()) {
+      if (CheckInput()) {
         const email = input_Email.value;
         const userName = input_User.value;
         const password = input_Pass.value;
         try {
-          data = { userName, password };
+          data = { userName, password, email };
           const res = await fetch("https://thportfolio.onrender.com/user/add", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const checkInput = () => {
+  const CheckInput = () => {
     if (input_Pass.value == "") {
       console.log("Mật khẩu rỗng");
       return false;

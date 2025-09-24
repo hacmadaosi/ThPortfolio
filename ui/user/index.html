@@ -6,9 +6,9 @@
     <title>ThPortfolio</title>
     <link rel="icon" type="image/png" href="./resource/Logo.png" />
 
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/classStyle.css" />
-    <link rel="stylesheet" href="./css/mobile.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/classStyle.css" />
+    <link rel="stylesheet" href="../css/mobile.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -26,16 +26,9 @@
       href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
     />
 
-    <script src="js/app.js"></script>
-    <script src="js/uiController.js"></script>
-
-     <!-- dùng boostrap 5 cdn-->
-      <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-        crossorigin="anonymous"
-      />
+    <script src="../js/app.js"></script>
+    <script src="../js/uiController.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <div id="auth-form" class="none">
@@ -142,14 +135,13 @@
         </button>
       </div>
     </div>
-    <div id="trang-chu" class="view">
-        <div id="naviagtion-bar">
+    <div id="naviagtion-bar">
           <div id="mobile-menu" class="pointer none active-scale-0_97">
             <i class="fa-solid fa-bars" style="color: black;"></i>
           </div>
-          <a href="#trang-chu"><img id="logo" src="./resource/Logo.png" alt="Logo"></a>
+          <a href="#trang-chu"><img id="logo" src="../resource/Logo.png" alt="Logo"></a>
           <div id="menu-item">
-            <ul id="menu">
+            <ul>
               <li><a href="#trang-chu">Trang Chủ</a></li>
               <li><a href="#gioi-thieu">Giới Thiệu</a></li>
               <li><a href="#doi-phat-trien">Đội phát triển</a></li>
@@ -166,10 +158,11 @@
             </div>
             
           </div>
-        </div>
+    </div>
+    <div id="trang-chu" class="view">
         <div id="center-content">
           <div id="center-content-left">
-            <h1>Tạo điểm nhấn</br>trong vài thao tác</h1>
+            <h1 class="font-bold text-5xl">Tạo điểm nhấn</br>trong vài thao tác</h1>
             <p>Website cung cấp các bản mẫu portfolio cho phép bạn tạo trang web cá nhân một cách nhanh chóng.</p>
           </div>
           <div id="center-content-right">ThPortfolio</div>
@@ -261,7 +254,7 @@
             <div class="col-md-6 col-lg-4 mb-4 pt-4">
               <h5 class="f-size-10-rem mb-3 ">Tiện ích</h5>
               <ul class="list-unstyled footer-links mb-0">
-                <li><a href="#" style="color:#808080" id="footer-login-link"class=" text-decoration-none d-block py-2">Đăng nhập</a></li>
+                <li><a href="#" style="color:#808080" id="footer-login-link" class="text-decoration-none d-block py-2">Đăng nhập</a></li>
                 <li><a href="#" style="color:#808080 "class=" text-decoration-none d-block py-2">Tạo tài khoản</a></li>
                 <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Quên mật khẩu</a></li>
                 <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Templates</a></li>
@@ -269,7 +262,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-8 d-flex flex-column justify-content-center align-items-md-end">
               <div class="footer-logo mb-2 d-flex align-items-center">
-                  <img src="./resource/Logo.png"  alt="Logo" class="me-2" style="width:24px; height:24px;">
+                  <img src="../resource/Logo.png"  alt="Logo" class="me-2" style="width:24px; height:24px;">
                   <span>ThPortfolio</span>
               </div>
               <p class="mb-0">© 2025 - Bản quyền thuộc ThPortfolio teams</p>
