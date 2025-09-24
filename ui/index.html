@@ -28,6 +28,14 @@
 
     <script src="js/app.js"></script>
     <script src="js/uiController.js"></script>
+
+     <!-- dùng boostrap 5 cdn-->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+      />
   </head>
   <body>
     <div id="auth-form" class="none">
@@ -170,7 +178,7 @@
           <button class="active-scale-0_97">Bắt đầu ngay</button>
         </div>
     </div>
-    <div id="gioi-thieu" class="view">
+    <div id="gioi-thieu" class="view none">
       <h1 class="">Giới Thiệu</h1>
       <p>
         ThPortfolio được phát triển với mục tiêu trở thành nền tảng hỗ trợ lập
@@ -247,6 +255,27 @@
         </div>
       </section>
     </div>
-    <div id="footer"></div>
+    <div class="footer bg-dark text-white mt-2 py-3">
+        <div class="footer-container">
+          <div class="row pdt-3 ">
+            <div class="col-md-6 col-lg-4 mb-4 pt-4">
+              <h5 class="f-size-10-rem mb-3 ">Tiện ích</h5>
+              <ul class="list-unstyled footer-links mb-0">
+                <li><a href="#" style="color:#808080" id="footer-login-link"class=" text-decoration-none d-block py-2">Đăng nhập</a></li>
+                <li><a href="#" style="color:#808080 "class=" text-decoration-none d-block py-2">Tạo tài khoản</a></li>
+                <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Quên mật khẩu</a></li>
+                <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Templates</a></li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-6 col-lg-8 d-flex flex-column justify-content-center align-items-md-end">
+              <div class="footer-logo mb-2 d-flex align-items-center">
+                  <img src="./resource/Logo.png"  alt="Logo" class="me-2" style="width:24px; height:24px;">
+                  <span>ThPortfolio</span>
+              </div>
+              <p class="mb-0">© 2025 - Bản quyền thuộc ThPortfolio teams</p>
+            </div>
+          </div>
+        </div>
+      </div>
   </body>
 </html>
