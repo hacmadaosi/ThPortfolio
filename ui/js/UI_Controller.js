@@ -3,7 +3,7 @@ import { CreateAccount } from "./Logic_Controller.js";
 document.addEventListener("DOMContentLoaded", () => {
   let stateLogin = true;
 
-  const menu_Item = document.querySelectorAll("#menu-items li a");
+  const menu_Item = document.querySelectorAll("#menu-items li");
   const btn_MobileMenu = document.getElementById("mobile-menu");
   const navigation_Menu = document.getElementById("menu-items");
 
