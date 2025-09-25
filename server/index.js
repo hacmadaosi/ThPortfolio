@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 app.get("/firebase-api", (req, res) => {
   res.json(firebaseModule.firebaseConfig);
 });
+
 app.post("/user/add", async (req, res) => {
   const { userName, password, email } = req.body;
   if (!userName || !password || !email) {
