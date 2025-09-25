@@ -177,12 +177,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Xử lý sự kiện người dùng nhấn chọn
-  menu_Item.forEach((item) => {
-    item.addEventListener("click", () => {
-      menu_Item.forEach((x) => x.classList.remove("text-sky-400"));
-      item.classList.remove("text-black");
-      item.classList.add("text-sky-400");
-    });
+  menu_Item.forEach((item, index) => {
+    if (index < 5)
+      item.addEventListener("click", () => {
+        menu_Item.forEach((x) => x.classList.remove("text-sky-400"));
+        item.classList.remove("text-black");
+        item.classList.add("text-sky-400");
+      });
   });
   // Xử lý sự kiện người dùng nhấn vào logo
   btn_Logo.addEventListener("click", () => {
