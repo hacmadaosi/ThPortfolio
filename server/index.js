@@ -29,7 +29,7 @@ app.post("/user/add", async (req, res) => {
     return res.status(200).json({ result: "Thêm thành công" });
   } catch (ex) {
     return res.status(500).json({
-      error: "Lỗi server, không thể thêm người dùng",
+      error: ex.message,
     });
   }
 });
