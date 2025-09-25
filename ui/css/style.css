@@ -386,3 +386,16 @@
   background-color: #fff;
   transition: width 0.3s ease;   
 }
+
+.notification-line{
+  animation: NotificationLine 5s forwards;
+}
+
+@keyframes NotificationLine {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
