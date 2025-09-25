@@ -1,43 +1,43 @@
 :root {
   --main-color: #f2f8fc;
 }
-@media (max-width: 1000px){
-    *{
-        box-sizing: border-box;
-    }
-    #menu-item{
-        position: fixed;
-        flex-direction: column;
-        background-color: white;
-        top: 70px;
-        left: 0;
-        padding: 16px 5vh 20px 5vh;
-        display: none;
-        gap: 20px;
-    }
-    #menu{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    #mobile-menu{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 4vh;
-        height: 4vh;
-        border: 1px black solid;
-        border-radius: 5px;
-    }
-    #menu li > a  {
-        color: black;
-        text-decoration: none;
-    }
-    #right-menu{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+@media (max-width: 1000px) {
+  * {
+    box-sizing: border-box;
+  }
+  #menu-item {
+    position: fixed;
+    flex-direction: column;
+    background-color: white;
+    top: 70px;
+    left: 0;
+    padding: 16px 5vh 20px 5vh;
+    display: none;
+    gap: 20px;
+  }
+  #menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  #mobile-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4vh;
+    height: 4vh;
+    border: 1px black solid;
+    border-radius: 5px;
+  }
+  #menu li > a {
+    color: black;
+    text-decoration: none;
+  }
+  #right-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
   #search-bar input {
     margin-right: auto;
@@ -130,5 +130,11 @@
     background: #007bff;
     color: #fff;
     border: 1px solid #007bff;
+  }
+  /*Phan gioi thieu*/
+  #gioi-thieu {
+    padding: 0 5vh; /* giữ padding như cũ */
+    font-size: 0.6rem;
+    padding-top: 120px;
   }
 }
