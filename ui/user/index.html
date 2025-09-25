@@ -41,6 +41,7 @@
       <p id="notify-content" class="font-light text-sm ml-8 pr-4">Phải có 1 thông báo gì đó.</p> 
       <div id="notify-line" class="pt-4 border-b-4 border-green-400 notification-line"></div>  
     </div>
+
     <!-- giao diện xác thực tài khoản -->
     <div id="auth-form" 
      class="hidden fixed bg-black bg-opacity-50 w-full h-screen flex items-center justify-center z-[1] ">
@@ -155,12 +156,12 @@
       </div>
     </div>
     <!-- Navigationbar -->
-    <div id="naviagtion-bar" class="fixed px-8 py-4 flex gap-6 w-full items-center shadow-md">
+    <div id="naviagtion-bar" class="fixed px-8 py-4 flex gap-6 w-full items-center shadow-md bg-white">
       <!-- Nút mở menu trên mobile -->
       <div id="mobile-menu" class="lg:hidden block mr-auto">
         <i class="fa-solid fa-bars" style="color: black;"></i>
       </div>
-      <a href="#trang-chu"><img class="w-10 h-10 "  src="../resource/Logo.png" alt="Logo"></a>
+      <a id="logo" href="#trang-chu"><img class="w-10 h-10 " src="../resource/Logo.png" alt="Logo"></a>
       <ul id="menu-items" class="flex gap-6 w-full hidden lg:flex">
         <li><a href="#trang-chu" 
           class="py-1 text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] text-sky-400">
@@ -194,12 +195,13 @@
       
       
       </div>
+
       <!-- Trang chủ -->
     <div id="trang-chu" class="h-screen">
         <div class="lg:flex lg:pt-[35vh] pt-[25vh] lg:px-[10vh] px-[5vh] ">
           <div class="">
             <h1 class="font-bold lg:text-5xl mb-2 text-[2rem]">Tạo điểm nhấn</br>trong vài thao tác</h1>
-            <p class="font-light lg:text-xl text-[0.75rem]">Website cung cấp các bản mẫu portfolio cho phép bạn tạo trang web cá nhân một cách nhanh chóng.</p>
+            <p class="lg:text-xl text-[0.75rem]">Website cung cấp các bản mẫu portfolio cho phép bạn tạo trang web cá nhân một cách nhanh chóng.</p>
           </div>
           <div class="lg:text-[7.5rem] text-[3rem] font-bold flex items-center justify-center w-full text-white [text-shadow:0_0_100px_deepskyblue] select-none">
             <span>ThPortfolio</span>
@@ -212,8 +214,9 @@
         </button>
         </div>
     </div>
-    <div id="gioi-thieu" class="">
-      <h1 class="">Giới Thiệu</h1>
+
+    <div id="gioi-thieu" class="h-screen">
+      <h1>Giới Thiệu</h1>
       <p>
         ThPortfolio được phát triển với mục tiêu trở thành nền tảng hỗ trợ lập
         trình viên, designer và freelancer trong việc xây dựng portfolio cá nhân
@@ -225,7 +228,7 @@
       <p>
         Với sứ mệnh giúp người dùng khẳng định thương hiệu cá nhân và mở rộng cơ
         hội nghề nghiệp, ThPortfolio tập trung phát triển các template dựa trên
-        tiêu chí thân thiện – sáng tạo – thực tiễn. Các bản mẫu không chỉ chú
+        tiêu chí thân thiện &ndash; sáng tạo &ndash; thực tiễn. Các bản mẫu không chỉ chú
         trọng đến thẩm mỹ mà còn đảm bảo tốc độ tải nhanh, chuẩn SEO và hỗ trợ
         đa ngôn ngữ, giúp kết nối hiệu quả với cả thị trường trong nước lẫn quốc
         tế.

@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn_MobileMenu = document.getElementById("mobile-menu");
   const navigation_Menu = document.getElementById("menu-items");
 
+  const btn_Logo = document.getElementById("logo");
   const btn_Close_Login = document.getElementById("close_login_form");
 
   const frm_Auth = document.getElementById("auth-form");
@@ -183,6 +184,11 @@ document.addEventListener("DOMContentLoaded", () => {
       item.classList.add("text-sky-400");
     });
   });
+  // Xử lý sự kiện người dùng nhấn vào logo
+  btn_Logo.addEventListener("click", () => {
+    menu_Item.forEach((item) => item.classList.remove("text-sky-400"));
+    menu_Item[0].classList.add("text-sky-400");
+  });
 
   // Xử lý sự kiện người mở navigation bar trên mobile
   btn_MobileMenu.addEventListener("click", () => {
@@ -196,5 +202,26 @@ document.addEventListener("DOMContentLoaded", () => {
     navigation_Menu.classList.toggle("gap-6");
     navigation_Menu.classList.toggle("gap-4");
     navigation_Menu.classList.toggle("pb-4");
+  });
+  // Làm sạch đường dẫn URL
+  const links = document.querySelectorAll(
+    "#menu-items a, a[href='#trang-chu']"
+  ); // logo href="#trang-chu"
+
+  links.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+
+      if (targetId.startsWith("#")) {
+        e.preventDefault(); // ngăn hành vi mặc định
+
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: "smooth" });
+          // Xóa hash khỏi URL
+          window.history.replaceState(null, null, window.location.pathname);
+        }
+      }
+    });
   });
 });
