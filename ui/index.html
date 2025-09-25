@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ThPortfolio</title>
+    <link rel="icon" type="image/png" href="./resource/Logo.png" />
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/classStyle.css" />
+    <link rel="stylesheet" href="./css/mobile.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
+    />
+
+    <script src="js/app.js"></script>
+    <script src="js/uiController.js"></script>
+
+     <!-- dùng boostrap 5 cdn-->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+      />
+  </head>
+  <body>
+    <div id="auth-form" class="none">
+      <!-- Đăng nhập -->
+      <div id="login-form" class="auth-form-account">
+        <button id="close_login_form" class="close_x active-scale-0_97">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h1 id="title-auth-form" class="mgb-2">Đăng nhập</h1>
+        <!-- Nhập email -->
+        <div id="email-textfield" class="input-value none">
+          <div>
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <input
+            id="email-input"
+            class="border-none"
+            type="password"
+            placeholder="Email"
+          />
+          <button
+            id="show-confirm-pass"
+            class="pd-0 border-none active-scale-0_97 pointer none"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+        <!-- Nhập tên tên tài khoản -->
+        <div class="input-value">
+          <i class="fa-solid fa-user"></i>
+          <input
+            id="user-input"
+            class="border-none"
+            type="text"
+            placeholder="Tên đăng nhập"
+          />
+          <button
+            id="clear-user-input"
+            class="pd-0 border-none active-scale-0_97 pointer none"
+          >
+            <i class="fa-solid fa-circle-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Nhập mật khẩu -->
+        <div class="input-value">
+          <div id="lock-icon">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <div id="unlock-icon" class="none">
+            <i class="fa-solid fa-unlock"></i>
+          </div>
+          <input
+            id="pass-input"
+            class="border-none"
+            type="password"
+            placeholder="Mật khẩu"
+          />
+          <button
+            id="show-pass"
+            class="pd-0 border-none active-scale-0_97 pointer none"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
+          <button
+            id="hide-pass"
+            class="pd-0 border-none active-scale-0_97 pointer none"
+          >
+            <i class="fa-solid fa-eye-slash"></i>
+          </button>
+        </div>
+        <!-- Nhập xác nhận mật khẩu -->
+        <div id="confirm-pass-textfield" class="input-value none">
+          <div>
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <input
+            id="pass-confirm-input"
+            class="border-none"
+            type="password"
+            placeholder="Xác nhận mật khẩu"
+          />
+          <button
+            id="show-confirm-pass"
+            class="pd-0 border-none active-scale-0_97 pointer none"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
+          <button
+            id="hide-confirm-pass"
+            class="pd-0 border-none active-scale-0_97 pointer none"
+          >
+            <i class="fa-solid fa-eye-slash"></i>
+          </button>
+        </div>
+        <p class="pointer active-scale-0_97">Quên mật khẩu?</p>
+        <button id="submit-button">Đăng nhập</button>
+        <div class="divider">
+          <span>Hoặc</span>
+        </div>
+        <div id="firebaseui-auth-container"></div>
+        <button id="create-account" class="pointer active-scale-0_97">
+          Tạo tài khoản
+        </button>
+      </div>
+    </div>
+    <div id="trang-chu" class="view">
+        <div id="naviagtion-bar">
+          <div id="mobile-menu" class="pointer none active-scale-0_97">
+            <i class="fa-solid fa-bars" style="color: black;"></i>
+          </div>
+          <a href="#trang-chu"><img id="logo" src="./resource/Logo.png" alt="Logo"></a>
+          <div id="menu-item">
+            <ul id="menu">
+              <li><a href="#trang-chu">Trang Chủ</a></li>
+              <li><a href="#gioi-thieu">Giới Thiệu</a></li>
+              <li><a href="#doi-phat-trien">Đội phát triển</a></li>
+              <li><a href="#lien-he">Liên Hệ</a></li>
+              <li><a href="#mau">Templates</a></li>
+            </ul>
+            <div id="right-menu">
+              <div id="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Tìm kiếm..." />
+                <button id="search-button" class="active-scale-0_97 pointer" >Tìm kiếm</button>
+              </div>
+              <button id="login-button" class="active-scale-0_97">Đăng Nhập</button>
+            </div>
+            
+          </div>
+        </div>
+        <div id="center-content">
+          <div id="center-content-left">
+            <h1>Tạo điểm nhấn</br>trong vài thao tác</h1>
+            <p>Website cung cấp các bản mẫu portfolio cho phép bạn tạo trang web cá nhân một cách nhanh chóng.</p>
+          </div>
+          <div id="center-content-right">ThPortfolio</div>
+        </div>
+        <div id="bottom-content">
+          <button class="active-scale-0_97">Bắt đầu ngay</button>
+        </div>
+    </div>
+    <div id="gioi-thieu" class="view">
+      <h1 class="">Giới Thiệu</h1>
+      <p>
+        ThPortfolio được phát triển với mục tiêu trở thành nền tảng hỗ trợ lập
+        trình viên, designer và freelancer trong việc xây dựng portfolio cá nhân
+        một cách nhanh chóng, chuyên nghiệp và hiệu quả. Website cung cấp nhiều
+        mẫu portfolio hiện đại, tối ưu trên mọi thiết bị, dễ dàng tùy chỉnh để
+        phù hợp với phong cách và định hướng nghề nghiệp của từng cá nhân.
+      </p>
+
+      <p>
+        Với sứ mệnh giúp người dùng khẳng định thương hiệu cá nhân và mở rộng cơ
+        hội nghề nghiệp, ThPortfolio tập trung phát triển các template dựa trên
+        tiêu chí thân thiện – sáng tạo – thực tiễn. Các bản mẫu không chỉ chú
+        trọng đến thẩm mỹ mà còn đảm bảo tốc độ tải nhanh, chuẩn SEO và hỗ trợ
+        đa ngôn ngữ, giúp kết nối hiệu quả với cả thị trường trong nước lẫn quốc
+        tế.
+      </p>
+
+      <p>
+        Hiện nay, ThPortfolio cung cấp đa dạng mẫu portfolio theo các phong
+        cách:
+      </p>
+      <ul>
+        <li>
+          Portfolio dành cho Lập trình viên: nhấn mạnh kỹ năng, dự án và công
+          nghệ sử dụng.
+        </li>
+        <li>
+          Portfolio dành cho Designer: tập trung trình bày sản phẩm sáng tạo,
+          thiết kế đồ họa và UI/UX.
+        </li>
+        <li>
+          Portfolio cho Freelancer/Content Creator: giới thiệu dịch vụ, kỹ năng
+          đa lĩnh vực, gắn kết khách hàng.
+        </li>
+      </ul>
+      <p>
+        Trong tương lai, ThPortfolio sẽ tiếp tục mở rộng hệ thống template, bổ
+        sung nhiều tính năng tự động hóa (chuyển đổi ngôn ngữ, tích hợp API, kết
+        nối mạng xã hội) nhằm mang đến trải nghiệm hoàn thiện hơn cho người
+        dùng.
+      </p>
+
+      <p>
+        <strong>Giá trị cốt lõi:</strong> Thân thiện &ndash; Sáng tạo &ndash;
+        Thực tiễn
+      </p>
+    </div>
+    <!-- Liên hệ -->
+    <div id="lien-he" class="view pd-horizontal-10 ">
+      <h1 class="f-size-2-rem pdt-7_5">Liên Hệ</h1>
+      <section id="lienhe" class="contact ">
+        <div class="container">
+          <form action="#" method="post" class="contact-form">
+            <div class="form-group">
+              <input
+                type="text"
+                name="title"
+                placeholder="Tiêu đề..."
+                required
+              />
+              <input type="email" name="email" placeholder="Email" required />
+            </div>
+            <div class="form-group">
+              <textarea
+                name="message"
+                placeholder="Nội dung..."
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn">Gửi</button>
+          </form>
+        </div>
+      </section>
+    </div>
+    <div class="footer bg-dark text-white mt-2 py-3">
+        <div class="footer-container">
+          <div class="row pdt-3 ">
+            <div class="col-md-6 col-lg-4 mb-4 pt-4">
+              <h5 class="f-size-10-rem mb-3 ">Tiện ích</h5>
+              <ul class="list-unstyled footer-links mb-0">
+                <li><a href="#" style="color:#808080" id="footer-login-link"class=" text-decoration-none d-block py-2">Đăng nhập</a></li>
+                <li><a href="#" style="color:#808080 "class=" text-decoration-none d-block py-2">Tạo tài khoản</a></li>
+                <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Quên mật khẩu</a></li>
+                <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Templates</a></li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-6 col-lg-8 d-flex flex-column justify-content-center align-items-md-end">
+              <div class="footer-logo mb-2 d-flex align-items-center">
+                  <img src="./resource/Logo.png"  alt="Logo" class="me-2" style="width:24px; height:24px;">
+                  <span>ThPortfolio</span>
+              </div>
+              <p class="mb-0">© 2025 - Bản quyền thuộc ThPortfolio teams</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
