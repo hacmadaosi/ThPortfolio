@@ -158,7 +158,7 @@
     <!-- Navigationbar -->
     <div id="naviagtion-bar" class="fixed px-8 py-4 flex gap-6 w-full items-center shadow-md bg-white">
       <!-- Nút mở menu trên mobile -->
-      <div id="mobile-menu" class="lg:hidden block mr-auto">
+      <div id="mobile-menu" class="lg:hidden mr-auto">
         <i class="fa-solid fa-bars" style="color: black;"></i>
       </div>
       <a id="logo" href="#trang-chu"><img class="w-10 h-10 " src="../resource/Logo.png" alt="Logo"></a>
@@ -279,29 +279,24 @@
     </section>
 </div>
 
-
-
-    <div class="footer bg-dark text-white mt-2 py-3 hidden">
-        <div class="footer-container">
-          <div class="row pdt-3 ">
-            <div class="col-lg-6 col-lg-4 mb-4 pt-4">
-              <h5 class="f-size-10-rem mb-3 ">Tiện ích</h5>
-              <ul class="list-unstyled footer-links mb-0">
-                <li><a href="#" style="color:#808080" id="footer-login-link" class="text-decoration-none d-block py-2">Đăng nhập</a></li>
-                <li><a href="#" style="color:#808080 "class=" text-decoration-none d-block py-2">Tạo tài khoản</a></li>
-                <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Quên mật khẩu</a></li>
-                <li><a href="#" style="color:#808080" class=" text-decoration-none d-block py-2">Templates</a></li>
-              </ul>
-            </div>
-            <div class="col-12 col-lg-6 col-lg-8 d-flex flex-column justify-content-center align-items-lg-end">
-              <div class="footer-logo mb-2 d-flex align-items-center">
-                  <img src="../resource/Logo.png"  alt="Logo" class="me-2" style="width:24px; height:24px;">
-                  <span>ThPortfolio</span>
-              </div>
-              <p class="mb-0">© 2025 - Bản quyền thuộc ThPortfolio teams</p>
-            </div>
-          </div>
-        </div>
+<footer id= "footer" class="bg-black text-white lg:px-[10vh]  py-12 px-[5vh] h-fit flex flex-col lg:flex-row ">
+      <div class="pr-12 lg:w-[40vh] block">
+        <h5 class="text-base font-bold mb-4 ">Tiện Ích</h5>
+        <ul class="text-gray-500 ">
+        <li class="border-t border-gray-500 py-3 hover:text-white hover:border-white"><button id="footer-dang-nhap" class="active:sca">Đăng nhập</button></li>
+        <li class="border-t border-gray-500 py-3 hover:text-white hover:border-white"><button id="foot-tao-tai-khoan">Tạo tài khoản</button></li>
+        <li class="border-t border-gray-500 py-3 hover:text-white hover:border-white"><button id="footer-quen-mat-khau">Quên mật khẩu</button></li>
+        <li class="border-t border-gray-500 py-3 hover:text-white hover:border-white"><a href="#trang-chu">Trang Chủ</a></li>
+        <li class="border-t border-gray-500 py-3 hover:text-white hover:border-white"><button id="footer-templates">Templates</button></li>
+      </ul>
+    </div>
+    <div class="flex flex-col lg:w-[60vh] justify-start">
+      <div class="flex items-center gap-2">
+        <i><img src="../resource/Logo.png" alt="icon" class="w-6 h-6 inline-block"/></i>
+        <button id="reload-trang-chu" class="font-bold text-white hover:text-cyan-400 active:scale-95">ThPortfolio</button>
       </div>
+      <p class="text-gray-400 mt-2">© 2025 - Bản quyền thuộc về Thportfolio teams</p>
+    </div>
+</footer>
   </body>
 </html>
