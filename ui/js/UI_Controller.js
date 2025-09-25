@@ -42,6 +42,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const icon_success = document.getElementById("success-icon");
   const icon_error = document.getElementById("error-icon");
   const process_notify = document.getElementById("notify-line");
+  
+  const btn_FooterLogin = document.getElementById("footer-dang-nhap");
+  const btn_TrangChuReload =document.getElementById("reload-trang-chu");
+
+  //xử lý sự kiện tải lại trang ở footer
+  btn_TrangChuReload.addEventListener("click", ()=>{
+     location.reload();
+  })
+  // Xử lý sự kiện người dung mở form đăng nhập ở Footer
+  btn_FooterLogin.addEventListener("click", ()=>{
+    frm_Auth.classList.remove("hidden");
+  })
   // Xử lý sự kiện người dùng submit form
   btn_Submit.addEventListener("click", async (e) => {
     e.preventDefault();
