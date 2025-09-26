@@ -25,7 +25,11 @@ app.post("/user/add", async (req, res) => {
     });
   }
   try {
-    const result = await firebaseModule.add_User(userName, password, email);
+    const result = await firebaseModule.createNewUser(
+      userName,
+      password,
+      email
+    );
     return res.status(200).json({ result: "Thêm thành công" });
   } catch (ex) {
     return res.status(500).json({
@@ -33,7 +37,15 @@ app.post("/user/add", async (req, res) => {
     });
   }
 });
-
+app.get("/getAllProjectMembers", async (req, res) => {
+  try {
+    const result = await firebaseModule.getAllProjectMembers();
+    console.log(result);
+    return res.status(200).json(result);
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
+});
 app.listen(port, () => {
   console.log(`Server đang lắng nghe trên cổng ${port}`);
 });

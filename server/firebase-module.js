@@ -6,7 +6,12 @@ const {
   sendEmailVerification,
 } = require("firebase/auth");
 
-const { getFirestore, collection, addDoc } = require("firebase/firestore");
+const {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+} = require("firebase/firestore");
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -22,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const add_User = async (username, password, email) => {
+const createNewUser = async (username, password, email) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -45,4 +50,21 @@ const add_User = async (username, password, email) => {
   }
 };
 
-module.exports = { firebaseConfig, add_User };
+const getAllProjectMembers = async () => {
+  try {
+    const result = await getDocs(collection(db, "developmentGroup"));
+    return result.docs
+      .map((doc) => ({
+        id: doc.data().id,
+        hoTen: doc.data().hoTen,
+        vaiTro: doc.data().vaiTro,
+        lienHe: doc.data().lienHe,
+        hinhAnh: doc.data().hinhAnh,
+      }))
+      .sort((a, b) => a.id - b.id);
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+module.exports = { firebaseConfig, createNewUser, getAllProjectMembers };
