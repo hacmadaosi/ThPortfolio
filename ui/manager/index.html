@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ThPortfolio</title>
+    <link rel="icon" type="image/png" href="../resource/Logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
+    />
+
+    <script src="../js/FireBase_Controller.js"></script>
+    <script type="module" src="../js/UI_Controller.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-sans bg-gray-100">
+    <!-- Navigationbar -->
+    <div
+      id="naviagtion-bar"
+      class="fixed px-8 py-4 flex gap-6 w-full items-center shadow-md bg-white"
+    >
+      <!-- Nút mở menu trên mobile -->
+      <div id="mobile-menu" class="lg:hidden mr-auto">
+        <i class="fa-solid fa-bars" style="color: black"></i>
+      </div>
+      <a id="logo" href="#trang-chu"
+        ><img class="w-10 h-10" src="../resource/Logo.png" alt="Logo"
+      /></a>
+      <ul id="menu-items" class="flex gap-6 w-full hidden lg:flex">
+        <li
+          class="py-1 w-fit text-base font-semibold border-b-2 border-transparent transition-all duration-[300ms] text-sky-400"
+        >
+          Quản Lý
+        </li>
+        <li class="ml-auto">
+          <button
+            id="Account-button"
+            class="text-sky-400 px-4 py-2 rounded-lg border border-sky-400 whitespace-nowrap text-xs transition-all duration-[200ms]"
+          >
+            Lê khánh Vinh
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex">
+      <!-- Left Sidebar (Danh mục) -->
+      <div
+        class="hidden lg:block pr-[5vh] pl-[10vh] flex flex-col border-r border-black mt-24"
+      >
+        <h1 class="text-3xl font-semibold mb-4 whitespace-nowrap">Danh mục</h1>
+        <ul class="space-y-2 flex-grow mb-[10vh]">
+          <li>
+            <a
+              href="#"
+              id="tab-mau-btn"
+              class="block py-1 text-base font-semibold text-black no-underline text-sky-400 hover:text-sky-400 hover:border-sky-400 hover:border-b-2"
+              >Mẫu</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              id="tab-tk-btn"
+              class="block py-1 text-base font-semibold text-black no-underline hover:text-sky-400 hover:border-sky-400 hover:border-b-2"
+              >Tài khoản</a
+            >
+          </li>
+        </ul>
+
+        <button
+          id="dang-xuat-button"
+          class="border rounded text-white w-[188px] h-[47px] px-8 py-2 text-sm lg:text-base font-bold w-fit bg-sky-400 hover:bg-blue-600 active:scale-95 mt-auto"
+        >
+          Quay lại
+        </button>
+      </div>
+
+      <!-- Right Content -->
+      <div
+        class="w-full flex flex-col my-24 lg:pr-[10vh] px-[5vh] text-xs lg:text-base"
+      >
+        <!-- Tab: Mẫu -->
+        <div id="tab-mau" class="block">
+          <h3 class="text-base lg:text-3xl font-semibold mb-4 lg:mb-8">
+            Chi tiết mẫu
+          </h3>
+          <section class="flex flex-col gap-2 lg:gap-4">
+            <div class="flex flex-col sm:flex-row sm:w-full lg:gap-4 gap-2">
+              <input
+                type="text"
+                placeholder="Tiêu đề"
+                class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              />
+            </div>
+            <input
+              placeholder="Mô tả"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+            />
+            <input
+              placeholder="Ảnh minh họa"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+            />
+            <input
+              placeholder="Thư mục dữ liệu"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+            />
+            <div
+              class="flex lg:justify-end justify-between sm:space-x-4 mt-4 lg:mt-6"
+            >
+              <button
+                class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95"
+              >
+                Hủy bỏ
+              </button>
+              <button
+                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:scale-95"
+              >
+                Xóa
+              </button>
+              <button
+                class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95"
+              >
+                Thay đổi
+              </button>
+              <button
+                class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 active:scale-95"
+              >
+                Thêm
+              </button>
+            </div>
+          </section>
+
+          <!-- Danh sách Mẫu -->
+          <div class="mt-8 w-full">
+            <h2
+              class="text-base lg:text-3xl font-semibold mb-[20px] sm:mb-[30px]"
+            >
+              Danh sách
+            </h2>
+            <div class="overflow-x-auto">
+              <!--  Danh sách Mẫu (mobile)-->
+              <div class="lg:border-2 lg:border-black space-y-2">
+                <div class="hidden lg:flex p-2 font-bold w-full">
+                  <p class="basis-[10%] text-center">STT</p>
+                  <p class="basis-[30%] text-center">Tiêu đề</p>
+                  <p class="basis-[20%] text-center">Tác giả</p>
+                  <p class="basis-[20%] text-center">Ngày đăng</p>
+                  <p class="basis-[20%] text-center">Thao tác</p>
+                </div>
+                <div
+                  class="border border-black p-4 lg:p-2 rounded-lg lg:flex lg:justify-evenly lg:border-0 lg:border-t-2 lg:rounded-none"
+                >
+                  <div
+                    class="flex gap-1 lg:basis-[10%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">STT:</p>
+                    <p>0</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[30%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tiêu Đề:</p>
+                    <p>Vũ trụ xanh trụ</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tác Giả:</p>
+                    <p>Lê Khánh Vinh</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Ngày Đăng:</p>
+                    <p>22/09/2025</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Thao tác:</p>
+                    <p>
+                      <a href="#" class="hover:underline text-sky-400"
+                        >Xem chi tiết</a
+                      >
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="border border-black p-4 lg:p-2 rounded-lg lg:flex lg:justify-evenly lg:border-0 lg:border-t-2 lg:rounded-none"
+                >
+                  <div
+                    class="flex gap-1 lg:basis-[10%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">STT:</p>
+                    <p>1</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[30%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tiêu Đề:</p>
+                    <p>Vũ trụ xanh trụ</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tác Giả:</p>
+                    <p>Lê Khánh Vinh</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Ngày Đăng:</p>
+                    <p>22/09/2025</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Thao tác:</p>
+                    <p>
+                      <a href="#" class="hover:underline text-sky-400"
+                        >Xem chi tiết</a
+                      >
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="border border-black p-4 lg:p-2 rounded-lg lg:flex lg:justify-evenly lg:border-0 lg:border-t-2 lg:rounded-none"
+                >
+                  <div
+                    class="flex gap-1 lg:basis-[10%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">STT:</p>
+                    <p>0</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[30%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tiêu Đề:</p>
+                    <p>Vũ trụ xanh trụ</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tác Giả:</p>
+                    <p>Lê Khánh Vinh</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Ngày Đăng:</p>
+                    <p>22/09/2025</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Thao tác:</p>
+                    <p>
+                      <a href="#" class="hover:underline text-sky-400"
+                        >Xem chi tiết</a
+                      >
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="border border-black p-4 lg:p-2 rounded-lg lg:flex lg:justify-evenly lg:border-0 lg:border-t-2 lg:rounded-none"
+                >
+                  <div
+                    class="flex gap-1 lg:basis-[10%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">STT:</p>
+                    <p>1</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[30%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tiêu Đề:</p>
+                    <p>Vũ trụ xanh trụ</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Tác Giả:</p>
+                    <p>Lê Khánh Vinh</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Ngày Đăng:</p>
+                    <p>22/09/2025</p>
+                  </div>
+                  <div
+                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
+                  >
+                    <p class="lg:hidden">Thao tác:</p>
+                    <p>
+                      <a href="#" class="hover:underline text-sky-400"
+                        >Xem chi tiết</a
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Tài khoản -->
+        <div id="tab-tk" class="hidden">
+          <h3 class="text-[16px] font-semibold mb-[20px] sm:mb-[30px]">
+            Chi tiết thông tin
+          </h3>
+          <section class="flex flex-col gap-4 lg:gap-8">
+            <div
+              class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]"
+            >
+              <input
+                type="text"
+                placeholder="Tên đăng nhập"
+                class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              />
+            </div>
+            <input
+              placeholder="Mật khẩu"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+            />
+            <input
+              placeholder="Loại tài khoản"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+            />
+            <div
+              class="flex flex-col sm:flex-row justify-end gap-2 sm:space-x-4"
+            >
+              <button
+                class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95"
+              >
+                Hủy bỏ
+              </button>
+              <button
+                class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95"
+              >
+                Thay đổi
+              </button>
+            </div>
+          </section>
+
+          <!-- Danh sách Tài khoản -->
+          <div class="container w-full max-w-[1052px] mt-8">
+            <h2 class="text-[16px] font-semibold mb-[20px] sm:mb-[30px]">
+              Danh sách
+            </h2>
+            <div class="overflow-x-auto">
+              <!-- Danh sách Tài khoản (desktop) -->
+              <table
+                class="w-full min-w-[600px] text-left border-2 border-black hidden sm:table"
+              >
+                <thead class="border-2 border-black">
+                  <tr>
+                    <th class="py-2 px-4 border-b font-semibold">STT</th>
+                    <th class="py-2 px-4 border-b font-semibold">Email</th>
+                    <th class="py-2 px-4 border-b font-semibold">
+                      Tên Đăng Nhập
+                    </th>
+                    <th class="py-2 px-4 border-b font-semibold">Mật Khẩu</th>
+                    <th class="py-2 px-4 border-b font-semibold">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-2 border-black">
+                    <td class="py-2 px-4">0</td>
+                    <td class="py-2 px-4">khanhvinh228@gmail.com</td>
+                    <td class="py-2 px-4">khanhvinh</td>
+                    <td class="py-2 px-4">$2b$12$jruwOIO...</td>
+                    <td class="py-2 px-4">
+                      <a href="#" class="hover:underline">Thay đổi</a>
+                      <a href="#" class="text-red-600 hover:underline">| Xóa</a>
+                    </td>
+                  </tr>
+                  <tr class="border-2 border-black">
+                    <td class="py-2 px-4">1</td>
+                    <td class="py-2 px-4">khanhvinh224@gmail.com</td>
+                    <td class="py-2 px-4">khanhvinh</td>
+                    <td class="py-2 px-4">$2b$12$jruwOIO...</td>
+                    <td class="py-2 px-4">
+                      <a href="#" class="hover:underline">Thay đổi</a>
+                      <a href="#" class="text-red-600 hover:underline">| Xóa</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Danh sách Tài khoản (mobile) -->
+              <div class="sm:hidden space-y-4">
+                <div class="border-2 border-black p-4 rounded-lg">
+                  <p class="font-semibold">STT: 0</p>
+                  <p>Email: khanhvinh228@gmail.com</p>
+                  <p>Tên Đăng Nhập: khanhvinh</p>
+                  <p>Mật Khẩu: $2b$12$jruwOIO...</p>
+                  <p class="mt-2">
+                    Thao tác:
+                    <a href="#" class="hover:underline">Thay đổi</a>
+                    <a href="#" class="text-red-600 hover:underline">| Xóa</a>
+                  </p>
+                </div>
+                <div class="border-2 border-black p-4 rounded-lg">
+                  <p class="font-semibold">STT: 1</p>
+                  <p>Email: khanhvinh224@gmail.com</p>
+                  <p>Tên Đăng Nhập: khanhvinh</p>
+                  <p>Mật Khẩu: $2b$12$jruwOIO...</p>
+                  <p class="mt-2">
+                    Thao tác:
+                    <a href="#" class="hover:underline">Thay đổi</a>
+                    <a href="#" class="text-red-600 hover:underline">| Xóa</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

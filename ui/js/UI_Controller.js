@@ -42,18 +42,43 @@ document.addEventListener("DOMContentLoaded", () => {
   const icon_success = document.getElementById("success-icon");
   const icon_error = document.getElementById("error-icon");
   const process_notify = document.getElementById("notify-line");
-  
   const btn_FooterLogin = document.getElementById("footer-dang-nhap");
-  const btn_TrangChuReload =document.getElementById("reload-trang-chu");
+  const btn_TrangChuReload = document.getElementById("reload-trang-chu");
+
+  const tabMauBtn = document.getElementById("tab-mau-btn");
+  const tabTkBtn = document.getElementById("tab-tk-btn");
+
+  const tabMau = document.getElementById("tab-mau");
+  const tabTk = document.getElementById("tab-tk");
+
+  // Khi click Mẫu
+  tabMauBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    tabMau.classList.remove("hidden");
+    tabTk.classList.add("hidden");
+
+    tabMauBtn.classList.add("text-sky-400");
+    tabTkBtn.classList.remove("text-sky-400");
+  });
+  // Khi click Tài Khoản
+  tabTkBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    tabTk.classList.remove("hidden");
+    tabMau.classList.add("hidden");
+
+    tabTkBtn.classList.add("text-sky-400");
+    tabMauBtn.classList.remove("text-sky-400");
+  });
 
   //xử lý sự kiện tải lại trang ở footer
-  btn_TrangChuReload.addEventListener("click", ()=>{
-     location.reload();
-  })
+  btn_TrangChuReload.addEventListener("click", () => {
+    location.reload();
+  });
   // Xử lý sự kiện người dung mở form đăng nhập ở Footer
-  btn_FooterLogin.addEventListener("click", ()=>{
+  btn_FooterLogin.addEventListener("click", () => {
     frm_Auth.classList.remove("hidden");
-  })
+  });
+
   // Xử lý sự kiện người dùng submit form
   btn_Submit.addEventListener("click", async (e) => {
     e.preventDefault();
