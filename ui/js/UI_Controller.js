@@ -1,6 +1,52 @@
 import { CreateAccount } from "./Logic_Controller.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Gọi API hiện thị thông tin nhà phát triển
+  (async () => {
+    try {
+      const res = await fetch(
+        "https://thportfolio.onrender.com/getAllProjectMembers"
+      );
+      const result = await res.json();
+
+      const imgDeveloperImage = document.querySelectorAll(".image-developer");
+      const txtDeveloperName = document.querySelectorAll(".name-developer");
+      const txtDeveloperRole = document.querySelectorAll(".role-developer");
+      const txtDeveloperContact =
+        document.querySelectorAll(".contact-developer");
+
+      for (let index = 0; index < result.length; index++) {
+        imgDeveloperImage[index].src = result[index].hinhAnh;
+        txtDeveloperName[index].textContent = result[index].hoTen;
+        txtDeveloperRole[index].textContent = result[index].vaiTro;
+        txtDeveloperContact[index].textContent = result[index].lienHe;
+      }
+    } catch (e) {
+      alert(e.message);
+    }
+  })();
+
+  // Làm sạch đường dẫn URL
+  const links = document.querySelectorAll(
+    "#menu-items a, a[href='#trang-chu']"
+  );
+
+  links.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+
+      if (targetId.startsWith("#")) {
+        e.preventDefault();
+
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: "smooth" });
+          window.history.replaceState(null, null, window.location.pathname);
+        }
+      }
+    });
+  });
+
   let stateLogin = true;
 
   const menu_Item = document.querySelectorAll("#menu-items li");
@@ -52,23 +98,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabTk = document.getElementById("tab-tk");
 
   // Khi click Mẫu
-  tabMauBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    tabMau.classList.remove("hidden");
-    tabTk.classList.add("hidden");
+  // tabMauBtn.addEventListener("click", (e) => {
+  //   e.preventDefault();
+  //   tabMau.classList.remove("hidden");
+  //   tabTk.classList.add("hidden");
 
-    tabMauBtn.classList.add("text-sky-400");
-    tabTkBtn.classList.remove("text-sky-400");
-  });
+  //   tabMauBtn.classList.add("text-sky-400");
+  //   tabTkBtn.classList.remove("text-sky-400");
+  // });
   // Khi click Tài Khoản
-  tabTkBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    tabTk.classList.remove("hidden");
-    tabMau.classList.add("hidden");
+  // tabTkBtn.addEventListener("click", (e) => {
+  //   e.preventDefault();
+  //   tabTk.classList.remove("hidden");
+  //   tabMau.classList.add("hidden");
 
-    tabTkBtn.classList.add("text-sky-400");
-    tabMauBtn.classList.remove("text-sky-400");
-  });
+  //   tabTkBtn.classList.add("text-sky-400");
+  //   tabMauBtn.classList.remove("text-sky-400");
+  // });
 
   //xử lý sự kiện tải lại trang ở footer
   btn_TrangChuReload.addEventListener("click", () => {
@@ -240,26 +286,5 @@ document.addEventListener("DOMContentLoaded", () => {
     navigation_Menu.classList.toggle("gap-6");
     navigation_Menu.classList.toggle("gap-4");
     navigation_Menu.classList.toggle("pb-4");
-  });
-  // Làm sạch đường dẫn URL
-  const links = document.querySelectorAll(
-    "#menu-items a, a[href='#trang-chu']"
-  ); // logo href="#trang-chu"
-
-  links.forEach((link) => {
-    link.addEventListener("click", function (e) {
-      const targetId = this.getAttribute("href");
-
-      if (targetId.startsWith("#")) {
-        e.preventDefault(); // ngăn hành vi mặc định
-
-        const targetEl = document.querySelector(targetId);
-        if (targetEl) {
-          targetEl.scrollIntoView({ behavior: "smooth" });
-          // Xóa hash khỏi URL
-          window.history.replaceState(null, null, window.location.pathname);
-        }
-      }
-    });
   });
 });
