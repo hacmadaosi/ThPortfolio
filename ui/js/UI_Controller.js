@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         txtDeveloperContact[index].textContent = result[index].lienHe;
       }
     } catch (e) {
-      alert(e.message);
+      console.log(e.message);
     }
   })();
 
@@ -88,8 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const icon_success = document.getElementById("success-icon");
   const icon_error = document.getElementById("error-icon");
   const process_notify = document.getElementById("notify-line");
-  const btn_FooterLogin = document.getElementById("footer-dang-nhap");
-  const btn_TrangChuReload = document.getElementById("reload-trang-chu");
 
   const tabMauBtn = document.getElementById("tab-mau-btn");
   const tabTkBtn = document.getElementById("tab-tk-btn");
@@ -97,167 +95,206 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabMau = document.getElementById("tab-mau");
   const tabTk = document.getElementById("tab-tk");
 
+  const btn_FooterLogin = document.getElementById("footer-dang-nhap");
+  const btn_TrangChuReload = document.getElementById("reload-trang-chu");
+
   // Khi click Mẫu
-  // tabMauBtn.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   tabMau.classList.remove("hidden");
-  //   tabTk.classList.add("hidden");
+  if (tabMauBtn) {
+    tabMauBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      tabMau.classList.remove("hidden");
+      tabTk.classList.add("hidden");
 
-  //   tabMauBtn.classList.add("text-sky-400");
-  //   tabTkBtn.classList.remove("text-sky-400");
-  // });
+      tabMauBtn.classList.add("text-sky-400");
+      tabTkBtn.classList.remove("text-sky-400");
+    });
+  }
   // Khi click Tài Khoản
-  // tabTkBtn.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   tabTk.classList.remove("hidden");
-  //   tabMau.classList.add("hidden");
+  if (tabTkBtn) {
+    tabTkBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      tabTk.classList.remove("hidden");
+      tabMau.classList.add("hidden");
 
-  //   tabTkBtn.classList.add("text-sky-400");
-  //   tabMauBtn.classList.remove("text-sky-400");
-  // });
+      tabTkBtn.classList.add("text-sky-400");
+      tabMauBtn.classList.remove("text-sky-400");
+    });
+  }
 
   //xử lý sự kiện tải lại trang ở footer
-  btn_TrangChuReload.addEventListener("click", () => {
-    location.reload();
-  });
+  if (btn_TrangChuReload) {
+    btn_TrangChuReload.addEventListener("click", () => {
+      location.reload();
+    });
+  }
+
   // Xử lý sự kiện người dung mở form đăng nhập ở Footer
-  btn_FooterLogin.addEventListener("click", () => {
-    frm_Auth.classList.remove("hidden");
-  });
+  if (btn_FooterLogin) {
+    btn_FooterLogin.addEventListener("click", () => {
+      frm_Auth.classList.remove("hidden");
+    });
+  }
 
   // Xử lý sự kiện người dùng submit form
-  btn_Submit.addEventListener("click", async (e) => {
-    e.preventDefault();
-    if (stateLogin) {
-      // Người dùng nhấn đăng nhập
-    } else {
-      // Người dùng nhấn đăng ký
-      const result = await CreateAccount(
-        input_UserName.value,
-        input_Password.value,
-        input_Email.value
-      );
+  if (btn_Submit) {
+    btn_Submit.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (stateLogin) {
+        // Người dùng nhấn đăng nhập
+      } else {
+        // Người dùng nhấn đăng ký
+        const result = await CreateAccount(
+          input_UserName.value,
+          input_Password.value,
+          input_Email.value
+        );
 
-      const success = result.state;
+        const success = result.state;
 
-      notification.classList.toggle("bg-[#F3FDF5]", success);
-      notification.classList.toggle("bg-[#FFF9F9]", !success);
+        notification.classList.toggle("bg-[#F3FDF5]", success);
+        notification.classList.toggle("bg-[#FFF9F9]", !success);
 
-      title_notify.classList.toggle("text-green-400", success);
-      title_notify.classList.toggle("text-red-400", !success);
+        title_notify.classList.toggle("text-green-400", success);
+        title_notify.classList.toggle("text-red-400", !success);
 
-      icon_success.classList.toggle("hidden", !success);
-      icon_error.classList.toggle("hidden", success);
+        icon_success.classList.toggle("hidden", !success);
+        icon_error.classList.toggle("hidden", success);
 
-      process_notify.classList.toggle("border-green-400", success);
-      process_notify.classList.toggle("border-red-400", !success);
-      content_notify.textContent = result.result;
+        process_notify.classList.toggle("border-green-400", success);
+        process_notify.classList.toggle("border-red-400", !success);
+        content_notify.textContent = result.result;
 
-      notification.classList.remove("hidden");
-      if (success) btn_CreateAccount.click();
-      setTimeout(() => {
-        notification.classList.add("hidden");
-      }, 5000);
-    }
-  });
+        notification.classList.remove("hidden");
+        if (success) btn_CreateAccount.click();
+        setTimeout(() => {
+          notification.classList.add("hidden");
+        }, 5000);
+      }
+    });
+  }
 
   // Xử lý sự kiện người dùng chuyển hướng đến tạo tài khoản
-  btn_CreateAccount.addEventListener("click", () => {
-    input_UserName.value = "";
-    input_ConfirmPass.value = "";
-    input_Password.value = "";
-    input_Email.value = "";
-    btn_ShowPassword.classList.add("hidden");
-    btn_HidePassword.classList.add("hidden");
-    btn_ClearInputUserName.classList.add("hidden");
-    btn_ShowConfirmPass.classList.add("hidden");
-    btn_HideConfirmPass.classList.add("hidden");
-    stateLogin = !stateLogin;
-    text_TitleAuthForm.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
-    btn_CreateAccount.textContent = stateLogin
-      ? "Tạo tài khoản"
-      : "Quay lại đăng nhập";
-    btn_Submit.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
-    textfield_Email.classList.toggle("hidden");
-    textfield_Confirm.classList.toggle("hidden");
+  if (btn_CreateAccount) {
+    btn_CreateAccount.addEventListener("click", () => {
+      input_UserName.value = "";
+      input_ConfirmPass.value = "";
+      input_Password.value = "";
+      input_Email.value = "";
+      btn_ShowPassword.classList.add("hidden");
+      btn_HidePassword.classList.add("hidden");
+      btn_ClearInputUserName.classList.add("hidden");
+      btn_ShowConfirmPass.classList.add("hidden");
+      btn_HideConfirmPass.classList.add("hidden");
+      stateLogin = !stateLogin;
+      text_TitleAuthForm.textContent = stateLogin
+        ? "Đăng nhập"
+        : "Tạo tài khoản";
+      btn_CreateAccount.textContent = stateLogin
+        ? "Tạo tài khoản"
+        : "Quay lại đăng nhập";
+      btn_Submit.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
+      textfield_Email.classList.toggle("hidden");
+      textfield_Confirm.classList.toggle("hidden");
 
-    icon_Lock.style.display = stateLogin ? "block" : "none";
-    icon_Unlock.style.display = stateLogin ? "none" : "block";
-  });
+      icon_Lock.style.display = stateLogin ? "block" : "none";
+      icon_Unlock.style.display = stateLogin ? "none" : "block";
+    });
+  }
 
   // Xử lý sự kiện người dùng nhập xác nhận mật khẩu
-  input_ConfirmPass.addEventListener("input", () => {
-    if (input_ConfirmPass.value == "") {
-      btn_ShowConfirmPass.classList.add("hidden");
-    } else {
-      btn_ShowConfirmPass.classList.remove("hidden");
-    }
-    btn_HideConfirmPass.classList.add("hidden");
-    input_ConfirmPass.type = "password";
-  });
+  if (input_ConfirmPass) {
+    input_ConfirmPass.addEventListener("input", () => {
+      if (input_ConfirmPass.value == "") {
+        btn_ShowConfirmPass.classList.add("hidden");
+      } else {
+        btn_ShowConfirmPass.classList.remove("hidden");
+      }
+      btn_HideConfirmPass.classList.add("hidden");
+      input_ConfirmPass.type = "password";
+    });
+  }
 
   // Xử lý sự kiện người dùng hiện xác nhận mật khẩu
-  btn_ShowConfirmPass.addEventListener("click", () => {
-    btn_ShowConfirmPass.classList.add("hidden");
-    btn_HideConfirmPass.classList.remove("hidden");
-    input_ConfirmPass.type = "text";
-  });
+  if (btn_ShowConfirmPass) {
+    btn_ShowConfirmPass.addEventListener("click", () => {
+      btn_ShowConfirmPass.classList.add("hidden");
+      btn_HideConfirmPass.classList.remove("hidden");
+      input_ConfirmPass.type = "text";
+    });
+  }
 
   // Xử lý sự kiện người dùng ẩn xác nhận mật khẩu
-  btn_HideConfirmPass.addEventListener("click", () => {
-    btn_ShowConfirmPass.classList.remove("hidden");
-    btn_HideConfirmPass.classList.add("hidden");
-    input_ConfirmPass.type = "password";
-  });
+  if (btn_HideConfirmPass) {
+    btn_HideConfirmPass.addEventListener("click", () => {
+      btn_ShowConfirmPass.classList.remove("hidden");
+      btn_HideConfirmPass.classList.add("hidden");
+      input_ConfirmPass.type = "password";
+    });
+  }
 
   // Xử lý sự kiện người dùng ẩn mật khẩu
-  btn_HidePassword.addEventListener("click", () => {
-    btn_ShowPassword.classList.remove("hidden");
-    btn_HidePassword.classList.add("hidden");
-    input_Password.type = "password";
-  });
+  if (btn_HidePassword) {
+    btn_HidePassword.addEventListener("click", () => {
+      btn_ShowPassword.classList.remove("hidden");
+      btn_HidePassword.classList.add("hidden");
+      input_Password.type = "password";
+    });
+  }
 
   // Xử lý sự kiện người dùng hiện mật khẩu
-  btn_ShowPassword.addEventListener("click", () => {
-    btn_ShowPassword.classList.add("hidden");
-    btn_HidePassword.classList.remove("hidden");
-    input_Password.type = "text";
-  });
+  if (btn_ShowPassword) {
+    btn_ShowPassword.addEventListener("click", () => {
+      btn_ShowPassword.classList.add("hidden");
+      btn_HidePassword.classList.remove("hidden");
+      input_Password.type = "text";
+    });
+  }
 
   // Xử lý sự kiện người dùng nhập mật khẩu
-  input_Password.addEventListener("input", () => {
-    if (input_Password.value == "") {
-      btn_ShowPassword.classList.add("hidden");
-    } else {
-      btn_ShowPassword.classList.remove("hidden");
-    }
-    btn_HidePassword.classList.add("hidden");
-    input_Password.type = "password";
-  });
+  if (input_Password) {
+    input_Password.addEventListener("input", () => {
+      if (input_Password.value == "") {
+        btn_ShowPassword.classList.add("hidden");
+      } else {
+        btn_ShowPassword.classList.remove("hidden");
+      }
+      btn_HidePassword.classList.add("hidden");
+      input_Password.type = "password";
+    });
+  }
 
   // Xử lý sự kiện người dùng nhấn xóa dữ liệu ô nhập tên tài khoản
-  btn_ClearInputUserName.addEventListener("click", () => {
-    input_UserName.value = "";
-    btn_ClearInputUserName.classList.add("hidden");
-  });
+  if (btn_ClearInputUserName) {
+    btn_ClearInputUserName.addEventListener("click", () => {
+      input_UserName.value = "";
+      btn_ClearInputUserName.classList.add("hidden");
+    });
+  }
 
   // Xử lý sự kiện người dùng nhập tên tài khoản
-  input_UserName.addEventListener("input", (event) => {
-    if (input_UserName.value == "") {
-      btn_ClearInputUserName.classList.add("hidden");
-    } else {
-      btn_ClearInputUserName.classList.remove("hidden");
-    }
-  });
+  if (input_UserName) {
+    input_UserName.addEventListener("input", (event) => {
+      if (input_UserName.value == "") {
+        btn_ClearInputUserName.classList.add("hidden");
+      } else {
+        btn_ClearInputUserName.classList.remove("hidden");
+      }
+    });
+  }
 
   // Xử lý sự kiện người dùng nhấn đóng form đăng nhập
-  btn_Close_Login.addEventListener("click", () => {
-    frm_Auth.classList.toggle("hidden");
-  });
+  if (btn_Close_Login) {
+    btn_Close_Login.addEventListener("click", () => {
+      frm_Auth.classList.toggle("hidden");
+    });
+  }
+
   // Xử lý sự kiện người dùng mở form đăng nhập
-  btn_OpenAuthForm.addEventListener("click", () => {
-    frm_Auth.classList.toggle("hidden");
-  });
+  if (btn_OpenAuthForm) {
+    btn_OpenAuthForm.addEventListener("click", () => {
+      frm_Auth.classList.toggle("hidden");
+    });
+  }
 
   // Xử lý sự kiện người dùng nhấn chọn
   menu_Item.forEach((item, index) => {
