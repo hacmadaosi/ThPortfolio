@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cart-thportfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="../js/FireBase_Controller.js"></script>
+    <script type="module" src="../js/UI_Controller.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Navigationbar -->
+    <div
+      id="naviagtion-bar"
+      class="fixed px-8 py-4 flex gap-6 w-full items-center shadow-md bg-white"
+    >
+      <!-- Nút mở menu trên mobile -->
+      <div id="mobile-menu" class="lg:hidden mr-auto">
+        <i class="fa-solid fa-bars" style="color: black"></i>
+      </div>
+      <a id="logo" href="#trang-chu"
+        ><img class="w-10 h-10" src="../resource/Logo.png" alt="Logo"
+      /></a>
+      <ul id="menu-items" class="flex gap-6 w-full hidden lg:flex">
+        <li
+          class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] text-sky-400"
+        >
+          <a href="#trang-chu">Trang Chủ</a>
+        </li>
+        <li
+          class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]"
+        >
+          <a href="#gioi-thieu">Giới Thiệu</a>
+        </li>
+        <li
+          class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]"
+        >
+          <a href="#doi-phat-trien">Nhóm Phát Triển</a>
+        </li>
+        <li
+          class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]"
+        >
+          <a href="#lien-he">Liên Hệ</a>
+        </li>
+        <li
+          class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] mr-auto"
+        >
+          <a href="#mau">Templates</a>
+        </li>
+        <li>
+          <div
+            id="search-bar"
+            class="w-fit items-center border border-black px-4 py-2 rounded-lg gap-2 mr-4 text-xs"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              class="border-0 focus:outline-none"
+              type="text"
+              placeholder="Tìm kiếm..."
+            />
+            <button
+              id="search-button"
+              class="active:scale-95 whitespace-nowrap transition-all duration-[200ms]"
+            >
+              Tìm kiếm
+            </button>
+          </div>
+        </li>
+        <li>
+          <button
+            id="login-button"
+            class="text-sky-400 px-4 py-2 rounded-lg border border-sky-400 active:scale-95 whitespace-nowrap text-xs transition-all duration-[200ms]"
+          >
+            Đăng Nhập
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="bg-[#F2F8FC]">
+      <div class="px-[5vh] lg:px-[10vh] h-screen mx-auto bg-[#F2F8FC] pt-24">
+        <!-- Header -->
+        <div
+          class="flex items-center border-b-2 border-black mx-auto -[50px] lg:pb-[20px] pb-[10px]"
+        >
+          <button class="lg:text-[32px]">←</button>
+          <h2 class="flex-1 text-center font-semibold lg:text-[32px] text-3xl">
+            Giỏ hàng của bạn
+          </h2>
+        </div>
+
+        <!-- Chọn tất cả -->
+        <div
+          class="flex items-center px-4 py-2 text-sm lg:px-0 lg:pt-1 lg:pb-0 lg:h-[86px] h-[60px]"
+        >
+          <input type="radio" id="selectAll" class="lg:h-[22px] lg:w-[22px]" />
+          <label
+            for="selectAll"
+            class="text-[16px] h-[20px] lg:pl-[16px] pl-[10px]"
+            >Chọn tất cả</label
+          >
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="space-y-4 pb-20">
+          <div
+            class="flex items-center gap-3 bg-white p-3 rounded-[20px] shadow-sm lg:h-[132px] lg:border-2"
+          >
+            <input type="radio" class="lg:mx-2 lg:h-[22px] lg:w-[22px]" />
+            <img
+              src="../resource/khanhvinhstyle-IMAGE 1.png"
+              alt="Product"
+              class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+            />
+            <div class="lg:mx-2 flex-1 mb-auto">
+              <p class="lg:text-base text-sm">Vũ trụ xanh đen</p>
+              <p class="text-blue-400 mt-1 lg:text-base text-sm">50.000đ</p>
+            </div>
+            <button
+              class="text-black text-xs underline italic mb-auto lg:mr-4 lg:mt-4"
+            >
+              Xóa
+            </button>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-white p-3 rounded-[20px] shadow-sm lg:h-[132px] lg:border-2"
+          >
+            <input type="radio" class="lg:mx-2 lg:h-[22px] lg:w-[22px]" />
+            <img
+              src="../resource/khanhvinhstyle-IMAGE 1.png"
+              alt="Product"
+              class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+            />
+            <div class="lg:mx-2 flex-1 mb-auto">
+              <p class="lg:text-base text-sm">Vũ trụ xanh đen</p>
+              <p class="text-blue-400 mt-1 lg:text-base text-sm">50.000đ</p>
+            </div>
+            <button
+              class="text-black text-xs underline italic mb-auto lg:mr-4 lg:mt-4"
+            >
+              Xóa
+            </button>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-white p-3 rounded-[20px] shadow-sm lg:h-[132px] lg:border-2"
+          >
+            <input type="radio" class="lg:mx-2 lg:h-[22px] lg:w-[22px]" />
+            <img
+              src="../resource/khanhvinhstyle-IMAGE 1.png"
+              alt="Product"
+              class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+            />
+            <div class="lg:mx-2 flex-1 mb-auto">
+              <p class="lg:text-base text-sm">Vũ trụ xanh đen</p>
+              <p class="text-blue-400 mt-1 lg:text-base text-sm">50.000đ</p>
+            </div>
+            <button
+              class="text-black text-xs underline italic mb-auto lg:mr-4 lg:mt-4"
+            >
+              Xóa
+            </button>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-white p-3 rounded-[20px] shadow-sm lg:h-[132px] lg:border-2"
+          >
+            <input type="radio" class="lg:mx-2 lg:h-[22px] lg:w-[22px]" />
+            <img
+              src="../resource/khanhvinhstyle-IMAGE 1.png"
+              alt="Product"
+              class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+            />
+            <div class="lg:mx-2 flex-1 mb-auto">
+              <p class="lg:text-base text-sm">Vũ trụ xanh đen</p>
+              <p class="text-blue-400 mt-1 lg:text-base text-sm">50.000đ</p>
+            </div>
+            <button
+              class="text-black text-xs underline italic mb-auto lg:mr-4 lg:mt-4"
+            >
+              Xóa
+            </button>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-white p-3 rounded-[20px] shadow-sm lg:h-[132px] lg:border-2"
+          >
+            <input type="radio" class="lg:mx-2 lg:h-[22px] lg:w-[22px]" />
+            <img
+              src="../resource/khanhvinhstyle-IMAGE 1.png"
+              alt="Product"
+              class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+            />
+            <div class="lg:mx-2 flex-1 mb-auto">
+              <p class="lg:text-base text-sm">Vũ trụ xanh đen</p>
+              <p class="text-blue-400 mt-1 lg:text-base text-sm">50.000đ</p>
+            </div>
+            <button
+              class="text-black text-xs underline italic mb-auto lg:mr-4 lg:mt-4"
+            >
+              Xóa
+            </button>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-white p-3 rounded-[20px] shadow-sm lg:h-[132px] lg:border-2"
+          >
+            <input type="radio" class="lg:mx-2 lg:h-[22px] lg:w-[22px]" />
+            <img
+              src="../resource/khanhvinhstyle-IMAGE 1.png"
+              alt="Product"
+              class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+            />
+            <div class="lg:mx-2 flex-1 mb-auto">
+              <p class="lg:text-base text-sm">Vũ trụ xanh đen</p>
+              <p class="text-blue-400 mt-1 lg:text-base text-sm">50.000đ</p>
+            </div>
+            <button
+              class="text-black text-xs underline italic mb-auto lg:mr-4 lg:mt-4"
+            >
+              Xóa
+            </button>
+          </div>
+          <div
+            class="flex items-center gap-3 bg-white p-3 rounded-[20px] shadow-sm lg:h-[132px] lg:border-2"
+          >
+            <input type="radio" class="lg:mx-2 lg:h-[22px] lg:w-[22px]" />
+            <img
+              src="../resource/khanhvinhstyle-IMAGE 1.png"
+              alt="Product"
+              class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+            />
+            <div class="lg:mx-2 flex-1 mb-auto">
+              <p class="lg:text-base text-sm">Vũ trụ xanh đen</p>
+              <p class="text-blue-400 mt-1 lg:text-base text-sm">50.000đ</p>
+            </div>
+            <button
+              class="text-black text-xs underline italic mb-auto lg:mr-4 lg:mt-4"
+            >
+              Xóa
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="fixed bottom-0 left-0 w-full lg:left-1/2 lg:-translate-x-1/2 lg:w-1/2 flex justify-between items-center border-t px-4 py-3 bg-white shadow-[1px_4px_10px_rgba(0,0,0,0.25)] rounded-[8px]"
+        >
+          <p class="text-sm">
+            Tổng tiền: <span class="font-semibold text-blue-500">0đ</span>
+          </p>
+          <button class="bg-[#00BFFF] text-white px-4 py-2 rounded shadow">
+            Thanh toán
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
