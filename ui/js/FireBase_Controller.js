@@ -21,4 +21,5 @@ const initFirebase = async () => {
     signInSuccessUrl: "/",
   });
 };
+
 document.addEventListener("DOMContentLoaded", initFirebase);
