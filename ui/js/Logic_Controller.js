@@ -40,6 +40,15 @@ const CheckEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return email && emailRegex.test(email);
 };
+export const CheckUserName = (userName) => {
+  const userNameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+  return !!(userName && userNameRegex.test(userName));
+};
+export const CheckPassword = (password) => {
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return !!(password && passwordRegex.test(password));
+};
 
 function base64ToString(base64) {
   return decodeURIComponent(escape(atob(base64)));
