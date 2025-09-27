@@ -23,7 +23,6 @@
     />
 
     <script src="../js/FireBase_Controller.js"></script>
-    <!-- <script src="../js/Logic_Controller.js"></script> -->
     <script type="module" src="../js/UI_Controller.js"></script>
     <link
       rel="stylesheet"
@@ -32,6 +31,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
+    <!-- Hiển thị thông báo -->
     <div id="notification" class="hidden fixed right-0 top-0 bg-[#F3FDF5] pt-4 z-[2] mr-2 mt-2 w-[18rem]">
       <div id="notify-title" class="flex gap-2 items-center text-green-400 mx-4 mb-2">
         <i id="success-icon" class="fa-solid fa-circle-check text-xl"></i> 
@@ -41,19 +41,18 @@
       <p id="notify-content" class="font-light text-sm ml-8 pr-4">Phải có 1 thông báo gì đó.</p> 
       <div id="notify-line" class="pt-4 border-b-4 border-green-400 notification-line"></div>  
     </div>
-
     <!-- giao diện xác thực tài khoản -->
     <div id="auth-form" 
      class="hidden fixed bg-black bg-opacity-50 w-full h-screen flex items-center justify-center z-[1] ">
       <!-- Đăng nhập -->
-      <div id="login-form" class="relative h-[95vh] w-[60vh] pt-20 pb-5 lg:px-16 px-8 rounded-xl bg-white mx-2 justify-center flex flex-col lg:text-base text-xs">
+      <div id="login-form" class="relative h-[90vh] w-[60vh] pt-20 pb-5 lg:px-16 px-8 rounded-xl bg-white mx-2 justify-center flex flex-col lg:text-base text-xs">
         <button id="close_login_form" class=" w-4 h-4 p-4 rounded-full flex items-center justify-center bg-transparent absolute top-0 right-0 mr-4 mt-4 active:scale-95 hover:bg-white ">
           <i class="fa-solid fa-xmark"></i>
         </button>
         <h1 id="title-auth-form" class="text-4xl font-bold mb-8">Đăng nhập</h1>
         <!-- Nhập email -->
          <!-- <form  action="#trang-chu" method="post" class="flex flex-col "> -->
-          <div id="email-textfield" class="hidden flex p-2 gap-5 border-b-2 border-black items-center mb-4 ">
+          <div id="email-textfield" class="hidden flex p-2 gap-5 border-b-2 border-black items-center mb-2 ">
             <i class="fa-solid fa-envelope"></i>
             <input
             id="email-input"
@@ -64,7 +63,7 @@
           />
         </div>
         <!-- Nhập tên tên tài khoản -->
-        <div class="flex p-2 gap-5 border-b-2 border-black items-center mb-4">
+        <div class="flex p-2 gap-5 border-b-2 border-black items-center mb-2">
           <i class="fa-solid fa-user"></i>
           <input
             id="user-input"
@@ -83,7 +82,7 @@
         </div>
 
         <!-- Nhập mật khẩu -->
-        <div class="flex p-2 gap-5 border-b-2 border-black items-center mb-4">
+        <div class="flex p-2 gap-5 border-b-2 border-black items-center mb-2">
           <div id="lock-icon">
             <i class="fa-solid fa-lock"></i>
           </div>
@@ -113,7 +112,7 @@
           </button>
         </div>
         <!-- Nhập xác nhận mật khẩu -->
-        <div id="confirm-textfield" class="hidden flex p-2 gap-5 border-b-2 border-black items-center mb-4 none">
+        <div id="confirm-textfield" class="hidden flex p-2 gap-5 border-b-2 border-black items-center mb-2 none">
           <div>
             <i class="fa-solid fa-lock"></i>
           </div>
@@ -170,7 +169,7 @@
           <a href="#gioi-thieu">Giới Thiệu</a></li>
         <li 
           class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
-          <a href="#doi-phat-trien">Nhóm Phát Triển</a></li>
+          <a href="#nhom-phat-trien">Nhóm Phát Triển</a></li>
         <li 
           class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
           <a href="#lien-he">Liên Hệ</a></li>
@@ -192,157 +191,119 @@
         </li>
       </ul>
       
+      
       </div>
 
-    <div id="templateDetail" class="flex lg:grid lg:grid-cols-[17rem_1fr] gap-4 pt-24">
-        <div id="sidebar" class="sidebar 
-                    w-full border-b border-black 
-                    lg:w-[17rem] lg:border-b-0 lg:border-r lg:border-gray-700        
-                    ">
-            <div class="filter fixed px-12 w-[17rem] h-[calc(100vh-6rem)] overflow-y-auto" >
-                <h1 class="text-4xl font-bold mb-5 pt=0 justify-center">Bộ lọc</h5>
-                    <!-- icon -->
-                    <div id="icon-sidebar"class="hidden fixed top-1/4 left-[16.2rem] lg:flex bg-white border rounded-full p-2 shadow cursor-pointer">
-                    <i class="fa-solid fa-chevron-left transition-transform duration-300"></i>
-                    </div>
-                <div class="mb-5 gap-4">
-                    <h2 class="text-2xl font-bold mb-3 gap-3">Chủ đề</h3>
-                        
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-all-1" checked 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-all-1" class="text-lg cursor-pointer px-[0.7rem]">Tất cả</label>
-                    </div>
+      <!-- TemplatesDetail -->
+<div class="pt-[4.5rem]">
+    <div class="bg-gray-200 py-5 px-[50px] flex flex-wrap justify-between items-center gap-2">
+        <h1 class="text-3xl font-bold">Templates</h1>
+        <p class="text-sm text-gray-600">Home >> Templates >> Vũ trụ xanh đen</p>
+    </div>
 
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-day" 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-day" class="text-lg cursor-pointer px-[0.7rem]">Sáng</label>
-                    </div>
-
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-night" 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-night" class="text-lg cursor-pointer px-[0.7rem]">Tối</label>
-                    </div>
-                </div> 
-                <div class="mb-5 py-4">
-                    <h2 class="text-2xl font-bold mb-3">Chủ đề</h3>
-            
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-works" checked 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-works" class="text-lg cursor-pointer px-[0.7rem]">Công việc</label>
-                    </div>
-
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-all-2" 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-all-2" class="text-lg cursor-pointer px-[0.7rem]">Tất cả</label>
-                    </div>
-
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-developer" 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-developer" class="text-lg cursor-pointer px-[0.7rem]">Lập trình viên </label>
-                    </div>
-
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-artistic-activities1" 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-artistic-activities1" class="text-lg cursor-pointer px-[0.7rem]">Hoạt động nghệ thuật</label>
-                    </div>
-                    <div class="flex-1 items-center py-1">
-                        <input type="checkbox" id="topic-artistic-activities2" 
-                            class="w-[1rem] h-[1rem] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                        <label for="topic-artistic-activities2" class="flex-1 cursor-pointer px-[0.7rem]">Phạm Ngọc Quý Hoạt động nghệ thuật</label>
-                    </div>
-                </div>  
-            </div>
-        </div>
-
-        <div id="main-content" class="main-content pb-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 px-[6.25rem] pt-0">
-                <!-- Card 1 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 1" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>  
-                    <p class="text-gray-600">Lê Khánh Vinh -  Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 2" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
-                    <p class="text-gray-600">Lê Khánh Vinh - Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 3" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
-                    <p class="text-gray-600">Lê Khánh Vinh - Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-                 <!-- Card 4 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 3" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
-                    <p class="text-gray-600">Lê Khánh Vinh - Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 5" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
-                    <p class="text-gray-600">Lê Khánh Vinh -  Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 6" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
-                    <p class="text-gray-600">Lê Khánh Vinh - Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 7" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
-                    <p class="text-gray-600">Lê Khánh Vinh - Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-                 <!-- Card 8 -->
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                <img src="../resource/template.png" alt="Card 8" class="w-full">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
-                    <p class="text-gray-600">Lê Khánh Vinh - Có hỗ trợ xuất CV</p>
-                </div>
-                </div>
-            </div>
-            <div class="mr-[6.25rem]">
-                <button class="flex px-8 py-3 mt-5 ml-auto  bg-sky-400 text-white text-sm font-semibold rounded-lg hover:bg-sky-600 active:scale-95 transition">
-                Xem thêm
-                </button>
-            </div>
+    <div class="flex flex-col">
+        <section class="mt-8 py-5 px-4 sm:px-12 lg:px-[120px] flex-wrap sm:flex-row sm:items-center gap-2">
+            <h2 class="text-xl font-bold">Vũ trụ xanh đen</h2>
+            <p class="text-md text-gray-600 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-user "></i> Lê Khánh Vinh</p>
+        </section>
+        
+        <div class="mt-4 flex justify-center px-4">
+            <img
+            src="../resource/khanhvinhstyle-IMAGE 1.png"
+            alt="preview-Template"
+            class="rounded-lg shadow-md w-full max-w-5xl"/>
         </div>
     </div>
-<!--  phát triển-->
+    
+  <div class="px-[100px] mt-24">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 pb-2">
+            <h3 class="text-base font-semibold border-b-[3px] border-sky-400  mb-2">Thông tin thêm</h3>
+            <p class="text-md text-gray-600">Ngày đăng: 22/09/2025</p>
+        </div>
+        <div class="col-span-3  pb-2">
+            <h3 class="text-base font-semibold border-b-[3px] border-sky-400 mb-2">Mô tả</h3>
+            <p class="text-md text-gray-600 leading-relaxed">
+                Template Portfolio Dark Mode được thiết kế dành riêng cho lập trình viên muốn thể hiện cá tính chuyên nghiệp trên nền giao diện tối giản, sang trọng. Giao diện sử dụng HTML, CSS và JavaScript thuần, tối ưu cho tốc độ tải nhanh và khả năng tùy chỉnh dễ dàng.
+                Với tông màu đen chủ đạo, template mang đến cảm giác hiện đại, tập trung vào nội dung và các dự án của bạn. Bố cục được sắp xếp rõ ràng: Trang chủ – Giới thiệu – Kỹ năng – Dự án – Liên hệ, phù hợp để trình bày hồ sơ cá nhân, showcase dự án và kỹ năng lập trình.
+                Ngoài ra, template còn hỗ trợ hiệu ứng cuộn mượt, animation nhẹ nhàng, responsive trên mọi thiết bị, giúp bạn tạo ấn tượng mạnh mẽ ngay từ cái nhìn đầu tiên. Đồng thời có tính năng dịch tự động sang tiếng Anh, giúp mở rộng khả năng tiếp cận quốc tế.
+            </p>
+        </div>
+    </div>
+    </div>
 
-<footer id= "footer" class="bg-black relative text-white lg:px-[10vh]  py-12 px-[5vh] h-fit flex flex-col lg:flex-row ">
+
+  <!-- Button -->
+  <div class="flex mr-[6.25rem] mt-4">
+    <button class="px-5 py-3 ml-auto  bg-sky-400 text-white rounded-lg active:scale-95 hover:bg-sky-600 ">Tạo với mẫu </button>
+  </div>
+<!-- xử lý backend cho lấy đánh giá và hiện đánh giá của khách hàng trên this template này -->
+  <!-- Reviews -->
+<!-- <div class="bg-gray-200 rounded-lg p-6 mx-[100px] mt-12 mb-12">
+  <h2 class="text-xl font-bold mb-6">Đánh giá</h2>
+  
+  <div class="bg-white rounded-lg p-6 space-y-8">
+  
+    <div>
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-400 text-white font-bold">
+          N
+        </div>
+        <p class="font-semibold">Nguyễn Văn A</p>
+      </div>
+      <div class="mt-2 flex items-center gap-2 text-yellow-500">
+        ★★★★★
+      </div>
+      <p class="mt-1 text-sm">Đẹp quá</p>
+      <p class="mt-1 text-xs text-gray-500">🕒 5:33 25/09/2025</p>
+    </div>
+    <hr class="border-t border-gray-300 my-4">
+
+   
+    <div>
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 flex items-center justify-center rounded-full bg-sky-500 text-white font-bold">
+          L
+        </div>
+        <p class="font-semibold">Lâm Văn C</p>
+      </div>
+      <div class="mt-2 flex items-center gap-2 text-yellow-500">
+        ★★★★★
+      </div>
+      <p class="mt-1 text-sm">Nhìn thích vô cùng luôn</p>
+      <p class="mt-1 text-xs text-gray-500">🕒 5:33 25/09/2025</p>
+    </div>
+    <hr class="border-t border-gray-300 my-4">
+
+ 
+    <div>
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 flex items-center justify-center rounded-full bg-green-600 text-white font-bold">
+          T
+        </div>
+        <p class="font-semibold">Trần Văn B</p>
+      </div>
+      <div class="mt-2 flex items-center gap-2 text-yellow-500">
+        ★★★★☆
+      </div>
+      <p class="mt-1 text-sm">Quá sáng tạo</p>
+      <p class="mt-1 text-xs text-gray-500">🕒 5:33 25/09/2025</p>
+    </div>
+  </div>
+
+  <div class="flex justify-center mt-6">
+    <button class="bg-sky-400 text-white px-5 py-3 rounded-md font-semibold active:scale-95 hover:bg-sky-600 ">
+      Viết đánh giá
+    </button>
+  </div>
+</div> -->
+</div>
+
+
+
+<!-- footer -->
+<footer id= "footer" class="bg-black text-white lg:px-[10vh] py-12 px-[5vh] flex flex-col lg:flex-row lg:text-base text-sm gap-3">
       <div class="pr-12 lg:w-[40vh] block">
         <h5 class="text-base font-bold mb-4 ">Tiện Ích</h5>
         <ul class="text-gray-500 ">
