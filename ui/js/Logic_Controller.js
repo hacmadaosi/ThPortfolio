@@ -24,6 +24,12 @@ export const CreateAccount = async (userName, password, email) => {
   if (!CheckEmail(email)) {
     return { state: false, result: "Vui lòng kiểm tra lại email" };
   }
+  if (!CheckUserName(userName)) {
+    return { state: false, result: "Vui lòng kiểm tra lại tên đăng nhập" };
+  }
+  if (!CheckPassword(password)) {
+    return { state: false, result: "Vui lòng kiểm tra lại mật khẩu" };
+  }
   try {
     const res = await fetch(base64ToString(END_POINTS.USER.CREATE_USER), {
       method: "POST",
@@ -60,11 +66,11 @@ const CheckEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return email && emailRegex.test(email);
 };
-export const CheckUserName = (userName) => {
+const CheckUserName = (userName) => {
   const userNameRegex = /^[a-zA-Z0-9_]{3,20}$/;
   return !!(userName && userNameRegex.test(userName));
 };
-export const CheckPassword = (password) => {
+const CheckPassword = (password) => {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return !!(password && passwordRegex.test(password));
