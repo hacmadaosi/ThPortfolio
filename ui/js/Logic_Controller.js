@@ -4,7 +4,7 @@ import END_POINTS from "../api.endpoints.js";
 
 export const LoginUser = async (email, password) => {
   try {
-    const res = await fetch("http://localhost:80/login", {
+    const res = await fetch(base64ToString(END_POINTS.USER.CHECK_LOGIN), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
