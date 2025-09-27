@@ -1,10 +1,16 @@
-import { CreateAccount, getInfoDeveloper } from "./Logic_Controller.js";
+import {
+  CreateAccount,
+  getInfoDeveloper,
+  LoginUser,
+} from "./Logic_Controller.js";
 // Navigation
 let menu_Item;
 let btn_MobileMenu;
 let navigation_Menu;
 let btn_Logo;
 let btn_Close_Login;
+let btnLogout;
+let btnAccount;
 
 // Authentication Form
 let frm_Auth;
@@ -50,6 +56,7 @@ let icon;
 let templateDetail;
 
 let stateLogin = true;
+const user = JSON.parse(localStorage.getItem("user"));
 
 document.addEventListener("DOMContentLoaded", () => {
   // Khởi tạo giá trị cho biến
@@ -211,10 +218,36 @@ function FooterAction() {
 }
 
 function NavigationAction() {
+  // Xử lý sự kiện người dùng đăng xuất
+  if (btnLogout) {
+    btnLogout.addEventListener("click", () => {
+      localStorage.clear();
+      btn_OpenAuthForm.textContent = "Đăng nhập";
+      menu_Item.forEach((items, index) => {
+        if (index !== menu_Item.length - 1) {
+          items.classList.toggle("hidden");
+        }
+      });
+    });
+  }
+
   // Xử lý sự kiện người dùng mở form đăng nhập
   if (btn_OpenAuthForm) {
     btn_OpenAuthForm.addEventListener("click", () => {
-      frm_Auth.classList.toggle("hidden");
+      // Nếu localStorage rỗng => Người dùng chưa đăng nhập
+      if (!localStorage.getItem("user")) {
+        frm_Auth.classList.remove("hidden");
+      }
+      // Nếu người dùng đăng nhập hiện các chức năng phù hợp
+      else {
+        menu_Item.forEach((items, index) => {
+          if (index !== menu_Item.length - 1) {
+            items.classList.toggle("hidden");
+          }
+        });
+        btn_OpenAuthForm.textContent =
+          btn_OpenAuthForm.textContent == user.email ? "Quay lại" : user.email;
+      }
     });
   }
 
@@ -228,24 +261,26 @@ function NavigationAction() {
       });
   });
   // Xử lý sự kiện người dùng nhấn vào logo
-  btn_Logo.addEventListener("click", () => {
-    menu_Item.forEach((item) => item.classList.remove("text-sky-400"));
-    menu_Item[0].classList.add("text-sky-400");
-  });
+  if (btn_Logo)
+    btn_Logo.addEventListener("click", () => {
+      menu_Item.forEach((item) => item.classList.remove("text-sky-400"));
+      menu_Item[0].classList.add("text-sky-400");
+    });
 
   // Xử lý sự kiện người mở navigation bar trên mobile
-  btn_MobileMenu.addEventListener("click", () => {
-    navigation_Menu.classList.toggle("hidden");
-    navigation_Menu.classList.toggle("fixed");
-    navigation_Menu.classList.toggle("flex-col");
-    navigation_Menu.classList.toggle("top-16");
-    navigation_Menu.classList.toggle("left-0");
-    navigation_Menu.classList.toggle("bg-white");
-    navigation_Menu.classList.toggle("pl-8");
-    navigation_Menu.classList.toggle("gap-6");
-    navigation_Menu.classList.toggle("gap-4");
-    navigation_Menu.classList.toggle("pb-4");
-  });
+  if (btn_MobileMenu)
+    btn_MobileMenu.addEventListener("click", () => {
+      navigation_Menu.classList.toggle("hidden");
+      navigation_Menu.classList.toggle("fixed");
+      navigation_Menu.classList.toggle("flex-col");
+      navigation_Menu.classList.toggle("top-16");
+      navigation_Menu.classList.toggle("left-0");
+      navigation_Menu.classList.toggle("bg-white");
+      navigation_Menu.classList.toggle("pl-8");
+      navigation_Menu.classList.toggle("gap-6");
+      navigation_Menu.classList.toggle("gap-4");
+      navigation_Menu.classList.toggle("pb-4");
+    });
 }
 function AuthenticationFormAction() {
   // Xử lý sự kiện người dùng submit form
@@ -254,6 +289,20 @@ function AuthenticationFormAction() {
       e.preventDefault();
       if (stateLogin) {
         // Người dùng nhấn đăng nhập
+        const res = await LoginUser(input_UserName.value, input_Password.value);
+        if (res.state) {
+          btn_OpenAuthForm.textContent = JSON.parse(
+            localStorage.getItem("user")
+          ).email;
+          frm_Auth.classList.add("hidden");
+          input_UserName.value = "";
+          input_Password.value = "";
+          btn_ShowPassword.classList.add("hidden");
+          btn_HidePassword.classList.add("hidden");
+          btn_ClearInputUserName.classList.add("hidden");
+        } else {
+          ShowNotification(res.state, res.result);
+        }
       } else {
         // Người dùng nhấn đăng ký
         const res = await CreateAccount(
@@ -293,8 +342,6 @@ function AuthenticationFormAction() {
       icon_Lock.style.display = stateLogin ? "block" : "none";
       icon_Unlock.style.display = stateLogin ? "none" : "block";
     });
-  } else {
-    alert("hahaha");
   }
 
   // Xử lý sự kiện người dùng nhập xác nhận mật khẩu
@@ -440,4 +487,12 @@ function ValueInitalization() {
   toggleBtn = document.getElementById("icon-sidebar");
   // icon = toggleBtn.querySelector("i");
   templateDetail = document.getElementById("main-content");
+
+  btnLogout = document.getElementById("logout-button");
+  btnAccount = document.getElementById("account-button");
+
+  // Thiết lập mặc định nếu người dùng đã đăng nhập
+  if (user) {
+    if (btn_OpenAuthForm) btn_OpenAuthForm.textContent = user.email;
+  }
 }

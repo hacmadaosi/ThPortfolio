@@ -30,7 +30,7 @@
     />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="bg-[#F2F8FC]">
     <!-- Hiển thị thông báo -->
     <div id="notification" class="hidden fixed right-0 top-0 bg-[#F3FDF5] pt-4 z-[2] mr-2 mt-2 w-[18rem]">
       <div id="notify-title" class="flex gap-2 items-center text-green-400 mx-4 mb-2">
@@ -177,16 +177,25 @@
           class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] mr-auto">
           <a href="#mau">Templates</a>
         </li>
-        <li><div id="search-bar" class="w-fit items-center border border-black px-4 py-2 rounded-lg gap-2 mr-4 text-xs">
+        <li><div id="search-bar" class="w-fit items-center border border-black px-4 py-2 rounded-lg gap-2 text-xs">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input class="border-0 focus:outline-none" type="text" placeholder="Tìm kiếm..." />
           <button id="search-button" 
             class="active:scale-95 whitespace-nowrap transition-all duration-[200ms]">
             Tìm kiếm</button></div>
         </li>
-          <li><button id="login-button" 
+        <li id="logout-button"
+          class="hidden py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] lg:ml-auto">
+          <button>Đăng xuất</button>
+        </li>
+        <li id="account-button"
+          class="hidden py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
+          <button>Thông tin cá nhân</button>
+        </li>
+        
+        <li><button id="login-button" 
               class=" text-sky-400 px-4 py-2 rounded-lg border border-sky-400 active:scale-95 whitespace-nowrap text-xs transition-all duration-[200ms]">
-              Đăng Nhập
+              Đăng nhập
           </button>
         </li>
       </ul>
