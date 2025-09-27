@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const CallAPIGetInfoDeveloper = async () => {
+  const developerDetail = document.getElementById("developer-detail");
   try {
     const res = await getInfoDeveloper();
     if (!res.state) {
@@ -88,6 +89,7 @@ const CallAPIGetInfoDeveloper = async () => {
       txtDeveloperRole[index].textContent = res.result[index].vaiTro;
       txtDeveloperContact[index].textContent = res.result[index].lienHe;
     }
+    developerDetail.classList.remove("hidden");
   } catch (e) {
     console.log(e.message);
   }
