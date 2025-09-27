@@ -44,12 +44,10 @@ let tabTk;
 let btn_FooterLogin;
 let btn_TrangChuReload;
 
-// Templates
-const sidebar;
-const toggleBtn;
-const icon;
-const templateDetail;
-let isOpen = true;
+let sidebar;
+let toggleBtn;
+let icon;
+let templateDetail;
 
 let stateLogin = true;
 
@@ -74,6 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Gọi API hiện thị thông tin nhà phát triển
   CallAPIGetInfoDeveloper();
+
+  // Xử lý sự kiện trang templates
+  TemplatesAction();
 });
 
 const CallAPIGetInfoDeveloper = async () => {
@@ -108,6 +109,19 @@ const ShowNotification = (state, content) => {
 
   title_notify.classList.toggle("text-green-400", state);
   title_notify.classList.toggle("text-red-400", !state);
+
+  icon_success.classList.toggle("hidden", !state);
+  icon_error.classList.toggle("hidden", state);
+
+  process_notify.classList.toggle("border-green-400", state);
+  process_notify.classList.toggle("border-red-400", !state);
+  content_notify.textContent = content;
+
+  notification.classList.remove("hidden");
+
+  setTimeout(() => {
+    notification.classList.add("hidden");
+  }, 5000);
 };
 
 function ClearURL() {
@@ -158,23 +172,26 @@ function ManagerAction() {
 }
 
 function TemplatesAction() {
-  sidebar.style.transition = "transform 0.3s ease-in-out";
+  if (sidebar) {
+    sidebar.style.transition = "transform 0.3s ease-in-out";
+  }
   let isOpen = true;
-
-  toggleBtn.addEventListener("click", () => {
-    if (isOpen) {
-      // Ẩn sidebar
-      sidebar.style.transform = "translateX(-100%)";
-      templateDetail.style.gridTemplateColumns = "1fr"; // main full width
-      icon.classList.replace("fa-chevron-left", "fa-chevron-right");
-    } else {
-      // Hiện sidebar
-      sidebar.style.transform = "translateX(0)";
-      templateDetail.style.gridTemplateColumns = "17rem 1fr"; // restore layout
-      icon.classList.replace("fa-chevron-right", "fa-chevron-left");
-    }
-    isOpen = !isOpen;
-  });
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      if (isOpen) {
+        // Ẩn sidebar
+        sidebar.style.transform = "translateX(-100%)";
+        templateDetail.style.gridTemplateColumns = "1fr"; // main full width
+        icon.classList.replace("fa-chevron-left", "fa-chevron-right");
+      } else {
+        // Hiện sidebar
+        sidebar.style.transform = "translateX(0)";
+        templateDetail.style.gridTemplateColumns = "17rem 1fr"; // restore layout
+        icon.classList.replace("fa-chevron-right", "fa-chevron-left");
+      }
+      isOpen = !isOpen;
+    });
+  }
 }
 
 function FooterAction() {
@@ -419,10 +436,8 @@ function ValueInitalization() {
   btn_FooterLogin = document.getElementById("footer-dang-nhap");
   btn_TrangChuReload = document.getElementById("reload-trang-chu");
 
- sidebar = document.getElementById("sidebar");
-   toggleBtn = document.getElementById("icon-sidebar");
-   icon = toggleBtn.querySelector("i");
-   templateDetail = document.getElementById("main-content");
-
-  sidebar.style.transition = "transform 0.3s ease-in-out";
+  sidebar = document.getElementById("sidebar");
+  toggleBtn = document.getElementById("icon-sidebar");
+  // icon = toggleBtn.querySelector("i");
+  templateDetail = document.getElementById("main-content");
 }
