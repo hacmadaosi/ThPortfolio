@@ -37,10 +37,29 @@ app.post("/user/add", async (req, res) => {
     });
   }
 });
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  if (!password || !email) {
+    return res.status(400).json({
+      result: "Thông tin cung cấp không đầy đủ",
+    });
+  }
+  try {
+    const result = await firebaseModule.LoginUser(email, password);
+    if (result.state) {
+      return res.status(200).json({ state: true, result: result.result });
+    } else {
+      return res.status(401).json({ state: false, result: result.result });
+    }
+  } catch (ex) {
+    return res.status(500).json({
+      error: ex.message,
+    });
+  }
+});
 app.get("/getAllProjectMembers", async (req, res) => {
   try {
     const result = await firebaseModule.getAllProjectMembers();
-    console.log(result);
     return res.status(200).json(result);
   } catch (e) {
     return res.status(500).json({ error: e.message });

@@ -1,4 +1,24 @@
 import END_POINTS from "../api.endpoints.js";
+
+// Gọi API kiểm tra đăng nhập
+
+export const LoginUser = async (email, password) => {
+  try {
+    const res = await fetch("http://localhost:80/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (data.state) {
+      localStorage.setItem("user", JSON.stringify(data.result));
+    }
+    return { state: data.state, result: data.result };
+  } catch (err) {
+    return { state: false, result: err.message };
+  }
+};
+
 // Gọi API tạo tài khoản
 export const CreateAccount = async (userName, password, email) => {
   if (!CheckEmail(email)) {
@@ -42,5 +62,5 @@ const CheckEmail = (email) => {
 };
 
 function base64ToString(base64) {
-  return decodeURIComponent(escape(atob(base64)));
+  return atob(base64);
 }
