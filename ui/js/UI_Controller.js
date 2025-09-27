@@ -46,6 +46,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn_FooterLogin = document.getElementById("footer-dang-nhap");
   const btn_TrangChuReload =document.getElementById("reload-trang-chu");
 
+  const sidebar = document.getElementById("sidebar");
+  const toggleBtn = document.getElementById("icon-sidebar");
+  const icon = toggleBtn.querySelector("i");
+  const templateDetail = document.getElementById("main-content");
+
+  sidebar.style.transition = "transform 0.3s ease-in-out";
+  let isOpen = true;
+
+  toggleBtn.addEventListener("click", () => {
+    if (isOpen) {
+      // Ẩn sidebar
+      sidebar.style.transform = "translateX(-100%)";
+      templateDetail.style.gridTemplateColumns = "1fr"; // main full width
+      icon.classList.replace("fa-chevron-left", "fa-chevron-right");
+    } else {
+      // Hiện sidebar
+      sidebar.style.transform = "translateX(0)";
+      templateDetail.style.gridTemplateColumns = "17rem 1fr"; // restore layout
+      icon.classList.replace("fa-chevron-right", "fa-chevron-left");
+    }
+    isOpen = !isOpen;
+  });
   //xử lý sự kiện tải lại trang ở footer
   btn_TrangChuReload.addEventListener("click", ()=>{
      location.reload();
