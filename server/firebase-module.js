@@ -1,7 +1,7 @@
 require("dotenv").config();
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
 const { json } = require("express");
 
 // Lấy chỗi firebase config
