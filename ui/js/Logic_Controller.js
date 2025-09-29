@@ -6,7 +6,7 @@ export const LoginAccount = async (email, password) => {
   try {
     const checkEmail = await AuthenticationAccount(email, password);
     const token = checkEmail.result;
-    const res = await fetch("http://localhost:80/login", {
+    const res = await fetch("https://thportfolio.onrender.com/login", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -33,7 +33,7 @@ export const CreateAccount = async (email, password) => {
   }
   try {
     // const res = await fetch(base64ToString(END_POINTS.USER.CREATE_USER), {
-    const res = await fetch("http://localhost:80/user/add", {
+    const res = await fetch("https://thportfolio.onrender.com/user/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
