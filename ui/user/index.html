@@ -6,23 +6,15 @@
     <title>ThPortfolio</title>
     <link rel="icon" type="image/png" href="../resource/Logo.png" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
     <link
       rel="stylesheet"
       href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
     />
 
-    <script src="../js/FireBase_Controller.js"></script>
     <script type="module" src="../js/UI_Controller.js"></script>
     <link
       rel="stylesheet"
@@ -52,7 +44,7 @@
         <h1 id="title-auth-form" class="text-4xl font-bold mb-8">Đăng nhập</h1>
         <!-- Nhập email -->
          <!-- <form  action="#trang-chu" method="post" class="flex flex-col "> -->
-          <div id="email-textfield" class="hidden flex p-2 gap-5 border-b-2 border-black items-center mb-2 ">
+          <div id="email-textfield" class=" flex p-2 gap-5 border-b-2 border-black items-center mb-2 ">
             <i class="fa-solid fa-envelope"></i>
             <input
             id="email-input"
@@ -61,24 +53,6 @@
             placeholder="Email"
             
           />
-        </div>
-        <!-- Nhập tên tên tài khoản -->
-        <div class="flex p-2 gap-5 border-b-2 border-black items-center mb-2">
-          <i class="fa-solid fa-user"></i>
-          <input
-            id="user-input"
-            class="focus:outline-none bg-transparent w-full"
-            type="text"
-            placeholder="Tên đăng nhập"
-            
-          />
-          <button
-            id="clear-user-input"
-            type="button"
-            class="active:scale-95 hidden"
-          >
-            <i class="fa-solid fa-circle-xmark"></i>
-          </button>
         </div>
 
         <!-- Nhập mật khẩu -->
@@ -184,15 +158,9 @@
             class="active:scale-95 whitespace-nowrap transition-all duration-[200ms]">
             Tìm kiếm</button></div>
         </li>
-        <li id="logout-button"
-          class="hidden py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] lg:ml-auto">
-          <button>Đăng xuất</button>
-        </li>
         <li id="account-button"
-          class="hidden py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]">
-          <button>Thông tin cá nhân</button>
-        </li>
-        
+          class="hidden py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] lg:ml-auto">
+          <button>Truy cập tài khoản</button>
         <li><button id="login-button" 
               class=" text-sky-400 px-4 py-2 rounded-lg border border-sky-400 active:scale-95 whitespace-nowrap text-xs transition-all duration-[200ms]">
               Đăng nhập

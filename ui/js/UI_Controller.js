@@ -1,22 +1,20 @@
 import {
-  CreateAccount,
   getInfoDeveloper,
-  LoginUser,
+  LoginAccount,
+  CreateAccount,
 } from "./Logic_Controller.js";
+
 // Navigation
 let menu_Item;
 let btn_MobileMenu;
 let navigation_Menu;
 let btn_Logo;
 let btn_Close_Login;
-let btnLogout;
 let btnAccount;
 
 // Authentication Form
 let frm_Auth;
 let btn_OpenAuthForm;
-let input_UserName;
-let btn_ClearInputUserName;
 let input_Password;
 let btn_ShowPassword;
 let btn_HidePassword;
@@ -55,8 +53,19 @@ let toggleBtn;
 let icon;
 let templateDetail;
 
+// User
+let txtUserName,
+  txtUserEmail,
+  btnLogout,
+  txtBillCount,
+  txtProfileName,
+  txtProfileEmail,
+  txtProfileSex,
+  txtProfileBirthDay,
+  txtTimeChangePass;
+
 let stateLogin = true;
-const user = JSON.parse(localStorage.getItem("user"));
+let user = JSON.parse(localStorage.getItem("user"));
 
 document.addEventListener("DOMContentLoaded", () => {
   // Khởi tạo giá trị cho biến
@@ -82,6 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Xử lý sự kiện trang templates
   TemplatesAction();
+
+  // Xử lý sự kiện trang profile
+  UserProfileAction();
+
+  // Xử lý giao diện nếu người dùng đã đăng nhập khi truy cập
+  ConfigLoginState();
 });
 
 const CallAPIGetInfoDeveloper = async () => {
@@ -218,16 +233,10 @@ function FooterAction() {
 }
 
 function NavigationAction() {
-  // Xử lý sự kiện người dùng đăng xuất
-  if (btnLogout) {
-    btnLogout.addEventListener("click", () => {
-      localStorage.clear();
-      btn_OpenAuthForm.textContent = "Đăng nhập";
-      menu_Item.forEach((items, index) => {
-        if (index !== menu_Item.length - 1) {
-          items.classList.toggle("hidden");
-        }
-      });
+  // Xử lý sự kiện người dùng mở trang thông tin cá nhân
+  if (btnAccount) {
+    btnAccount.addEventListener("click", () => {
+      window.location.href = "./user.html";
     });
   }
 
@@ -245,8 +254,7 @@ function NavigationAction() {
             items.classList.toggle("hidden");
           }
         });
-        btn_OpenAuthForm.textContent =
-          btn_OpenAuthForm.textContent == user.email ? "Quay lại" : user.email;
+        // btn_OpenAuthForm.textContent == user.email ? "Quay lại" : user.email;
       }
     });
   }
@@ -289,26 +297,22 @@ function AuthenticationFormAction() {
       e.preventDefault();
       if (stateLogin) {
         // Người dùng nhấn đăng nhập
-        const res = await LoginUser(input_UserName.value, input_Password.value);
+        const res = await LoginAccount(input_Email.value, input_Password.value);
         if (res.state) {
-          btn_OpenAuthForm.textContent = JSON.parse(
-            localStorage.getItem("user")
-          ).email;
           frm_Auth.classList.add("hidden");
-          input_UserName.value = "";
           input_Password.value = "";
+          input_Email.value = "";
           btn_ShowPassword.classList.add("hidden");
           btn_HidePassword.classList.add("hidden");
-          btn_ClearInputUserName.classList.add("hidden");
-        } else {
-          ShowNotification(res.state, res.result);
+          user = JSON.parse(localStorage.getItem("user"));
+          btn_OpenAuthForm.textContent = SubText(user.data.HoTen);
         }
+        ShowNotification(res.state, res.result);
       } else {
         // Người dùng nhấn đăng ký
         const res = await CreateAccount(
-          input_UserName.value,
-          input_Password.value,
-          input_Email.value
+          input_Email.value,
+          input_Password.value
         );
         ShowNotification(res.state, res.result);
         if (res.state) btn_CreateAccount.click();
@@ -319,13 +323,11 @@ function AuthenticationFormAction() {
   // Xử lý sự kiện người dùng chuyển hướng đến tạo tài khoản
   if (btn_CreateAccount) {
     btn_CreateAccount.addEventListener("click", () => {
-      input_UserName.value = "";
       input_ConfirmPass.value = "";
       input_Password.value = "";
       input_Email.value = "";
       btn_ShowPassword.classList.add("hidden");
       btn_HidePassword.classList.add("hidden");
-      btn_ClearInputUserName.classList.add("hidden");
       btn_ShowConfirmPass.classList.add("hidden");
       btn_HideConfirmPass.classList.add("hidden");
       stateLogin = !stateLogin;
@@ -336,7 +338,6 @@ function AuthenticationFormAction() {
         ? "Tạo tài khoản"
         : "Quay lại đăng nhập";
       btn_Submit.textContent = stateLogin ? "Đăng nhập" : "Tạo tài khoản";
-      textfield_Email.classList.toggle("hidden");
       textfield_Confirm.classList.toggle("hidden");
 
       icon_Lock.style.display = stateLogin ? "block" : "none";
@@ -406,25 +407,6 @@ function AuthenticationFormAction() {
     });
   }
 
-  // Xử lý sự kiện người dùng nhấn xóa dữ liệu ô nhập tên tài khoản
-  if (btn_ClearInputUserName) {
-    btn_ClearInputUserName.addEventListener("click", () => {
-      input_UserName.value = "";
-      btn_ClearInputUserName.classList.add("hidden");
-    });
-  }
-
-  // Xử lý sự kiện người dùng nhập tên tài khoản
-  if (input_UserName) {
-    input_UserName.addEventListener("input", (event) => {
-      if (input_UserName.value == "") {
-        btn_ClearInputUserName.classList.add("hidden");
-      } else {
-        btn_ClearInputUserName.classList.remove("hidden");
-      }
-    });
-  }
-
   // Xử lý sự kiện người dùng nhấn đóng form đăng nhập
   if (btn_Close_Login) {
     btn_Close_Login.addEventListener("click", () => {
@@ -432,7 +414,38 @@ function AuthenticationFormAction() {
     });
   }
 }
+const UserProfileAction = () => {
+  // Hiển thị tên người dùng
+  if (txtUserName) txtUserName.textContent = SubText(user.data.HoTen, 20);
+  // Hiển thị email người dùng
+  if (txtUserEmail) txtUserEmail.textContent = user.data.Email;
+  // Đăng xuất
+  if (btnLogout)
+    btnLogout.addEventListener("click", () => {
+      window.location.href = "./index.html";
+      if (btn_OpenAuthForm) btn_OpenAuthForm.textContent = "Đăng nhập";
+      localStorage.clear();
+    });
+  // Hiển thị hóa đơn đã thanh toán
+  if (txtBillCount) txtBillCount.textContent = user.data.HoaDon.length;
 
+  // Hiển thị tên
+  if (txtProfileName) txtProfileName.textContent = NaNText(user.data.HoTen);
+
+  // Hiển thị email
+  if (txtProfileEmail) txtProfileEmail.textContent = NaNText(user.data.Email);
+
+  // Hiển thị giới tính
+  if (txtProfileSex) txtProfileSex.textContent = NaNText(user.data.GioiTinh);
+
+  // Hiển thị ngày sinh
+  if (txtProfileBirthDay)
+    txtProfileBirthDay.textContent = NaNText(user.data.NgaySinh);
+
+  // Hiển thị thời gian đổi mật khẩu cuối
+  if (txtTimeChangePass)
+    txtTimeChangePass.textContent = user.data.ThoiGianCapNhatMatKhau;
+};
 function ValueInitalization() {
   menu_Item = document.querySelectorAll("#menu-items li");
   btn_MobileMenu = document.getElementById("mobile-menu");
@@ -443,9 +456,6 @@ function ValueInitalization() {
 
   frm_Auth = document.getElementById("auth-form");
   btn_OpenAuthForm = document.getElementById("login-button");
-  input_UserName = document.getElementById("user-input");
-  btn_ClearInputUserName = document.getElementById("clear-user-input");
-
   input_Password = document.getElementById("pass-input");
   btn_ShowPassword = document.getElementById("show-pass");
   btn_HidePassword = document.getElementById("hide-pass");
@@ -488,11 +498,30 @@ function ValueInitalization() {
   // icon = toggleBtn.querySelector("i");
   templateDetail = document.getElementById("main-content");
 
-  btnLogout = document.getElementById("logout-button");
   btnAccount = document.getElementById("account-button");
 
+  txtUserName = document.getElementById("user-name");
+  txtUserEmail = document.getElementById("user-email");
+  btnLogout = document.getElementById("logout-button");
+  txtBillCount = document.getElementById("bill-count");
+  txtProfileName = document.getElementById("profile-name");
+  txtProfileEmail = document.getElementById("profile-email");
+  txtProfileSex = document.getElementById("profile-sex");
+  txtProfileBirthDay = document.getElementById("profile-birthday");
+  txtTimeChangePass = document.getElementById("time-change-password");
+}
+
+// Xử lý giao diện nếu người dùng đã đăng nhập khi truy cập
+const ConfigLoginState = () => {
   // Thiết lập mặc định nếu người dùng đã đăng nhập
   if (user) {
-    if (btn_OpenAuthForm) btn_OpenAuthForm.textContent = user.email;
+    if (btn_OpenAuthForm)
+      btn_OpenAuthForm.textContent = SubText(user.data.HoTen);
   }
-}
+};
+const SubText = (str, maxLength) => {
+  return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
+};
+const NaNText = (str) => {
+  return !str || str.trim() === "" ? "NaN" : str;
+};

@@ -1,44 +1,46 @@
 import END_POINTS from "../api.endpoints.js";
+import { AuthenticationAccount } from "./FireBase_Controller.js";
 
-// Gọi API kiểm tra đăng nhập
-
-export const LoginUser = async (email, password) => {
+// Hàm xử lý đăng nhập
+export const LoginAccount = async (email, password) => {
   try {
-    const res = await fetch(base64ToString(END_POINTS.USER.CHECK_LOGIN), {
+    const checkEmail = await AuthenticationAccount(email, password);
+    const token = checkEmail.result;
+    const res = await fetch("http://localhost:80/login", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      return { state: false, result: data.result || "Lỗi server" };
+    }
+
+    // Lưu thông tin từ server sau khi người dùng đăng nhập thành công
+    localStorage.setItem("user", JSON.stringify(data.result));
+    return { state: true, result: "Đã đăng nhập thành công" };
+  } catch (ex) {
+    return { state: false, result: ex.message };
+  }
+};
+
+// Gọi API tạo tài khoản
+export const CreateAccount = async (email, password) => {
+  if (!CheckEmail(email)) {
+    return { state: false, result: "Email không hợp lệ!" };
+  }
+  if (!CheckPassword(password)) {
+    return { state: false, result: "Mật khẩu không hợp lệ" };
+  }
+  try {
+    // const res = await fetch(base64ToString(END_POINTS.USER.CREATE_USER), {
+    const res = await fetch("http://localhost:80/user/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
-    if (data.state) {
-      localStorage.setItem("user", JSON.stringify(data.result));
-    }
-    return { state: data.state, result: data.result };
-  } catch (err) {
-    return { state: false, result: err.message };
-  }
-};
-
-// Gọi API tạo tài khoản
-export const CreateAccount = async (userName, password, email) => {
-  if (!CheckEmail(email)) {
-    return { state: false, result: "Vui lòng kiểm tra lại email" };
-  }
-  if (!CheckUserName(userName)) {
-    return { state: false, result: "Vui lòng kiểm tra lại tên đăng nhập" };
-  }
-  if (!CheckPassword(password)) {
-    return { state: false, result: "Vui lòng kiểm tra lại mật khẩu" };
-  }
-  try {
-    const res = await fetch(base64ToString(END_POINTS.USER.CREATE_USER), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userName, password, email }),
-    });
-    const data = await res.json();
     if (!res.ok) {
-      return { state: false, result: data.error || "Lỗi server" };
+      return { state: false, result: data.result || "Lỗi server" };
     }
     return { state: true, result: data.result };
   } catch (err) {

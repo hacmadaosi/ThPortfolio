@@ -1,20 +1,10 @@
 require("dotenv").config();
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./serviceAccountKey.json");
 const { json } = require("express");
-const { initializeApp } = require("firebase/app");
-const {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendEmailVerification,
-} = require("firebase/auth");
 
-const {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-} = require("firebase/firestore");
-
+// Lấy chỗi firebase config
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -25,55 +15,58 @@ const firebaseConfig = {
   measurementId: process.env.MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
-// Xác thực tài khoản
-const LoginUser = async (email, password) => {
+const db = admin.firestore();
+
+const createNewUser = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    return { state: true, result: userCredential.user };
-  } catch (err) {
-    if (err.code == "auth/wrong-password") {
-      return { state: false, result: "Mật khẩu không đúng!" };
-    } else if (err.code == "auth/user-not-found") {
-      return { state: false, result: "Email chưa được đăng ký!" };
-    } else if (err.code == "auth/invalid-credential") {
-      return { state: false, result: "Email hoặc mật khẩu không chính xác!" };
-    } else {
-      return { state: false, result: err.message };
-    }
-  }
-};
-
-// Tạo tài khoản
-const createNewUser = async (username, password, email) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const user = userCredential.user;
-    await sendEmailVerification(user);
-
-    const docRef = await addDoc(collection(db, "user"), {
-      uid: user.uid,
-      username: username,
-      password: password,
+    const userCredential = await admin.auth().createUser({
       email: email,
-      state: 0,
+      password: password,
     });
-    return docRef;
+    await db
+      .collection("NguoiDung")
+      .doc(userCredential.uid)
+      .set({
+        Email: email,
+        HoTen: "user-" + userCredential.uid,
+        NgaySinh: "",
+        GioiTinh: "",
+        PhanLoai: "user",
+        HinhAnh: "",
+        HoaDon: [],
+        ThoiGianCapNhatMatKhau: getFormattedDateTime(),
+      });
+    return { state: true, result: userCredential.uid };
   } catch (ex) {
     throw ex;
   }
 };
+
+// // Xác thực tài khoản
+const LoginAccount = async (idToken) => {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const userDoc = await admin
+      .firestore()
+      .collection("NguoiDung")
+      .doc(decodedToken.uid)
+      .get();
+    if (!userDoc.exists) {
+      return res.status(404).json({ message: "Người dùng không tồn tại" });
+    }
+    return {
+      state: true,
+      result: { uid: decodedToken.uid, data: userDoc.data() },
+    };
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 // Lấy danh sách nhà phát triển
 const getAllProjectMembers = async () => {
   try {
@@ -96,5 +89,18 @@ module.exports = {
   firebaseConfig,
   createNewUser,
   getAllProjectMembers,
-  LoginUser,
+  LoginAccount,
 };
+// Lấy thời gian hiện tại
+function getFormattedDateTime() {
+  const now = new Date();
+
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+
+  const day = String(now.getDate()).padStart(2, "0");
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const year = now.getFullYear();
+
+  return `${hours}:${minutes} ${day}/${month}/${year}`;
+}

@@ -18,26 +18,6 @@ app.get("/firebase-api", (req, res) => {
 });
 
 app.post("/user/add", async (req, res) => {
-  const { userName, password, email } = req.body;
-  if (!userName || !password || !email) {
-    return res.status(400).json({
-      error: "Thông tin cung cấp không đầy đủ",
-    });
-  }
-  try {
-    const result = await firebaseModule.createNewUser(
-      userName,
-      password,
-      email
-    );
-    return res.status(200).json({ result: "Thêm thành công" });
-  } catch (ex) {
-    return res.status(500).json({
-      error: ex.message,
-    });
-  }
-});
-app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!password || !email) {
     return res.status(400).json({
@@ -45,7 +25,24 @@ app.post("/login", async (req, res) => {
     });
   }
   try {
-    const result = await firebaseModule.LoginUser(email, password);
+    const result = await firebaseModule.createNewUser(email, password);
+    if (result.state) {
+      return res
+        .status(200)
+        .json({ state: true, result: "Tài khoản đã được tạo thành công!" });
+    }
+  } catch (e) {
+    return res.status(500).json({ state: false, result: e.message });
+  }
+});
+
+app.get("/login", async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Không có token" });
+  }
+  try {
+    const result = await firebaseModule.LoginAccount(authHeader.split(" ")[1]);
     if (result.state) {
       return res.status(200).json({ state: true, result: result.result });
     } else {
@@ -57,6 +54,7 @@ app.post("/login", async (req, res) => {
     });
   }
 });
+
 app.get("/getAllProjectMembers", async (req, res) => {
   try {
     const result = await firebaseModule.getAllProjectMembers();

@@ -5,31 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ThPortfolio</title>
     <link rel="icon" type="image/png" href="../resource/Logo.png" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
     <link
       rel="stylesheet"
       href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
     />
 
-    <script src="../js/FireBase_Controller.js"></script>
     <script type="module" src="../js/UI_Controller.js"></script>
-    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../css/style.css"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-[#F2F8FC]">
-    <div class="mx-[10vh] my-9 space-y-4">
-      <div id="user-summary-card" class="bg-white rounded-2xl py-4 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)]">
+    <div class="lg:mx-[10vh] mx-[2vh] my-9 space-y-4 flex flex-col">
+      <div id="user-summary-card" class="bg-white rounded-2xl py-4 gap-4 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex-col lg:flex-row">
         <div class="flex-1 flex items-center">
           <div
             class="w-16 h-16 rounded-full flex items-center justify-center font-bold bg-sky-400 text-2xl text-white mr-6"
@@ -38,31 +34,33 @@
           </div>
 
           <div>
-            <p class="text-2xl font-bold">Lê Khánh Vinh</p>
-            <p class="text-gray-500">khanhvinh2288@gmail.com</p>
+            <p id="user-name" class="text-base font-bold"></p>
+            <p id="user-email" class="text-gray-500 text-sm"></p>
           </div>
         </div>
-        <div id="" class="flex-1 flex border-x-2 border-sky-400 text-3xl px-6 items-center">
-            <div class="p-3 bg-[#F2F8FC] w-fit h-fit rounded-lg">
+        <div class="flex flex-1 justify-between text-xs lg:text-base">
+          <div id="" class="lg:flex-1 flex lg:border-x-2 border-sky-400 lg:text-3xl text-2xl lg:px-6 items-center">
+            <div class="lg:p-3 p-2 bg-[#F2F8FC] w-fit h-fit rounded-lg">
                 <i class="fa-solid fa-basket-shopping"></i>
             </div>
             <div class="ml-6">
-                <p class="text-base font-bold">1</p>
+                <p id="bill-count" class="text-base font-bold">x</p>
                 <p class="text-xs text-gray-500">Tổng số hóa đơn</p>
             </div>
         </div>
-        <div id="" class="flex-1 pl-6 space-y-4">
-          <button class="flex items-center gap-2 text-sky-400">
+        <div id="" class="lg:flex-1 lg:pl-6 space-y-4 ">
+          <button class="flex items-center gap-2 text-sky-400 whitespace-nowrap">
             <i class="fa-solid fa-sliders"></i>Thông tin tài khoản
           </button>
-          <button class="flex items-center gap-2">
+          <button class="flex items-center gap-2 whitespace-nowrap">
             <i class="fa-regular fa-credit-card"></i>Lịch sử thanh toán
           </button>
-          <button class="flex items-center gap-2">
+          <button id="logout-button" class="flex items-center gap-2 whitespace-nowrap active:scale-95 active:text-sky-400">
             <i class="fa-solid fa-arrow-right-from-bracket"></i></i>Đăng xuất
-          </div>
         </div>
-        <div id="detail-account-card" class="bg-white rounded-2xl pt-6 pb-12 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col">
+        </div>
+        </div>
+        <div id="detail-account-card" class="bg-white rounded-2xl pt-6 pb-12 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col lg:text-base text-sm">
             <div class="flex justify-between items-center w-full mb-2">
                 <p class="font-bold">Thông tin cá nhân</p>
                 <button class="items-center gap-1 text-sky-400">
@@ -70,28 +68,28 @@
                     Cập nhật
                 </button>
             </div>
-            <div class="flex gap-16">
+            <div class="flex lg:gap-16 lg:flex-row flex-col">
                 <div class="flex flex-1 justify-between py-4 border-b-2 border-gray-300">
                     <p class="text-gray-500">Họ tên:</p>
-                    <p class="font-semibold">Lê Khánh Vinh</p>
+                    <p id="profile-name" class="font-semibold">NaN</p>
                 </div>
                 <div class="flex flex-1 justify-between py-4 border-b-2 border-gray-300">
                     <p class="text-gray-500">Email:</p>
-                    <p class="font-semibold">khanhvinh2288@gmail.com</p>
+                    <p id="profile-email" class="font-semibold">NaN</p>
                 </div>
             </div>
-            <div class="flex gap-16">
+            <div class="flex lg:gap-16 lg:flex-row flex-col">
                 <div class="flex flex-1 justify-between py-4 border-b-2 border-gray-300">
                     <p class="text-gray-500">Giới tính:</p>
-                    <p class="font-semibold">Nam</p>
+                    <p id="profile-sex" class="font-semibold">NaN</p>
                 </div>
                 <div class="flex flex-1 justify-between py-4 border-b-2 border-gray-300">
                     <p class="text-gray-500">Ngày sinh:</p>
-                    <p class="font-semibold">18/09/2004</p>
+                    <p id="profile-birthday" class="font-semibold">NaN</p>
                 </div>
             </div>
         </div>
-        <div id="detail-account-card" class="bg-white rounded-2xl py-6 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col">
+        <div id="detail-account-card" class="bg-white rounded-2xl py-6 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col lg:text-base text-sm">
             <div class="flex justify-between items-center w-full mb-2">
                 <p class="font-bold">Mật khẩu</p>
                 <button class="items-center gap-1 text-sky-400">
@@ -101,10 +99,10 @@
             </div>
             <div class="flex flex-1 justify-between py-4">
                     <p class="text-gray-500">Cập nhật lần cuối</p>
-                    <p class="">17:28 03/09/2025</p>
+                    <p id="time-change-password" class="">17:28 03/09/2025</p>
                 </div>
         </div>
-        <button class="px-8 py-2 bg-sky-400 text-white font-bold rounded">Quay lại</button>
+        <button class="px-8 py-2 bg-sky-400 text-white font-bold rounded ml-auto">Quay lại</button>
       </div>
     </div>
   </body>
