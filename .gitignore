@@ -1,1 +1,3 @@
 .firebase/
+.env
+server/serviceAccountKey.json
