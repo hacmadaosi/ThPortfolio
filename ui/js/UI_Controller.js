@@ -50,6 +50,14 @@ let icon;
 let templateDetail;
 
 let stateLogin = true;
+// Biến xử lý thanh toán
+let btnThanhToan;
+let btnThoatThanhToan;
+let tabGioHang;
+let tabThanhToan;
+
+//xử lý locgic chọn sản phẩm
+let total = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   // Khởi tạo giá trị cho biến
@@ -75,6 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Xử lý sự kiện trang templates
   TemplatesAction();
+
+  //xử lý sự kiến trang thanh toán
+  CartAction();
 });
 
 const CallAPIGetInfoDeveloper = async () => {
@@ -167,6 +178,38 @@ function ManagerAction() {
 
       tabTkBtn.classList.add("text-sky-400");
       tabMauBtn.classList.remove("text-sky-400");
+    });
+  }
+}
+// thực hiện chuyển giỏ hàng sang thanh toán
+function CartAction() {
+  if (btnThanhToan) {
+    btnThanhToan.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (total <= 0) {
+        alert("Vui lòng chọn ít nhất một sản phẩm trước khi thanh toán!");
+        return; // Dừng tại đây, không chuyển trang
+      }
+      //Lấy các phần tử hiển thị tổng tiền bên layout thanh toán
+      const totalProductEl = document.getElementById("total-product-amount");
+      const totalPaymentEl = document.getElementById("total-payment-amount");
+
+      //Gán giá trị tổng tiền từ giỏ hàng sang layout thanh toán
+      if (totalProductEl) {
+        totalProductEl.innerText = total.toLocaleString("vi-VN") + "đ";
+      }
+      if (totalPaymentEl) {
+        totalPaymentEl.innerText = total.toLocaleString("vi-VN") + "đ";
+      }
+      tabGioHang.classList.add("hidden");
+      tabThanhToan.classList.remove("hidden");
+    });
+  }
+  if (btnThoatThanhToan) {
+    btnThoatThanhToan.addEventListener("click", (e) => {
+      e.preventDefault();
+      tabGioHang.classList.remove("hidden");
+      tabThanhToan.classList.add("hidden");
     });
   }
 }
@@ -385,6 +428,53 @@ function AuthenticationFormAction() {
     });
   }
 }
+//xử lý logic chọn sản phẩm tính tổng tiền
+const checkboxes = document.querySelectorAll(".select-checkbox"); // Lấy tất cả checkbox sản phẩm
+const totalAmountEl = document.getElementById("total-amount"); // Lấy phần tử hiển thị tổng tiền (span)
+const selectAllCheckbox = document.getElementById("selectAll"); // Checkbox chọn tất cả
+
+// Xử lý khi tick từng checkbox sản phẩm
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    const item = checkbox.closest(".item"); // Thẻ cha chứa thông tin sản phẩm
+    const priceText = item.querySelector(".price").innerText;
+    const price = parseInt(priceText.replace(/\D/g, "")); // Lấy số từ "50.000đ"
+
+    if (checkbox.checked) {
+      total += price;
+    } else {
+      total -= price;
+    }
+
+    // Cập nhật tổng tiền hiển thị
+    totalAmountEl.innerText = total.toLocaleString("vi-VN") + "đ";
+
+    // Nếu bỏ chọn 1 checkbox thì bỏ tick "chọn tất cả"
+    const allChecked = [...checkboxes].every((cb) => cb.checked);
+    selectAllCheckbox.checked = allChecked;
+  });
+});
+
+// Xử lý khi tick "Chọn tất cả"
+selectAllCheckbox.addEventListener("change", () => {
+  const isChecked = selectAllCheckbox.checked;
+  total = 0; // reset tổng để cộng lại từ đầu
+
+  checkboxes.forEach((cb) => {
+    cb.checked = isChecked;
+
+    // Cộng tổng nếu chọn tất cả
+    if (isChecked) {
+      const item = cb.closest(".item");
+      const priceText = item.querySelector(".price").innerText;
+      const price = parseInt(priceText.replace(/\D/g, ""));
+      total += price;
+    }
+  });
+
+  // Cập nhật tổng tiền hiển thị
+  totalAmountEl.innerText = total.toLocaleString("vi-VN") + "đ";
+});
 
 function ValueInitalization() {
   menu_Item = document.querySelectorAll("#menu-items li");
@@ -440,4 +530,9 @@ function ValueInitalization() {
   toggleBtn = document.getElementById("icon-sidebar");
   // icon = toggleBtn.querySelector("i");
   templateDetail = document.getElementById("main-content");
+
+  btnThanhToan = document.getElementById("tab-thanhtoan-btn");
+  btnThoatThanhToan = document.getElementById("tab-quaylai-btn");
+  tabGioHang = document.getElementById("tab-giohang");
+  tabThanhToan = document.getElementById("tab-thanhtoan");
 }
