@@ -49,11 +49,15 @@ let tabTk;
 // Footer
 let btn_FooterLogin;
 let btn_TrangChuReload;
-
+// 
 let sidebar;
 let toggleBtn;
-let icon;
-let templateDetail;
+let iconSidebar;
+let mainContent;
+//
+let linkTemplates ;
+let trang_chu;
+
 
 let stateLogin = true;
 const user = JSON.parse(localStorage.getItem("user"));
@@ -82,6 +86,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Xử lý sự kiện trang templates
   TemplatesAction();
+  // Xử lý sự kiện chuyển trang Index sang templates và ngược lại
+  CheckoutPage(trang_chu, "index.html");
+  CheckoutPage(linkTemplates, "templates.html");
+  // Xử lý sự kiện menu hiện tại đang chọn ở đâu ULR
+   HighlightCurrentMenu();
 });
 
 const CallAPIGetInfoDeveloper = async () => {
@@ -179,26 +188,79 @@ function ManagerAction() {
 }
 
 function TemplatesAction() {
-  if (sidebar) {
-    sidebar.style.transition = "transform 0.3s ease-in-out";
+  if (!sidebar || !toggleBtn || !iconSidebar || !mainContent) {
+    return;
   }
+
   let isOpen = true;
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-      if (isOpen) {
-        // Ẩn sidebar
-        sidebar.style.transform = "translateX(-100%)";
-        templateDetail.style.gridTemplateColumns = "1fr"; // main full width
-        icon.classList.replace("fa-chevron-left", "fa-chevron-right");
-      } else {
-        // Hiện sidebar
-        sidebar.style.transform = "translateX(0)";
-        templateDetail.style.gridTemplateColumns = "17rem 1fr"; // restore layout
-        icon.classList.replace("fa-chevron-right", "fa-chevron-left");
-      }
-      isOpen = !isOpen;
+
+  toggleBtn.addEventListener("click", () => {
+    if (isOpen) {
+      // === ĐÓNG SIDEBAR ===
+      sidebar.style.setProperty("--sidebar-width", "0rem");
+      sidebar.classList.add("overflow-hidden");
+
+      // đổi layout grid để main chiếm 100%
+      templates.style.gridTemplateColumns = "0fr 1fr";
+
+      // đổi icon
+      iconSidebar.classList.replace("fa-chevron-left", "fa-chevron-right");
+
+      // chỉnh lại vị trí toggleBtn
+      toggleBtn.style.left = "1rem";
+    } else {
+      // === MỞ SIDEBAR ===
+      sidebar.style.setProperty("--sidebar-width", "17rem");
+      sidebar.classList.remove("overflow-hidden");
+
+      // layout grid trở lại
+      templates.style.gridTemplateColumns = "17rem 1fr";
+
+      // đổi icon
+      iconSidebar.classList.replace("fa-chevron-right", "fa-chevron-left");
+
+      // chỉnh lại vị trí toggleBtn
+      toggleBtn.style.left = "16.2rem";
+    }
+
+    isOpen = !isOpen;
+  });
+}
+ //Xử lý sự kiện chuyển trang
+function CheckoutPage(element, targetUrl) {
+  if (element) {
+    element.addEventListener("click", (e) => {
+      e.preventDefault(); 
+      document.body.classList.add("transition-opacity", "duration-300", "opacity-0");
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 300);
     });
   }
+}
+
+// Sự kiện menu hiện tại trên URL
+function HighlightCurrentMenu() {
+  let currentPath = window.location.pathname.split("/").pop();
+  if (currentPath === "" || currentPath === "/") {
+    currentPath = "index.html";
+  }
+  menu_Item.forEach((x) => x.classList.remove("text-sky-400", "border-sky-400"));
+  menu_Item.forEach((item) => {
+    const link = item.querySelector("a");
+    if (!link) return;
+
+    let linkPath = link.getAttribute("href").replace("./", "").replace("/", "");
+    if (linkPath.includes("#")) {
+      linkPath = linkPath.split("#")[0]; 
+    }
+    if (
+      (currentPath === "index.html" && link.getAttribute("href").includes("index.html")) ||
+      (currentPath === "templates.html" && link.getAttribute("href").includes("templates.html"))
+    ) {
+      item.classList.add("text-sky-400", "border-sky-400");
+    }
+  });
 }
 
 function FooterAction() {
@@ -483,11 +545,14 @@ function ValueInitalization() {
   btn_FooterLogin = document.getElementById("footer-dang-nhap");
   btn_TrangChuReload = document.getElementById("reload-trang-chu");
 
+  // Xử lý sự kiện trang templates
   sidebar = document.getElementById("sidebar");
   toggleBtn = document.getElementById("icon-sidebar");
-  // icon = toggleBtn.querySelector("i");
-  templateDetail = document.getElementById("main-content");
-
+  iconSidebar = document.getElementById("sidebar-toggle-icon");
+  mainContent = document.getElementById("main-content");
+  linkTemplates = document.getElementById("link-templates")
+  trang_chu = document.getElementById("trang-chu");
+  //
   btnLogout = document.getElementById("logout-button");
   btnAccount = document.getElementById("account-button");
 
