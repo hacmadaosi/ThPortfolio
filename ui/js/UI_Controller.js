@@ -39,8 +39,8 @@ let icon_error;
 let process_notify;
 
 // Tabs
-let tabMauBtn;
-let tabTkBtn;
+let tabMauBtns;
+let tabTkBtns;
 let tabMau;
 let tabTk;
 
@@ -169,28 +169,41 @@ function ClearURL() {
 }
 
 function ManagerAction() {
-  // Khi click Mẫu
-  if (tabMauBtn) {
-    tabMauBtn.addEventListener("click", (e) => {
+  if (!tabMau || !tabTk || !tabMauBtns || !tabTkBtns) return;
+
+  // Khi click "Mẫu"
+  tabMauBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
+
       tabMau.classList.remove("hidden");
       tabTk.classList.add("hidden");
 
-      tabMauBtn.classList.add("text-sky-400");
-      tabTkBtn.classList.remove("text-sky-400");
+      tabMauBtns.forEach((b) =>
+        b.classList.add("text-sky-400", "underline", "underline-offset-4")
+      );
+      tabTkBtns.forEach((b) =>
+        b.classList.remove("text-sky-400", "underline", "underline-offset-4")
+      );
     });
-  }
-  // Khi click Tài Khoản
-  if (tabTkBtn) {
-    tabTkBtn.addEventListener("click", (e) => {
+  });
+
+  // Khi click "Tài khoản"
+  tabTkBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
+
       tabTk.classList.remove("hidden");
       tabMau.classList.add("hidden");
 
-      tabTkBtn.classList.add("text-sky-400");
-      tabMauBtn.classList.remove("text-sky-400");
+      tabTkBtns.forEach((b) =>
+        b.classList.add("text-sky-400", "underline", "underline-offset-4")
+      );
+      tabMauBtns.forEach((b) =>
+        b.classList.remove("text-sky-400", "underline", "underline-offset-4")
+      );
     });
-  }
+  });
 }
 
 function TemplatesAction() {
@@ -484,8 +497,8 @@ function ValueInitalization() {
   icon_error = document.getElementById("error-icon");
   process_notify = document.getElementById("notify-line");
 
-  tabMauBtn = document.getElementById("tab-mau-btn");
-  tabTkBtn = document.getElementById("tab-tk-btn");
+  tabMauBtns = document.querySelectorAll("#tab-mau-btn");
+  tabTkBtns = document.querySelectorAll("#tab-tk-btn");
 
   tabMau = document.getElementById("tab-mau");
   tabTk = document.getElementById("tab-tk");
