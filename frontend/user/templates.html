@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ThPortfolio</title>
+    <link rel="icon" type="image/png" href="../resource/Logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
+    />
+
+    <script src="../js/FireBase_Controller.js"></script>
+    <!-- <script src="../js/Logic_Controller.js"></script> -->
+    <script type="module" src="../js/UI_Controller.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Ẩn scrollbar trên webkit (Chrome, Edge, Safari) */
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Ẩn scrollbar trên Firefox */
+      .hide-scrollbar {
+        scrollbar-width: none;
+        -ms-overflow-style: none; /* IE 10+ */
+      }
+    </style>
+  </head>
+  <body class="bg-[#F2F8FC]">
+    <div
+      id="notification"
+      class="hidden fixed right-0 top-0 bg-[#F3FDF5] pt-4 z-[2] mr-2 mt-2 w-[18rem]"
+    >
+      <div
+        id="notify-title"
+        class="flex gap-2 items-center text-green-400 mx-4 mb-2"
+      >
+        <i id="success-icon" class="fa-solid fa-circle-check text-xl"></i>
+        <i
+          id="error-icon"
+          class="fa-solid fa-circle-exclamation text-xl hidden"
+        ></i>
+        <p class="font-bold">Thông báo</p>
+      </div>
+      <p id="notify-content" class="font-light text-sm ml-8 pr-4">
+        Phải có 1 thông báo gì đó.
+      </p>
+      <div
+        id="notify-line"
+        class="pt-4 border-b-4 border-green-400 notification-line"
+      ></div>
+    </div>
+
+    <!-- giao diện xác thực tài khoản -->
+    <div
+      id="auth-form"
+      class="hidden fixed bg-black bg-opacity-50 w-full h-screen flex items-center justify-center z-[1]"
+    >
+      <!-- Đăng nhập -->
+      <div
+        id="login-form"
+        class="relative h-[95vh] w-[60vh] pt-20 pb-5 lg:px-16 px-8 rounded-xl bg-white mx-2 justify-center flex flex-col lg:text-base text-xs"
+      >
+        <button
+          id="close_login_form"
+          class="w-4 h-4 p-4 rounded-full flex items-center justify-center bg-transparent absolute top-0 right-0 mr-4 mt-4 active:scale-95 hover:bg-white"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h1 id="title-auth-form" class="text-4xl font-bold mb-8">Đăng nhập</h1>
+        <!-- Nhập email -->
+        <!-- <form  action="#trang-chu" method="post" class="flex flex-col "> -->
+        <div
+          id="email-textfield"
+          class="hidden flex p-2 gap-5 border-b-2 border-black items-center mb-4"
+        >
+          <i class="fa-solid fa-envelope"></i>
+          <input
+            id="email-input"
+            class="focus:outline-none bg-transparent w-full"
+            type="email"
+            placeholder="Email"
+          />
+        </div>
+        <!-- Nhập tên tên tài khoản -->
+        <div class="flex p-2 gap-5 border-b-2 border-black items-center mb-4">
+          <i class="fa-solid fa-user"></i>
+          <input
+            id="user-input"
+            class="focus:outline-none bg-transparent w-full"
+            type="text"
+            placeholder="Tên đăng nhập"
+          />
+          <button
+            id="clear-user-input"
+            type="button"
+            class="active:scale-95 hidden"
+          >
+            <i class="fa-solid fa-circle-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Nhập mật khẩu -->
+        <div class="flex p-2 gap-5 border-b-2 border-black items-center mb-4">
+          <div id="lock-icon">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <div id="unlock-icon" class="hidden">
+            <i class="fa-solid fa-unlock"></i>
+          </div>
+          <input
+            id="pass-input"
+            class="focus:outline-none bg-transparent w-full"
+            placeholder="Mật khẩu"
+          />
+          <button id="show-pass" class="active:scale-95 hidden" type="button">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+          <button id="hide-pass" class="active:scale-95 hidden" type="button">
+            <i class="fa-solid fa-eye-slash"></i>
+          </button>
+        </div>
+        <!-- Nhập xác nhận mật khẩu -->
+        <div
+          id="confirm-textfield"
+          class="hidden flex p-2 gap-5 border-b-2 border-black items-center mb-4 none"
+        >
+          <div>
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <input
+            id="confirm-input"
+            class="focus:outline-none bg-transparent w-full"
+            placeholder="Xác nhận mật khẩu"
+          />
+          <button
+            id="show-confirm-pass"
+            class="active:scale-95 hidden"
+            type="button"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
+          <button
+            id="hide-confirm-pass"
+            class="active:scale-95 hidden"
+            type="button"
+          >
+            <i class="fa-solid fa-eye-slash"></i>
+          </button>
+        </div>
+        <button
+          type="button"
+          class="active:scale-95 w-fit ml-auto text-gray-500"
+        >
+          Quên mật khẩu?
+        </button>
+        <div class="mb-4 mt-8 flex justify-center">
+          <button
+            id="submit-button"
+            class="font-bold text-white rounded-lg px-10 py-2 bg-sky-400 active:scale-95"
+          >
+            Đăng nhập
+          </button>
+        </div>
+        <!-- </form> -->
+        <div class="flex justify-center items-center gap-10">
+          <div class="flex-grow h-px bg-black"></div>
+          <span>Hoặc</span>
+          <div class="flex-grow h-px bg-black"></div>
+        </div>
+        <div class="mb-auto">
+          <div id="firebaseui-auth-container"></div>
+        </div>
+        <button
+          id="create-account"
+          type="button"
+          class="border-black border py-2 active:scale-95"
+        >
+          Tạo tài khoản
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigationbar -->
+    <div id="naviagtion-bar"></div>
+    <script>
+      fetch("../components/NavigationBar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("naviagtion-bar").innerHTML = html;
+        });
+    </script>
+
+    <div class="pt-28 flex">
+      <!-- Bộ lọc -->
+      <div class="px-12 space-y-5 border-r border-black">
+        <p class="text-3xl font-bold">Bộ lọc</p>
+        <div class="flex flex-col gap-2">
+          <p class="font-medium text-xl">Chủ đề</p>
+          <div class="flex gap-2 items-center">
+            <input
+              class="appearance-none w-4 h-4 border-black border-2 checked:border-black transition-colors duration-200 checked:bg-sky-400 cursor-pointer"
+              type="radio"
+              name="theme"
+              checked
+            />Tất cả
+          </div>
+          <div class="flex gap-2 items-center">
+            <input
+              class="appearance-none w-4 h-4 border-black border-2 checked:border-black transition-colors duration-200 checked:bg-sky-400 cursor-pointer"
+              type="radio"
+              name="theme"
+            />Sáng
+          </div>
+          <div class="flex gap-2 items-center">
+            <input
+              class="appearance-none w-4 h-4 border-black border-2 checked:border-black transition-colors duration-200 checked:bg-sky-400 cursor-pointer"
+              type="radio"
+              name="theme"
+            />Tối
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <p class="font-medium text-xl">Công việc</p>
+          <div class="flex gap-2 items-center">
+            <input
+              class="appearance-none w-4 h-4 border-black border-2 checked:border-black transition-colors duration-200 checked:bg-sky-400 cursor-pointer"
+              type="radio"
+              name="word"
+              checked
+            />Tất cả
+          </div>
+          <div class="flex gap-2 items-center">
+            <input
+              class="appearance-none w-4 h-4 border-black border-2 checked:border-black transition-colors duration-200 checked:bg-sky-400 cursor-pointer"
+              type="radio"
+              name="word"
+            />
+            <span class="whitespace-nowrap">Lập trình viên</span>
+          </div>
+          <div class="flex gap-2 items-center">
+            <input
+              class="appearance-none w-4 h-4 border-black border-2 checked:border-black transition-colors duration-200 checked:bg-sky-400 cursor-pointer"
+              type="radio"
+              name="word"
+            />
+            <span class="whitespace-nowrap">Nghệ thuật</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hiện thị các portfolio -->
+      <div class="mx-24 w-full h-screen overflow-auto hide-scrollbar pb-16">
+        <div id="cac-mau-templates" class="grid grid-cols-2 gap-12"></div>
+        <script>
+          const CARDS = [
+            {
+              id: "1",
+              title: "Card 1",
+              author: "Tác giả 1",
+              subtitle: "Subtitle 1",
+            },
+            {
+              id: "2",
+              title: "Card 2",
+              author: "Tác giả 2",
+              subtitle: "Subtitle 2",
+            },
+            {
+              id: "3",
+              title: "Card 3",
+              author: "Tác giả 3",
+              subtitle: "Subtitle 3",
+            },
+            {
+              id: "4",
+              title: "Card 4",
+              author: "Tác giả 4",
+              subtitle: "Subtitle 4",
+            },
+          ];
+          fetch("../components/CardPortfolio.html")
+            .then((res) => res.text())
+            .then((template) => {
+              const container = document.getElementById("cac-mau-templates");
+              CARDS.forEach((cardData) => {
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = template
+                  .replace("{{TieuDe}}", cardData.title)
+                  .replace("{{TacGia}}", cardData.author)
+                  .replace("{{TieuDePhu}}", cardData.subtitle);
+                const card = tempDiv.firstElementChild;
+                card.addEventListener("click", () => {
+                  window.location.href = `./templateDetail.html?id=${cardData.id}`;
+                });
+
+                container.appendChild(card);
+              });
+            });
+        </script>
+      </div>
+    </div>
+    <div id="footer"></div>
+    <script>
+      fetch("../components/Footer.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("footer").innerHTML = html;
+        });
+    </script>
+  </body>
+</html>
