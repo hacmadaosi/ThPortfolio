@@ -26,6 +26,8 @@
     <!-- <script src="../js/Logic_Controller.js"></script> -->
     <script type="module" src="../js/UI_Controller.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="../data/data.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* Ẩn scrollbar trên webkit (Chrome, Edge, Safari) */
@@ -205,7 +207,7 @@
         });
     </script>
 
-    <div class="pt-28 flex">
+    <div class="pt-28 flex pb-16">
       <!-- Bộ lọc -->
       <div class="px-12 space-y-5 border-r border-black">
         <p class="text-3xl font-bold">Bộ lọc</p>
@@ -264,45 +266,20 @@
       </div>
 
       <!-- Hiện thị các portfolio -->
-      <div class="mx-24 w-full h-screen overflow-auto hide-scrollbar pb-16">
+      <div class="mx-24 w-full h-screen overflow-auto hide-scrollbar">
         <div id="cac-mau-templates" class="grid grid-cols-2 gap-12"></div>
         <script>
-          const CARDS = [
-            {
-              id: "1",
-              title: "Card 1",
-              author: "Tác giả 1",
-              subtitle: "Subtitle 1",
-            },
-            {
-              id: "2",
-              title: "Card 2",
-              author: "Tác giả 2",
-              subtitle: "Subtitle 2",
-            },
-            {
-              id: "3",
-              title: "Card 3",
-              author: "Tác giả 3",
-              subtitle: "Subtitle 3",
-            },
-            {
-              id: "4",
-              title: "Card 4",
-              author: "Tác giả 4",
-              subtitle: "Subtitle 4",
-            },
-          ];
           fetch("../components/CardPortfolio.html")
             .then((res) => res.text())
             .then((template) => {
               const container = document.getElementById("cac-mau-templates");
-              CARDS.forEach((cardData) => {
+              Templates.forEach((cardData) => {
                 const tempDiv = document.createElement("div");
                 tempDiv.innerHTML = template
                   .replace("{{TieuDe}}", cardData.title)
                   .replace("{{TacGia}}", cardData.author)
-                  .replace("{{TieuDePhu}}", cardData.subtitle);
+                  .replace("{{TieuDePhu}}", cardData.subtitle)
+                  .replace("{{HinhAnh}}", cardData.imgLink);
                 const card = tempDiv.firstElementChild;
                 card.addEventListener("click", () => {
                   window.location.href = `./templateDetail.html?id=${cardData.id}`;

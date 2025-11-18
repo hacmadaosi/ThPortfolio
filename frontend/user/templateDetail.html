@@ -27,8 +27,9 @@
     <script type="module" src="../js/UI_Controller.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../data/data.js"></script>
   </head>
-  <body>
+  <body class="bg-[#F2F8FC]">
     <div
       id="notification"
       class="hidden fixed right-0 top-0 bg-[#F3FDF5] pt-4 z-[2] mr-2 mt-2 w-[18rem]"
@@ -192,12 +193,77 @@
           document.getElementById("naviagtion-bar").innerHTML = html;
         });
     </script>
-    <div class="h-screen pb-16 pt-20">
-      <div class="flex justify-between px-10 py-5">
+
+    <!-- Nội dung chính -->
+    <div class="pt-[72px]">
+      <div class="flex justify-between px-10 py-5 bg-gray-100">
         <span class="text-4xl">Templates</span>
-        <button>Quay lại</button>
+        <button class="text-xs" onclick="window.history.go(-1)">
+          Quay lại
+        </button>
+      </div>
+
+      <div class="flex flex-col px-24 mt-8">
+        <!-- Tiêu đề -->
+        <span class="font-bold text-3xl" id="tpDetail_TieuDe">Tiêu đề</span>
+        <!-- Tác giả -->
+        <div class="space-x-1 mt-2">
+          <i class="fa-regular fa-user"></i>
+          <span id="tpDetail_TacGia"> Tác giả</span>
+        </div>
+        <!-- Hình ảnh minha họa -->
+        <img id="tpDetail_HinhAnh" class="mt-12 mx-28" alt="Ảnh minh họa" />
+        <div class="mt-28 flex">
+          <!-- Thông tin thêm -->
+          <div class="flex flex-col w-[30%] gap-2">
+            <span class="text-2xl font-medium">Thông tin thêm</span>
+            <span id="tpDetail_NgayDang">Ngày đăng</span>
+          </div>
+          <!-- Mô tả -->
+          <div class="flex flex-col w-full gap-2">
+            <span class="text-2xl font-medium">Mô tả</span>
+            <span id="tpDetail_MoTa">Phải có nội dung gì đó.</span>
+          </div>
+        </div>
+        <!-- Nút thêm vào giỏ hàng -->
+        <div
+          id="tpDetail_buttonAddToCard"
+          class="py-12 w-full flex justify-end"
+        ></div>
+        <script>
+          fetch("../components/Button.html")
+            .then((res) => res.text())
+            .then((widget) => {
+              const button = document.getElementById(
+                "tpDetail_buttonAddToCard"
+              );
+              button.innerHTML = widget.replace(
+                "{{TieuDe}}",
+                "Thêm vào giỏ hàng"
+              );
+              button.firstElementChild.addEventListener("click", () => {
+                alert("hahaha");
+              });
+            });
+        </script>
+        <script>
+          const template =
+            Templates[new URLSearchParams(window.location.search).get("id")];
+          const TacGia = document.getElementById("tpDetail_TacGia");
+          TacGia.textContent = template.author;
+          const TieuDe = document.getElementById("tpDetail_TieuDe");
+          TieuDe.textContent = template.title;
+          const HinhAnh = document.getElementById("tpDetail_HinhAnh");
+          HinhAnh.src = template.imgLink;
+          const NgayDang = document.getElementById("tpDetail_NgayDang");
+          NgayDang.textContent = "Ngày đăng: " + template.date;
+          const MoTa = document.getElementById("tpDetail_MoTa");
+          MoTa.textContent = template.description;
+        </script>
       </div>
     </div>
+
+    <!-- Footer -->
     <div id="footer"></div>
     <script>
       fetch("../components/Footer.html")
