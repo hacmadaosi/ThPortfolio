@@ -23,7 +23,7 @@
     />
 
     <script src="../js/FireBase_Controller.js"></script>
-    <!-- <script src="../js/Logic_Controller.js"></script> -->
+    <script src="../js/Logic_Controller.js"></script>
     <script type="module" src="../js/UI_Controller.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -224,44 +224,120 @@
             <span class="text-2xl font-medium">Mô tả</span>
             <span id="tpDetail_MoTa">Phải có nội dung gì đó.</span>
           </div>
+          <script>
+            const _id = new URLSearchParams(window.location.search).get("id");
+            const template = Templates[_id];
+            const TacGia = document.getElementById("tpDetail_TacGia");
+            TacGia.textContent = template.author;
+            const TieuDe = document.getElementById("tpDetail_TieuDe");
+            TieuDe.textContent = template.title;
+            const HinhAnh = document.getElementById("tpDetail_HinhAnh");
+            HinhAnh.src = template.imgLink;
+            const NgayDang = document.getElementById("tpDetail_NgayDang");
+            NgayDang.textContent = "Ngày đăng: " + template.date;
+            const MoTa = document.getElementById("tpDetail_MoTa");
+            MoTa.textContent = template.description;
+          </script>
         </div>
         <!-- Nút thêm vào giỏ hàng -->
         <div
           id="tpDetail_buttonAddToCard"
           class="py-12 w-full flex justify-end"
         ></div>
-        <script>
-          fetch("../components/Button.html")
-            .then((res) => res.text())
-            .then((widget) => {
-              const button = document.getElementById(
-                "tpDetail_buttonAddToCard"
-              );
-              button.innerHTML = widget.replace(
-                "{{TieuDe}}",
-                "Thêm vào giỏ hàng"
-              );
-              button.firstElementChild.addEventListener("click", () => {
-                alert("hahaha");
+
+        <!-- Thông tin đánh giá -->
+        <div
+          class="bg-gray-200 w-full mb-12 p-8 flex flex-col gap-8 rounded-xl"
+        >
+          <span class="font-medium text-xl gap-8">Đánh giá</span>
+          <div
+            id="tpDetail_listRates"
+            class="bg-white p-4 flex flex-col rounded-xl"
+          ></div>
+          <script>
+            fetch("../components/CardRate.html")
+              .then((res) => res.text())
+              .then((widget) => {
+                const listRates = document.getElementById("tpDetail_listRates");
+                const listRate = Rates.filter((e) => e.templateId == _id);
+                if (listRate && listRate.length > 0)
+                  listRate.map((e) => {
+                    const tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = widget
+                      .replace("{{Rate}}", e.rating * 20)
+                      .replace("{{Content}}", e.content)
+                      .replace("{{Date}}", e.date)
+                      .replace(
+                        "{{UserName}}",
+                        Users.find((u) => u.id === e.userId).fullName
+                      );
+                    const card = tempDiv.firstElementChild;
+                    const btn = card.querySelector(".btnRate");
+                    const menu = card.querySelector(".cardRateMenu");
+
+                    btn.onclick = (e) => {
+                      document
+                        .querySelectorAll(".cardRateMenu")
+                        .forEach((m) => {
+                          if (m !== menu) m.classList.add("hidden");
+                        });
+
+                      menu.classList.toggle("hidden");
+                      e.stopPropagation();
+                    };
+                    document.addEventListener("click", () => {
+                      document
+                        .querySelectorAll(".cardRateMenu")
+                        .forEach((m) => m.classList.add("hidden"));
+                    });
+                    listRates.append(card);
+                  });
+                else {
+                  const emptyMessage = document.createElement("p");
+                  emptyMessage.classList = "w-full flex justify-center";
+                  emptyMessage.textContent = "Chưa có đánh giá nào.";
+                  listRates.append(emptyMessage);
+                }
               });
-            });
-        </script>
-        <script>
-          const template =
-            Templates[new URLSearchParams(window.location.search).get("id")];
-          const TacGia = document.getElementById("tpDetail_TacGia");
-          TacGia.textContent = template.author;
-          const TieuDe = document.getElementById("tpDetail_TieuDe");
-          TieuDe.textContent = template.title;
-          const HinhAnh = document.getElementById("tpDetail_HinhAnh");
-          HinhAnh.src = template.imgLink;
-          const NgayDang = document.getElementById("tpDetail_NgayDang");
-          NgayDang.textContent = "Ngày đăng: " + template.date;
-          const MoTa = document.getElementById("tpDetail_MoTa");
-          MoTa.textContent = template.description;
-        </script>
+          </script>
+          <div
+            id="tpDetail_buttonOpenRateDialog"
+            class="w-full flex justify-center"
+          ></div>
+        </div>
       </div>
     </div>
+    <script>
+      fetch("../components/Button.html")
+        .then((res) => res.text())
+        .then((widget) => {
+          // Nút thêm vào g
+          const buttonAddToCard = document.getElementById(
+            "tpDetail_buttonAddToCard"
+          );
+          buttonAddToCard.innerHTML = widget.replace(
+            "{{TieuDe}}",
+            "Thêm vào giỏ hàng"
+          );
+          buttonAddToCard.firstElementChild.addEventListener("click", () => {
+            alert("hahaha");
+          });
+          // Nút thêm đánh giá
+          const buttonOpenRateDialog = document.getElementById(
+            "tpDetail_buttonOpenRateDialog"
+          );
+          buttonOpenRateDialog.innerHTML = widget.replace(
+            "{{TieuDe}}",
+            "Viết đánh giá"
+          );
+          buttonOpenRateDialog.firstElementChild.addEventListener(
+            "click",
+            () => {
+              alert("hahaha");
+            }
+          );
+        });
+    </script>
 
     <!-- Footer -->
     <div id="footer"></div>

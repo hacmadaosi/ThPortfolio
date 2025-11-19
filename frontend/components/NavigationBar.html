@@ -6,29 +6,31 @@
   <div id="mobile-menu" class="lg:hidden mr-auto">
     <i class="fa-solid fa-bars" style="color: black"></i>
   </div>
-  <a id="logo" href="#trang-chu"
+  <a id="logo" href="./index.html"
     ><img class="w-10 h-10" src="../resource/Logo.png" alt="Logo"
   /></a>
-  <ul id="menu-items" class="flex gap-6 w-full hidden lg:flex">
+  <ul id="menu-items" class="flex gap-5 w-full hidden lg:flex">
     <li
       class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]"
     >
-      <a href="./index.html#trang-chu">Trang Chủ</a>
+      <a href="./index.html#trang-chu" class="whitespace-nowrap">Trang Chủ</a>
     </li>
     <li
       class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]"
     >
-      <a href="./index.html#gioi-thieu">Giới Thiệu</a>
+      <a href="./index.html#gioi-thieu" class="whitespace-nowrap">Giới Thiệu</a>
     </li>
     <li
       class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]"
     >
-      <a href="./index.html#doi-phat-trien">Nhóm Phát Triển</a>
+      <a href="./index.html#doi-phat-trien" class="whitespace-nowrap"
+        >Nhóm Phát Triển</a
+      >
     </li>
     <li
       class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms]"
     >
-      <a href="./index.html#lien-he">Liên Hệ</a>
+      <a href="./index.html#lien-he" class="whitespace-nowrap">Liên Hệ</a>
     </li>
     <li
       class="py-1 w-fit text-base font-semibold border-b-2 border-transparent hover:border-sky-400 transition-all duration-[300ms] mr-auto text-sky-400"
@@ -36,9 +38,18 @@
       <a href="./templates.html">Templates</a>
     </li>
     <li>
+      <a
+        href="./cart.html"
+        class="flex items-center gap-2 border border-black rounded-lg px-3 text-xs py-2 w-fit active:scale-95"
+      >
+        <img class="w-4 h-4" src="../resource/shopping-cart.png" />
+        <button class="whitespace-nowrap">Giỏ hàng</button>
+      </a>
+    </li>
+    <li>
       <div
         id="search-bar"
-        class="w-fit items-center border border-black px-4 py-2 rounded-lg gap-2 mr-4 text-xs"
+        class="flex w-fit items-center border border-black px-4 py-2 rounded-lg gap-2 text-xs whitespace-nowrap"
       >
         <i class="fa-solid fa-magnifying-glass"></i>
         <input

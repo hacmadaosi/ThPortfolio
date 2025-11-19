@@ -67,6 +67,11 @@ let txtUserName,
 let stateLogin = true;
 let user = JSON.parse(localStorage.getItem("user"));
 
+// Cart
+let btn_Payment;
+let listCartItems;
+let listPayment = [];
+
 document.addEventListener("DOMContentLoaded", () => {
   // Khởi tạo giá trị cho biến
   ValueInitalization();
@@ -97,6 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Xử lý giao diện nếu người dùng đã đăng nhập khi truy cập
   ConfigLoginState();
+
+  // trang giỏ hàng
+  CartAction();
 });
 
 const CallAPIGetInfoDeveloper = async () => {
@@ -120,9 +128,7 @@ const CallAPIGetInfoDeveloper = async () => {
       txtDeveloperContact[index].textContent = res.result[index].lienHe;
     }
     developerDetail.classList.remove("hidden");
-  } catch (e) {
-    console.log(e.message);
-  }
+  } catch (e) {}
 };
 
 const ShowNotification = (state, content) => {
@@ -289,6 +295,24 @@ function NavigationAction() {
       navigation_Menu.classList.toggle("gap-4");
       navigation_Menu.classList.toggle("pb-4");
     });
+}
+function CartAction() {
+  if (btn_Payment) {
+    btn_Payment.addEventListener("click", () => {
+      listCartItems = document.querySelectorAll(".cardcart_input");
+      listPayment = [];
+      listCartItems.forEach((el) => {
+        if (el.checked) {
+          listPayment.push(el.value);
+        }
+      });
+      if (listPayment.length > 0) {
+        window.location.href = "./payment.html";
+      } else {
+        ShowNotification(false, "Hãy chọn 1 sản phẩm để thanh toán");
+      }
+    });
+  }
 }
 function AuthenticationFormAction() {
   // Xử lý sự kiện người dùng submit form
@@ -472,6 +496,7 @@ function ValueInitalization() {
   input_Email = document.getElementById("email-input");
 
   btn_Submit = document.getElementById("submit-button");
+  btn_Payment = document.getElementById("cart_Payment");
 
   btn_CreateAccount = document.getElementById("create-account");
 

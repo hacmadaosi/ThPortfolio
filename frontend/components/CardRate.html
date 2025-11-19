@@ -1,0 +1,48 @@
+<div class="p-6 my-2 rounded-lg flex items-start bg-gray-100">
+  <div class="flex items-center gap-2 w-[20%]">
+    <img
+      class="w-8 h-8 rounded-full"
+      src="../resource/img2.png"
+      alt="Ảnh đại diện"
+    />
+    <span>{{UserName}}</span>
+  </div>
+  <div class="w-full flex flex-col gap-2">
+    <div class="w-fit flex relative text-yellow-400">
+      <!-- sao nền -->
+      <i class="fa-regular fa-star"></i>
+      <i class="fa-regular fa-star"></i>
+      <i class="fa-regular fa-star"></i>
+      <i class="fa-regular fa-star"></i>
+      <i class="fa-regular fa-star"></i>
+
+      <!-- sao phủ vàng theo {{rate}} -->
+      <div class="absolute top-0 left-0 flex overflow-hidden w-[{{Rate}}%]">
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+      </div>
+    </div>
+    <span>{{Content}}</span>
+    <div class="text-gray-500 flex items-center gap-2">
+      <i class="fa-regular fa-clock"></i>
+      <span>{{Date}}</span>
+    </div>
+  </div>
+  <div class="relative inline-block">
+    <button class="btnRate">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+    <div
+      class="cardRateMenu absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg hidden"
+    >
+      <ul class="flex flex-col">
+        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Chỉnh sửa</li>
+        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Xóa</li>
+        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Báo cáo</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div
+  class="flex items-center bg-white rounded-[20px] gap-5 px-5 shadow-sm py-4 lg:border-2"
+>
+  <input
+    type="checkbox"
+    value="{{id}}"
+    class="cardcart_input appearance-none w-4 h-4 border-black border-2 checked:border-black transition-colors duration-200 checked:bg-sky-400 cursor-pointer"
+  />
+  <img
+    src="{{HinhAnh}}"
+    alt="Product"
+    class="lg:w-32 lg:h-24 w-20 h-18 rounded object-cover"
+  />
+  <div class="flex-1 mb-auto">
+    <p class="lg:text-base text-sm">{{TieuDe}}</p>
+    <p class="cardcart_DonGia text-blue-400 lg:text-base text-sm">{{DonGia}}</p>
+  </div>
+  <button class="text-black text-xs underline italic mb-auto">Xóa</button>
+</div>
