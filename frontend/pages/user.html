@@ -48,11 +48,11 @@
                 <p class="text-xs text-gray-500">Tổng số hóa đơn</p>
             </div>
         </div>
-        <div id="" class="lg:flex-1 lg:pl-6 space-y-4 ">
-          <button class="flex items-center gap-2 text-sky-400 whitespace-nowrap">
+        <div class="lg:flex-1 lg:pl-6 space-y-2">
+          <button id="user_btnAccountInfor" class="flex items-center gap-2 text-sky-400 whitespace-nowrap">
             <i class="fa-solid fa-sliders"></i>Thông tin tài khoản
           </button>
-          <button class="flex items-center gap-2 whitespace-nowrap">
+          <button id="user_btnPaymentHistory" class="flex items-center gap-2 whitespace-nowrap">
             <i class="fa-regular fa-credit-card"></i>Lịch sử thanh toán
           </button>
           <button id="logout-button" class="flex items-center gap-2 whitespace-nowrap active:scale-95 active:text-sky-400">
@@ -60,7 +60,8 @@
         </div>
         </div>
         </div>
-        <div id="detail-account-card" class="bg-white rounded-2xl pt-6 pb-12 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col lg:text-base text-sm">
+        <div id="user_formAccountInfor" class="space-y-4 ">
+          <div  class="bg-white rounded-2xl pt-6 pb-12 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col lg:text-base text-sm">
             <div class="flex justify-between items-center w-full mb-2">
                 <p class="font-bold">Thông tin cá nhân</p>
                 <button class="items-center gap-1 text-sky-400">
@@ -88,22 +89,86 @@
                     <p id="profile-birthday" class="font-semibold">NaN</p>
                 </div>
             </div>
+          </div>
+          <div  class="bg-white rounded-2xl py-6 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col lg:text-base text-sm">
+              <div class="flex justify-between items-center w-full mb-2">
+                  <p class="font-bold">Mật khẩu</p>
+                  <button class="items-center gap-1 text-sky-400">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                      Thay đổi mật khẩu
+                  </button>
+              </div>
+              <div class="flex flex-1 justify-between py-4">
+                      <p class="text-gray-500">Cập nhật lần cuối</p>
+                      <p id="time-change-password" class="">17:28 03/09/2025</p>
+                  </div>
+          </div>
         </div>
-        <div id="detail-account-card" class="bg-white rounded-2xl py-6 px-6 flex shadow-[2px_2px_10px_rgba(0,0,0,0.20)] flex flex-col lg:text-base text-sm">
-            <div class="flex justify-between items-center w-full mb-2">
-                <p class="font-bold">Mật khẩu</p>
-                <button class="items-center gap-1 text-sky-400">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    Thay đổi mật khẩu
-                </button>
+
+        <div id="user_formPaymentHistory" class="hidden bg-white rounded-2xl p-6">
+          <span class="font-medium">Lịch sử mua hàng</span>
+          <div id="user_ShowAdvoice">
+            <div class="p-4 flex flex-col gap-4">
+              <div class="flex gap-4">
+                <p class="text-gray-400 tetx-sm">Đơn hàng: <span class="tetx-sm text-black">hahaha</span></p> 
+                <p class="text-gray-400 tetx-sm">Ngày thanh toán: <span class="tetx-sm text-black">hahaha</span></p> 
+              </div>
             </div>
-            <div class="flex flex-1 justify-between py-4">
-                    <p class="text-gray-500">Cập nhật lần cuối</p>
-                    <p id="time-change-password" class="">17:28 03/09/2025</p>
-                </div>
+            <script>
+              const container = document.getElementById("user_ShowAdvoice") 
+              const HoaDon = JSON.parse(localStorage.getItem("user")).HoaDon
+              const Templates = JSON.parse(localStorage.getItem("templates"))
+              
+              // console.log(Templates.find(e => e.id == "lGAeTdALv6MPNw9WWxt4"))
+              HoaDon.map(e => {
+                container.innerHTML += (`<div class="p-4 flex flex-col border border-black rounded-xl gap-5">
+                  <div class="flex gap-4">
+                    <p class="text-gray-400 tetx-sm">Đơn hàng: <span class="tetx-sm text-black">${e.id}</span></p> 
+                    <p class="text-gray-400 tetx-sm">Ngày thanh toán: <span class="tetx-sm text-black">${e.ThoiGian}</span></p>
+                  </div>
+                  ${e.Mau.map(idTemplate => {
+                    const template = Templates.find(el => el.id == idTemplate)
+                    return `<div class="flex gap-4 group">
+                              <div class="relative">
+                                <img src="${template.LienKetAnh}" alt="Ảnh minh họa" class="h-[100px] rounded-lg group-hover:blur-sm">
+                                <a href="./portfolio.html?advoice=${e.id}&templateId=${template.id}" 
+                                  class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap text-white border px-3 py-2 border-white rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform-gpu">
+                                  Xem chi tiết
+                                </a>
+                              </div>
+                              <div class='group-hover:blur-sm'>
+                                <span class="font-bold">${template.TieuDe}</span>
+                                <p class="text-gray-400">Tác giả: <span class="text-black">${template.TacGia}</span></p>
+                              </div>
+                            </div>`}).join('')} 
+                   <p class="w-full flex justify-end font-bold">Tổng thanh toán&nbsp;  <span class="text-sky-400">${e.TongTien.toLocaleString("vi-VN")}</span>&nbsp;vnđ</p>                
+                </div>`)
+              })
+            </script>
+          </div>
         </div>
-        <button class="px-8 py-2 bg-sky-400 text-white font-bold rounded ml-auto">Quay lại</button>
+        <button class="px-8 py-2 bg-sky-400 text-white font-bold rounded ml-auto"><a href="./index.html">Quay lại</a></button>
       </div>
     </div>
+    <script>
+      const btn_AccountInfor = document.getElementById("user_btnAccountInfor")
+      const btn_PaymentHistory = document.getElementById("user_btnPaymentHistory")
+      const form_AccountInfor = document.getElementById("user_formAccountInfor")
+      const form_PaymentHistory = document.getElementById("user_formPaymentHistory")
+      btn_AccountInfor.addEventListener("click", () => {
+        form_PaymentHistory.classList.add("hidden")
+        btn_AccountInfor.classList.add("text-sky-400")
+        form_AccountInfor.classList.remove("hidden")
+        btn_PaymentHistory.classList.remove("text-sky-400")
+
+      })
+      btn_PaymentHistory.addEventListener("click", () => {
+        form_PaymentHistory.classList.remove("hidden")
+        form_AccountInfor.classList.add("hidden")
+        btn_AccountInfor.classList.remove("text-sky-400")
+        btn_PaymentHistory.classList.add("text-sky-400")
+
+      })
+    </script>
   </body>
 </html>

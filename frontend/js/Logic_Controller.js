@@ -1,26 +1,46 @@
 import END_POINTS from "../api.endpoints.js";
-import { AuthenticationAccount } from "./FireBase_Controller.js";
 
 // Hàm xử lý đăng nhập
-export const LoginAccount = async (email, password) => {
+export const LoginAccount = async (userName, password) => {
   try {
-    const checkEmail = await AuthenticationAccount(email, password);
-    const token = checkEmail.result;
-    const res = await fetch("https://thportfolio.onrender.com/login", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
+    const res = await fetch("http://localhost:80/api/users/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: userName,
+        password: password,
+      }),
     });
+
     const data = await res.json();
     if (!res.ok) {
-      return { state: false, result: data.result || "Lỗi server" };
+      return {
+        state: false,
+        result: data.message || "Lỗi khi gọi LoginAccount",
+      };
     }
-
     // Lưu thông tin từ server sau khi người dùng đăng nhập thành công
-    localStorage.setItem("user", JSON.stringify(data.result));
+    localStorage.setItem("user", JSON.stringify(data));
+    window.location.reload();
     return { state: true, result: "Đã đăng nhập thành công" };
   } catch (ex) {
     return { state: false, result: ex.message };
   }
+};
+
+export const getAllTemplates = async () => {
+  const res = await fetch("http://localhost:80/api/templates");
+  const data = await res.json();
+  if (!res.ok) {
+    return {
+      state: false,
+      result: data.message || "Lỗi khi gọi getAllTemplates",
+    };
+  }
+
+  localStorage.setItem("templates", JSON.stringify(data.result));
 };
 
 // Gọi API tạo tài khoản

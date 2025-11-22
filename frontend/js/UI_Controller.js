@@ -2,6 +2,7 @@ import {
   getInfoDeveloper,
   LoginAccount,
   CreateAccount,
+  getAllTemplates,
 } from "./Logic_Controller.js";
 
 // Navigation
@@ -24,8 +25,7 @@ let textfield_Confirm;
 let input_ConfirmPass;
 let btn_ShowConfirmPass;
 let btn_HideConfirmPass;
-let textfield_Email;
-let input_Email;
+let input_User;
 let btn_Submit;
 let btn_CreateAccount;
 let text_TitleAuthForm;
@@ -53,6 +53,11 @@ let toggleBtn;
 let icon;
 let templateDetail;
 
+// Payment
+let text_totalPrice;
+let text_PaymentPrice;
+let text_Discount;
+
 // User
 let txtUserName,
   txtUserEmail,
@@ -63,14 +68,13 @@ let txtUserName,
   txtProfileSex,
   txtProfileBirthDay,
   txtTimeChangePass;
+let frm_User;
 
 let stateLogin = true;
 let user = JSON.parse(localStorage.getItem("user"));
-
+let templates = JSON.parse(localStorage.getItem("templates"));
 // Cart
 let btn_Payment;
-let listCartItems;
-let listPayment = [];
 
 document.addEventListener("DOMContentLoaded", () => {
   // Khởi tạo giá trị cho biến
@@ -94,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Gọi API hiện thị thông tin nhà phát triển
   CallAPIGetInfoDeveloper();
 
+  CallAPIGetAllTemplate();
+
   // Xử lý sự kiện trang templates
   TemplatesAction();
 
@@ -105,30 +111,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // trang giỏ hàng
   CartAction();
+
+  // trang thanh toán
+  PaymentAction();
 });
+
+const CallAPIGetAllTemplate = async () => {
+  const container = document.getElementById("cac-mau-templates");
+  if (container && templates.length > 0) {
+    try {
+      await getAllTemplates();
+      const templateHtml = await fetch("../components/CardPortfolio.html").then(
+        (r) => r.text()
+      );
+      templates.map((e) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = templateHtml
+          .replace("{{TieuDe}}", e.TieuDe)
+          .replace("{{TacGia}}", e.TacGia)
+          .replace("{{TieuDePhu}}", e.MoTaNgan)
+          .replace("{{HinhAnh}}", e.LienKetAnh);
+        const card = tempDiv.firstElementChild;
+        card.addEventListener("click", () => {
+          window.location.href = `./templateDetail.html?id=${e.id}`;
+        });
+        container.appendChild(card);
+      });
+    } catch (e) {
+      console.log("Lỗi khi gọi API hiển thị mẫu - ", e);
+    }
+  }
+};
 
 const CallAPIGetInfoDeveloper = async () => {
   const developerDetail = document.getElementById("developer-detail");
-  try {
-    const res = await getInfoDeveloper();
-    if (!res.state) {
-      ShowNotification(res.state, res.result);
-      return;
-    }
+  if (developerDetail)
+    try {
+      const res = await getInfoDeveloper();
+      if (!res.state) {
+        ShowNotification(res.state, res.result);
+        return;
+      }
 
-    const imgDeveloperImage = document.querySelectorAll(".image-developer");
-    const txtDeveloperName = document.querySelectorAll(".name-developer");
-    const txtDeveloperRole = document.querySelectorAll(".role-developer");
-    const txtDeveloperContact = document.querySelectorAll(".contact-developer");
+      const imgDeveloperImage = document.querySelectorAll(".image-developer");
+      const txtDeveloperName = document.querySelectorAll(".name-developer");
+      const txtDeveloperRole = document.querySelectorAll(".role-developer");
+      const txtDeveloperContact =
+        document.querySelectorAll(".contact-developer");
 
-    for (let index = 0; index < res.result.length; index++) {
-      imgDeveloperImage[index].src = res.result[index].hinhAnh;
-      txtDeveloperName[index].textContent = res.result[index].hoTen;
-      txtDeveloperRole[index].textContent = res.result[index].vaiTro;
-      txtDeveloperContact[index].textContent = res.result[index].lienHe;
+      for (let index = 0; index < res.result.length; index++) {
+        imgDeveloperImage[index].src = res.result[index].hinhAnh;
+        txtDeveloperName[index].textContent = res.result[index].hoTen;
+        txtDeveloperRole[index].textContent = res.result[index].vaiTro;
+        txtDeveloperContact[index].textContent = res.result[index].lienHe;
+      }
+      developerDetail.classList.remove("hidden");
+    } catch (e) {
+      console.log("Lỗi khi gọi API hiển thị nhóm phát triển - ", e);
     }
-    developerDetail.classList.remove("hidden");
-  } catch (e) {}
 };
 
 const ShowNotification = (state, content) => {
@@ -173,7 +213,16 @@ function ClearURL() {
     });
   });
 }
-
+function PaymentAction() {
+  if (text_totalPrice && text_PaymentPrice && text_Discount) {
+    const totalPrice = localStorage.getItem("totalPrice");
+    const discount = 5;
+    text_totalPrice.textContent = totalPrice.toLocaleString("vi-VN");
+    text_Discount.textContent = discount;
+    const sum = totalPrice - totalPrice * (discount / 100);
+    text_PaymentPrice.textContent = sum.toLocaleString("vi-VN");
+  }
+}
 function ManagerAction() {
   // Khi click Mẫu
   if (tabMauBtn) {
@@ -246,25 +295,6 @@ function NavigationAction() {
     });
   }
 
-  // Xử lý sự kiện người dùng mở form đăng nhập
-  if (btn_OpenAuthForm) {
-    btn_OpenAuthForm.addEventListener("click", () => {
-      // Nếu localStorage rỗng => Người dùng chưa đăng nhập
-      if (!localStorage.getItem("user")) {
-        frm_Auth.classList.remove("hidden");
-      }
-      // Nếu người dùng đăng nhập hiện các chức năng phù hợp
-      else {
-        menu_Item.forEach((items, index) => {
-          if (index !== menu_Item.length - 1) {
-            items.classList.toggle("hidden");
-          }
-        });
-        // btn_OpenAuthForm.textContent == user.email ? "Quay lại" : user.email;
-      }
-    });
-  }
-
   // Xử lý sự kiện người dùng nhấn chọn
   menu_Item.forEach((item, index) => {
     if (index < 5)
@@ -299,14 +329,12 @@ function NavigationAction() {
 function CartAction() {
   if (btn_Payment) {
     btn_Payment.addEventListener("click", () => {
-      listCartItems = document.querySelectorAll(".cardcart_input");
-      listPayment = [];
-      listCartItems.forEach((el) => {
-        if (el.checked) {
-          listPayment.push(el.value);
-        }
-      });
-      if (listPayment.length > 0) {
+      const lbe_totalPirce = document.getElementById("cart_totalPirce");
+      if (lbe_totalPirce.textContent.replace(/\./g, "") > 0) {
+        localStorage.setItem(
+          "totalPrice",
+          lbe_totalPirce.textContent.replace(/\./g, "")
+        );
         window.location.href = "./payment.html";
       } else {
         ShowNotification(false, "Hãy chọn 1 sản phẩm để thanh toán");
@@ -321,23 +349,20 @@ function AuthenticationFormAction() {
       e.preventDefault();
       if (stateLogin) {
         // Người dùng nhấn đăng nhập
-        const res = await LoginAccount(input_Email.value, input_Password.value);
+        const res = await LoginAccount(input_User.value, input_Password.value);
         if (res.state) {
           frm_Auth.classList.add("hidden");
           input_Password.value = "";
-          input_Email.value = "";
+          input_User.value = "";
           btn_ShowPassword.classList.add("hidden");
           btn_HidePassword.classList.add("hidden");
           user = JSON.parse(localStorage.getItem("user"));
-          btn_OpenAuthForm.textContent = SubText(user.data.HoTen);
+          btn_OpenAuthForm.textContent = user.HoTen;
         }
         ShowNotification(res.state, res.result);
       } else {
         // Người dùng nhấn đăng ký
-        const res = await CreateAccount(
-          input_Email.value,
-          input_Password.value
-        );
+        const res = await CreateAccount(input_User.value, input_Password.value);
         ShowNotification(res.state, res.result);
         if (res.state) btn_CreateAccount.click();
       }
@@ -349,7 +374,7 @@ function AuthenticationFormAction() {
     btn_CreateAccount.addEventListener("click", () => {
       input_ConfirmPass.value = "";
       input_Password.value = "";
-      input_Email.value = "";
+      input_User.value = "";
       btn_ShowPassword.classList.add("hidden");
       btn_HidePassword.classList.add("hidden");
       btn_ShowConfirmPass.classList.add("hidden");
@@ -440,35 +465,42 @@ function AuthenticationFormAction() {
 }
 const UserProfileAction = () => {
   // Hiển thị tên người dùng
-  if (txtUserName) txtUserName.textContent = SubText(user.data.HoTen, 20);
+  if (txtUserName) txtUserName.textContent = SubText(user.HoTen, 20);
   // Hiển thị email người dùng
-  if (txtUserEmail) txtUserEmail.textContent = user.data.Email;
+  if (txtUserEmail) txtUserEmail.textContent = user.Email;
   // Đăng xuất
   if (btnLogout)
     btnLogout.addEventListener("click", () => {
+      localStorage.removeItem("user");
       window.location.href = "./index.html";
-      if (btn_OpenAuthForm) btn_OpenAuthForm.textContent = "Đăng nhập";
-      localStorage.clear();
+      btn_OpenAuthForm.textContent = "Đăng nhập";
     });
   // Hiển thị hóa đơn đã thanh toán
-  if (txtBillCount) txtBillCount.textContent = user.data.HoaDon.length;
+  if (txtBillCount) txtBillCount.textContent = user.HoaDon.length;
 
   // Hiển thị tên
-  if (txtProfileName) txtProfileName.textContent = NaNText(user.data.HoTen);
+  if (txtProfileName) txtProfileName.textContent = NaNText(user.HoTen);
 
   // Hiển thị email
-  if (txtProfileEmail) txtProfileEmail.textContent = NaNText(user.data.Email);
+  if (txtProfileEmail) txtProfileEmail.textContent = NaNText(user.Email);
 
   // Hiển thị giới tính
-  if (txtProfileSex) txtProfileSex.textContent = NaNText(user.data.GioiTinh);
+  if (txtProfileSex) txtProfileSex.textContent = NaNText(user.GioiTinh);
 
   // Hiển thị ngày sinh
   if (txtProfileBirthDay)
-    txtProfileBirthDay.textContent = NaNText(user.data.NgaySinh);
+    txtProfileBirthDay.textContent = NaNText(user.NgaySinh);
 
   // Hiển thị thời gian đổi mật khẩu cuối
   if (txtTimeChangePass)
-    txtTimeChangePass.textContent = user.data.ThoiGianCapNhatMatKhau;
+    txtTimeChangePass.textContent = user.ThoiGianCapNhatMatKhau;
+
+  // if (frm_User) {
+  //   user.HoaDon.map((e) => {
+  //     console.log(e.ThoiGian);
+  //   });
+  //   console.log(user.HoaDon);
+  // }
 };
 function ValueInitalization() {
   menu_Item = document.querySelectorAll("#menu-items li");
@@ -479,7 +511,7 @@ function ValueInitalization() {
   btn_Close_Login = document.getElementById("close_login_form");
 
   frm_Auth = document.getElementById("auth-form");
-  btn_OpenAuthForm = document.getElementById("login-button");
+  btn_OpenAuthForm = document.getElementById("navButtonOpenLoginForm");
   input_Password = document.getElementById("pass-input");
   btn_ShowPassword = document.getElementById("show-pass");
   btn_HidePassword = document.getElementById("hide-pass");
@@ -492,8 +524,7 @@ function ValueInitalization() {
   btn_ShowConfirmPass = document.getElementById("show-confirm-pass");
   btn_HideConfirmPass = document.getElementById("hide-confirm-pass");
 
-  textfield_Email = document.getElementById("email-textfield");
-  input_Email = document.getElementById("email-input");
+  input_User = document.getElementById("user-input");
 
   btn_Submit = document.getElementById("submit-button");
   btn_Payment = document.getElementById("cart_Payment");
@@ -522,6 +553,9 @@ function ValueInitalization() {
   toggleBtn = document.getElementById("icon-sidebar");
   // icon = toggleBtn.querySelector("i");
   templateDetail = document.getElementById("main-content");
+  text_totalPrice = document.getElementById("payment_totalPrice");
+  text_PaymentPrice = document.getElementById("payment_paymentPrice");
+  text_Discount = document.getElementById("payment_Discount");
 
   btnAccount = document.getElementById("account-button");
 
@@ -534,17 +568,16 @@ function ValueInitalization() {
   txtProfileSex = document.getElementById("profile-sex");
   txtProfileBirthDay = document.getElementById("profile-birthday");
   txtTimeChangePass = document.getElementById("time-change-password");
+  frm_User = document.getElementById("user_formPaymentHistory");
 }
 
 // Xử lý giao diện nếu người dùng đã đăng nhập khi truy cập
 const ConfigLoginState = () => {
   // Thiết lập mặc định nếu người dùng đã đăng nhập
-  if (user) {
-    if (btn_OpenAuthForm)
-      btn_OpenAuthForm.textContent = SubText(user.data.HoTen);
-  }
+  if (btn_OpenAuthForm)
+    btn_OpenAuthForm.textContent = SubText(user ? user.HoTen : "Đăng nhập");
 };
-const SubText = (str, maxLength) => {
+const SubText = (str, maxLength = 50) => {
   return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
 };
 const NaNText = (str) => {

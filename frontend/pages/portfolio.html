@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ThPortfolio</title>
+  </head>
+  <body>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+
+      // 2. Lấy giá trị của từng tham số bằng phương thức .get()
+      const advoiceId = urlParams.get("advoice");
+      const templateId = urlParams.get("templateId");
+
+      // 3. Sử dụng các giá trị đã lấy
+      if (templateId) {
+        console.log(`Đã tải Template có ID: ${templateId}`);
+      }
+      if (advoiceId) {
+        console.log(`Thuộc về Order ID: ${advoiceId}`);
+      }
+      window.location.href = "../templates/template0/index.html";
+    </script>
+  </body>
+</html>

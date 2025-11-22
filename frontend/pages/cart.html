@@ -12,16 +12,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <!-- Thư viện sử dụng Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
-    />
-
-    <!-- <script src="../js/FireBase_Controller.js"></script> -->
     <script type="module" src="../js/UI_Controller.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
 
@@ -56,6 +46,7 @@
         class="pt-4 border-b-4 border-green-400 notification-line"
       ></div>
     </div>
+
     <!-- Navigationbar -->
     <div id="naviagtion-bar"></div>
     <script>
@@ -262,7 +253,7 @@
                     const tempDiv = document.createElement("div");
                     tempDiv.innerHTML = widget
                       .replace("{{HinhAnh}}", e.imgLink)
-                      .replace("{{id}}", e.id)
+                      .replace("{{Value}}", e.price)
                       .replace("{{TieuDe}}", e.title)
                       .replace("{{DonGia}}", e.price.toLocaleString("vi-VN"));
                     const card = tempDiv.firstElementChild;

@@ -14,22 +14,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
-    />
-
-    <script src="../js/FireBase_Controller.js"></script>
-    <script src="../js/Logic_Controller.js"></script>
+    <!-- <script src="../js/Logic_Controller.js"></script> -->
     <script type="module" src="../js/UI_Controller.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../data/data.js"></script>
   </head>
   <body class="bg-[#F2F8FC]">
+    <!-- Hiển thị thông báo -->
     <div
       id="notification"
       class="hidden fixed right-0 top-0 bg-[#F3FDF5] pt-4 z-[2] mr-2 mt-2 w-[18rem]"
@@ -191,6 +183,23 @@
         .then((res) => res.text())
         .then((html) => {
           document.getElementById("naviagtion-bar").innerHTML = html;
+          const btn_OpenAuthForm = document.getElementById(
+            "navButtonOpenLoginForm"
+          );
+          btn_OpenAuthForm.textContent = JSON.parse(
+            localStorage.getItem("user")
+          )
+            ? JSON.parse(localStorage.getItem("user")).HoTen
+            : "Đăng nhập";
+
+          const form_AuthForm = document.getElementById("auth-form");
+          btn_OpenAuthForm.addEventListener("click", () => {
+            if (!localStorage.getItem("user")) {
+              form_AuthForm.classList.toggle("hidden");
+            } else {
+              window.location.href = "./user.html";
+            }
+          });
         });
     </script>
 
@@ -226,18 +235,24 @@
           </div>
           <script>
             const _id = new URLSearchParams(window.location.search).get("id");
-            const template = Templates[_id];
+            const template = JSON.parse(localStorage.getItem("templates")).find(
+              (e) => e.id == _id
+            );
+            console.log(template);
             const TacGia = document.getElementById("tpDetail_TacGia");
-            TacGia.textContent = template.author;
+            TacGia.textContent = template.TacGia;
             const TieuDe = document.getElementById("tpDetail_TieuDe");
-            TieuDe.textContent = template.title;
+            TieuDe.textContent = template.TieuDe;
             const HinhAnh = document.getElementById("tpDetail_HinhAnh");
-            HinhAnh.src = template.imgLink;
+            HinhAnh.src = template.LienKetAnh;
             const NgayDang = document.getElementById("tpDetail_NgayDang");
-            NgayDang.textContent = "Ngày đăng: " + template.date;
+            NgayDang.textContent = "Ngày đăng: " + template.NgayDang;
             const MoTa = document.getElementById("tpDetail_MoTa");
-            MoTa.textContent = template.description;
+            MoTa.textContent = template.MoTa;
           </script>
+        </div>
+        <div class="flex pt-2 text-2xl font-bold">
+          <p>Giá: <span id="tpDetail_Gia" class="text-sky-400">0 vnđ</span></p>
         </div>
         <!-- Nút thêm vào giỏ hàng -->
         <div
@@ -255,6 +270,8 @@
             class="bg-white p-4 flex flex-col rounded-xl"
           ></div>
           <script>
+            const Gia = document.getElementById("tpDetail_Gia");
+            Gia.textContent = `${template.Gia.toLocaleString("vi-VN")} vnđ`;
             fetch("../components/CardRate.html")
               .then((res) => res.text())
               .then((widget) => {

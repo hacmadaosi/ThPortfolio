@@ -14,16 +14,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
-    />
-
-    <script src="../js/FireBase_Controller.js"></script>
-    <!-- <script src="../js/Logic_Controller.js"></script> -->
     <script type="module" src="../js/UI_Controller.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../data/data.js"></script>
@@ -43,6 +33,7 @@
     </style>
   </head>
   <body class="bg-[#F2F8FC]">
+    <!-- Hiển thị thông báo -->
     <div
       id="notification"
       class="hidden fixed right-0 top-0 bg-[#F3FDF5] pt-4 z-[2] mr-2 mt-2 w-[18rem]"
@@ -204,6 +195,23 @@
         .then((res) => res.text())
         .then((html) => {
           document.getElementById("naviagtion-bar").innerHTML = html;
+          const btn_OpenAuthForm = document.getElementById(
+            "navButtonOpenLoginForm"
+          );
+          btn_OpenAuthForm.textContent = JSON.parse(
+            localStorage.getItem("user")
+          )
+            ? JSON.parse(localStorage.getItem("user")).HoTen
+            : "Đăng nhập";
+
+          const form_AuthForm = document.getElementById("auth-form");
+          btn_OpenAuthForm.addEventListener("click", () => {
+            if (!localStorage.getItem("user")) {
+              form_AuthForm.classList.toggle("hidden");
+            } else {
+              window.location.href = "./user.html";
+            }
+          });
         });
     </script>
 
@@ -268,27 +276,6 @@
       <!-- Hiện thị các portfolio -->
       <div class="mx-24 w-full h-screen overflow-auto hide-scrollbar">
         <div id="cac-mau-templates" class="grid grid-cols-2 gap-12"></div>
-        <script>
-          fetch("../components/CardPortfolio.html")
-            .then((res) => res.text())
-            .then((template) => {
-              const container = document.getElementById("cac-mau-templates");
-              Templates.forEach((cardData) => {
-                const tempDiv = document.createElement("div");
-                tempDiv.innerHTML = template
-                  .replace("{{TieuDe}}", cardData.title)
-                  .replace("{{TacGia}}", cardData.author)
-                  .replace("{{TieuDePhu}}", cardData.subtitle)
-                  .replace("{{HinhAnh}}", cardData.imgLink);
-                const card = tempDiv.firstElementChild;
-                card.addEventListener("click", () => {
-                  window.location.href = `./templateDetail.html?id=${cardData.id}`;
-                });
-
-                container.appendChild(card);
-              });
-            });
-        </script>
       </div>
     </div>
     <div id="footer"></div>
