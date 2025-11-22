@@ -44,25 +44,19 @@ export const getAllTemplates = async () => {
 };
 
 // Gọi API tạo tài khoản
-export const CreateAccount = async (email, password) => {
-  if (!CheckEmail(email)) {
-    return { state: false, result: "Email không hợp lệ!" };
-  }
-  if (!CheckPassword(password)) {
-    return { state: false, result: "Mật khẩu không hợp lệ" };
-  }
+export const CreateAccount = async (userName, password) => {
   try {
     // const res = await fetch(base64ToString(END_POINTS.USER.CREATE_USER), {
-    const res = await fetch("https://thportfolio.onrender.com/user/add", {
+    const res = await fetch("http://localhost:80/api/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ userName, password }),
     });
     const data = await res.json();
     if (!res.ok) {
       return { state: false, result: data.result || "Lỗi server" };
     }
-    return { state: true, result: data.result };
+    return { state: true, result: data.message };
   } catch (err) {
     return { state: false, result: err.message };
   }
@@ -83,6 +77,11 @@ export const getInfoDeveloper = async () => {
     return { state: false, result: err.message };
   }
 };
+
+const testHaha = () => {
+  alert("hahahah");
+};
+window.testHaha = testHaha;
 
 const CheckEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

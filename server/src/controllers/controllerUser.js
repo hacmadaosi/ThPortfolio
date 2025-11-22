@@ -84,9 +84,7 @@ export const CreateAccount = async (req, res) => {
       QuanLy: false,
     };
     await db.collection("users").doc().set(newUser);
-    res
-      .status(201)
-      .json({ message: "Tạo tài khoản thành công", user: newUser });
+    res.status(201).json({ message: "Tạo tài khoản thành công" });
   } catch (error) {
     res
       .status(500)
