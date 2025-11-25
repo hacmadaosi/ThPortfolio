@@ -103,10 +103,12 @@ export const GetAllUsers = async (req, res) => {
             ...doc.data()
         }));
 
-        const formattedData = data.map(user => {
-            const { MatKhau, TenDangNhap, HoaDon, ThoiGianCapNhatMatKhau, ...safeUser } = user;
-            return safeUser;
-        })
+        const formattedData = data.map(user => ({
+            id: user.id,
+            Email: user.Email,
+            TenDangNhap: user.TenDangNhap, 
+            QuanLy: user.QuanLy
+        }));
         res.json(formattedData);
     } catch (error) {
         res
@@ -115,44 +117,6 @@ export const GetAllUsers = async (req, res) => {
     }
 };
   
-// upload-avatar
-// router.post("/upload-avatar/:id", UploadAvatar);
-
-// export const UploadAvatar = async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const { AvatarURL } = req.body;
-
-//     if (!id || !AvatarURL)
-//       return res.status(400).json({ state: false, result: "Thất bại" });
-
-//     await db.collection("NguoiDung").doc(id).update({ HinhAnh: AvatarURL });
-//     res.json({ state: true, result: "Cập nhật hình đại diện thành công!" });
-//   } catch (error) {
-//     res.status(500).json({ state: false, result: `Lỗi UploadAvatar: ${error.message}` });
-//   }
-// };
-
-
-
-
-// Lấy thông tin người dùng theo ID
-
-// export const GetUserById = async (req, res) => {   
-//   try {
-//     const userId = req.params.id;
-//     const userDoc = await db.collection("NguoiDung").doc(userId).get(); 
-//     if (!userDoc.exists) {
-//       return res.status(404).json({ message: "Người dùng không tồn tại" });
-//     }
-//     res.json({ id: userDoc.id, ...userDoc.data() });
-//   } catch (error) {
-//     res
-//       .status(500)
-//       .json({ message: `Lỗi khi gọi hàm GetUserById - ${error.message}` });
-//   }
-// };
-// Cập nhật thông tin người dùng
 export const UpdateUser = async (req, res) => {
   try {
     await db.collection("NguoiDung").doc(req.params.id).update(req.body);

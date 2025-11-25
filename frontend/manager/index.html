@@ -6,23 +6,17 @@
     <title>ThPortfolio</title>
     <link rel="icon" type="image/png" href="../resource/Logo.png" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.js"></script>
+    
     <link
       rel="stylesheet"
       href="https://www.gstatic.com/firebasejs/ui/6.1.1/firebase-ui-auth.css"
     />
 
-    <script src="../js/FireBase_Controller.js"></script>
+
     <script type="module" src="../js/UI_Controller.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
@@ -334,7 +328,7 @@
             <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
               <input id="name"
                 type="text"
-                placeholder="Họ tên"
+                placeholder="Tên đăng nhập"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
               <input id="email"
@@ -345,48 +339,20 @@
             </div>
 
             <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
-              <input id="role"
-                placeholder="Loại tài khoản"
+              <input id="password"
+                placeholder="Mật khẩu"
                 class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
             </div>
             <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
-              <select id="sex" class="border border-black rounded px-4 py-2 text-sm sm:text-base w-1/2">
-                  <option value="">Chọn giới tính</option>
-                  <option value="Nam">Nam</option>
-                  <option value="Nữ">Nữ</option>
-              </select>
-              <!-- <input id="sex"
-                placeholder="Giới tính"
-                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-              /> -->
-              <input id="birthday"
-                placeholder="Ngày sinh"
-                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-              />
+              <select id="role" class="border border-black rounded px-4 py-2 text-sm sm:text-base w-1/2">
+                  <option value="">Chọn loại tài khoản</option>
+                  <option value= "admin" >Quản lý</option>
+                  <option value= "customer" >Khách hàng</option>
+              </select>  
             </div>
 
-            <div class="flex-1 w-full">
-            <label for="file-upload" class="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Tải lên hình đại diện mới
-            </label>
-            <input
-              id="fileInput"
-              type="file" 
-              accept="image/*"
-              class="block w-full text-sm text-gray-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-md file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100"
-            />
-           <img id="previewAvatar" class="w-24 h-24 rounded-full mt-3 object-cover" 
-           />
-          </div>
-
-            <div class="flex flex-col border-2 py-2 px-2 sm:flex-row justify-end gap-2 sm:space-x-4">
+            <div class="flex flex-col sm:flex-row justify-end gap-2 sm:space-x-4">
               <button id="btnCancel"
                 class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95">
                 Hủy bỏ
@@ -412,9 +378,7 @@
                   <tr>
                     <th class="py-2 px-4 border-b font-semibold">STT</th>
                     <th class="py-2 px-4 border-b font-semibold">Email</th>
-                    <th class="py-2 px-4 border-b font-semibold">Họ và tên</th>
-                    <th class="py-2 px-4 border-b font-semibold">giới tính</th>
-                    <th class="py-2 px-4 border-b font-semibold">Ngày sinh</th>
+                    <th class="py-2 px-4 border-b font-semibold">Tên đăng nhập</th>
                     <th class="py-2 px-4 border-b font-semibold">Loại tài khoản</th>
                     <th class="py-2 px-4 border-b font-semibold">Thao tác</th>
                   </tr>

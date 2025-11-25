@@ -62,9 +62,9 @@ export const getAllUsers = async () => {
 };
 
 
-export const updateUser = async (id, body) => {
+export const updateUser = async ( body) => {
   try {
-    const res = await fetch(`${"http://localhost:80/api/users"}/${id}`, {
+      const res = await fetch(`http://localhost:80/api/users`, {  
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

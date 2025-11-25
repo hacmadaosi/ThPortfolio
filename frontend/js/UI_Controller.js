@@ -78,6 +78,8 @@ let previewImg;
 let fileUpload;
 let btnSave;
 let btnCancel;
+
+let idChange = null;
 let stateLogin = true;
 let user = JSON.parse(localStorage.getItem("user"));
 let templates = JSON.parse(localStorage.getItem("templates"));
@@ -106,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Gọi API hiện thị thông tin nhà phát triển
   CallAPIGetInfoDeveloper();
 
-  //CallAPIGetAllTemplate();
+  CallAPIGetAllTemplate();
 
   // Xử lý sự kiện trang templates
   TemplatesAction();
@@ -125,26 +127,19 @@ document.addEventListener("DOMContentLoaded", () => {
   
   /// Hiển thị danh sách người dùng
   CallApiGetAllUser();
-  handleDele_Upload();
+  //handleDele_Upload();
 });
 window.currentUserId = null;
-window.fillForm = (user) => {
-  document.getElementById("email").value = user.Email || "";
-  document.getElementById("name").value = user.Hoten || "";
-  document.getElementById("sex").value = user.GioiTinh || "";
-  document.getElementById("birthday").value = user.NgaySinh || "";
-  document.getElementById("role").value = user.QuanLy ? "Quản lý" : "Người dùng";
+window.fillForm = (listusers) => {
+  document.getElementById("email").value = listusers.Email || "";
+  document.getElementById("name").value = listusers.TenDangNhap || "";
+  document.getElementById("role").value = listusers.QuanLy ? "Quản lý" : "Khách hàng";
 
-  window.currentUserId = user.id;
-
-  if (user.HinhAnh) {
-    document.getElementById("previewAvatar").src = user.HinhAnh;
-  } else {
-    document.getElementById("previewAvatar").src = "";
-  }
+  window.currentUserId = listusers.id;
 };
 
 const CallApiGetAllUser = async () => {
+  if (tabTk){
     const res = await getAllUsers();
     if (!res.state) {
         console.error("Lỗi load users:", res.result);
@@ -155,34 +150,37 @@ const CallApiGetAllUser = async () => {
     desktopList.innerHTML = "";
     mobileList.innerHTML = "";
 
-    users.forEach((user, index) => {
+    users.forEach((e, index) => {
         const row = document.createElement("tr");
         row.className = "border-b cursor-pointer hover:bg-gray-100";
 
         row.innerHTML = `
             <td class="py-2 px-4 border-b">${index + 1}</td>
-            <td class="py-2 px-4 border-b">${user.Email || ""}</td>
-            <td class="py-2 px-4 border-b">${user.Hoten || ""}</td>
-            <td class="py-2 px-4 border-b">${user.GioiTinh || ""}</td>
-            <td class="py-2 px-4 border-b">${user.NgaySinh || ""}</td>
-            <td class="py-2 px-4 border-b">${user.QuanLy ? "Quản lý" : "Người dùng"}</td>
+            <td class="py-2 px-4 border-b">${e.Email || ""}</td>
+            <td class="py-2 px-4 border-b">${e.TenDangNhap || ""}</td>
+            <td class="py-2 px-4 border-b">${e.QuanLy ? "Quản lý" : "Khách hàng"}</td>
             <td class="py-2 px-4 border-b">
-              <button class="btnEdit text-blue-500 underline mr-2" data-id="${user.id}">
+              <button class="btnEdit text-blue-500 underline mr-2" data-id="${e.id}">
                 Sửa
               </button>
 
-              <button class="btnDelete text-red-600 underline" data-id="${user.id}">
+              <button class="btnDelete text-red-600 underline" data-id="${e.id}">
                 Xóa
               </button>
             </td>`;
 
-        row.querySelector(".btnEdit").addEventListener("click", () => fillForm(user));
+        row.querySelector(".btnEdit").addEventListener("click", () => {
+          //history.pushState({}, "", `./index.html?id=${e.id}`);
+              idChange = e.id;
+              fillForm(e);
+          });
 
+        
         row.querySelector(".btnDelete").addEventListener("click", async () => {
           if (!confirm("Bạn có chắc muốn xóa tài khoản này?")) 
             return;
 
-          const result = await deleteUser(user.id);
+          const result = await deleteUser(e.id);
           alert(result.result);
 
           if (result.state) 
@@ -195,12 +193,10 @@ const CallApiGetAllUser = async () => {
         // Mobile layout
         const mobileItem = `
             <div class="border p-4 rounded cursor-pointer bg-white"
-                onclick='fillForm(${JSON.stringify(user)})'>
-                <p><strong>Email:</strong> ${user.Email}</p>
-                <p><strong>Họ và tên:</strong> ${user.Hoten }</p>
-                <p><strong>Giới tính:</strong> ${user.GioiTinh }</p>
-                <p><strong>Ngày sinh:</strong> ${user.NgaySinh }</p>
-                <p><strong>Loại tài khoản:</strong> ${user.QuanLy ? "Quản lý" : "Người dùng"}</p>
+                onclick='fillForm(${JSON.stringify(e)})'>
+                <p><strong>Email:</strong> ${e.Email}</p>
+                <p><strong>Tên đăng nhập:</strong> ${e.TenDangNhap }</p>
+                <p><strong>Loại tài khoản:</strong> ${e.QuanLy ? "Quản lý" : "Khách hàng"}</p>
             </div>
         `;
         mobileList.innerHTML += mobileItem;
@@ -213,8 +209,6 @@ const handleDele_Upload = async () => {
     window.currentUserId = null;
     document.getElementById("email").value = "";
     document.getElementById("name").value = "";
-    document.getElementById("sex").value = "";
-    document.getElementById("birthday").value = "";
     document.getElementById("role").value = "";
     //document.getElementById("previewAvatar").src = "";
     });
@@ -225,146 +219,66 @@ const handleDele_Upload = async () => {
     if (!id) return alert("Bạn chưa chọn người dùng để sửa!");
 
     const body = {
-      Email: document.getElementById("email").value,
-      Hoten: document.getElementById("name").value,
-      GioiTinh: document.getElementById("sex").value,
-      NgaySinh: document.getElementById("birthday").value,
-      QuanLy: document.getElementById("role").value === "Quản lý",
-    };
+      id: idChange,
+      QuanLy: document.getElementById("role").value === "admin"
+  };
 
-    const result = await updateUser(id, body);
-    alert(result.result);
+    const password = document.getElementById("password").value;
+    const TenDangNhap = document.getElementById("name").value;
+    const Email = document.getElementById("email").value;
 
+
+// Nếu có nhập mật khẩu thì mới gán vào body
+  if (password.trim() !== "" ) {
+    body.MatKhau = password;
+  }
+  if (TenDangNhap.trim() !== "" ) {
+    body.TenDangNhap = TenDangNhap;
+  }
+  if (Email.trim() !== "" ) {
+    body.Email = Email;
+  }
+
+    
+    // const result = await updateUser(body);
+    // alert(result.result);
+    console.log(body);
     if (result.state) {
       CallApiGetAllUser();
       btnCancel.click();     }
     });
   }
 }
-
-
-
-
-
-// export const CallApiGetAllUser = async () => {
-//   const { state, result } = await getAllUsers();
-//   if (!state) return alert(result);
-
-//   desktopList.innerHTML = "";
-//   mobileList.innerHTML = "";
-
-//   result.forEach((u, i) => {
-//     renderDesktopRow(u, i);
-//     renderMobileRow(u, i);
-//   });
-// };
-
-// function renderDesktopRow(u, i) {
-//   const tr = document.createElement("tr");
-//   tr.className = "border-2 border-black cursor-pointer";
-
-//   tr.innerHTML = `
-//     <td class="py-2 px-4">${i}</td>
-//     <td class="py-2 px-4">${u.Email}</td>
-//     <td class="py-2 px-4">${u.UserName}</td>
-//     <td class="py-2 px-4">${u.Password}</td>
-//     <td class="py-2 px-4">
-//       <a class="hover:underline text-blue-600">Thay đổi</a>
-//       <a class="text-red-600 hover:underline ml-2">Xóa</a>
-//     </td>`;
-
-//   // Event click lên row để binding
-//   tr.addEventListener("click", () => bindUserToForm(u));
-
-//   // Event cho XÓA (ngăn click row)
-//   tr.children[4].children[1].addEventListener("click", (e) => {
-//     e.stopPropagation();
-//     deleteUserHandler(u.id);
-//   });
-
-//   desktopList.appendChild(tr);
-// }
-
-// function renderMobileRow(u, i) {
-//   const div = document.createElement("div");
-//   div.className = "border-2 border-black p-4 rounded-lg cursor-pointer";
-
-//   div.innerHTML = `
-//       <p class="font-semibold">STT: ${i}</p>
-//       <p>Email: ${u.Email}</p>
-//       <p>Tên đăng nhập: ${u.UserName}</p>
-//       <p>Mật khẩu: ${u.Password}</p>
-
-//       <p class="mt-2 text-blue-600 underline">Thay đổi</p>
-//       <p class="text-red-600 underline">Xóa</p>
-//   `;
-
-//   // Binding row
-//   div.children[0].addEventListener("click", () => bindUserToForm(u));
-//   div.children[5].addEventListener("click", () => bindUserToForm(u));
-//   div.children[6].addEventListener("click", () => deleteUserHandler(u.id));
-
-//   mobileList.appendChild(div);
-// }
-
-
-// function bindUserToForm(u) {
-//   CURRENT_ID = u.id;
-
-//   username.value = u.UserName;
-//   email.value = u.Email;
-//   password.value = u.Password;
-//   role.value = u.Role || "";
-//   sex.value = u.Sex || "";
-//   birthday.value = u.Birthday || "";
-
-//   // Nếu user có avatar → load preview
-//   if (u.AvatarUrl) {
-//     avatarPreview.src = u.AvatarUrl;
-//     avatarPreview.classList.remove("hidden");
-//   }
-// }
-
-// async function deleteUserHandler(id) {
-//   if (!confirm("Bạn có chắc muốn xóa không?")) return;
-
-//   const res = await deleteUser(id);
-//   alert(res.result);
-
-//   loadUsersToUI();
-// }
-
-// btnSave.addEventListener("click", async () => {
-//   if (!CURRENT_ID) {
-//     alert("Bạn phải chọn dòng muốn chỉnh sửa");
-//     return;
-//   }
-
-//   const body = {
-//     UserName: username.value,
-//     Email: email.value,
-//     Password: password.value,
-//     Role: role.value,
-//     Sex: sex.value,
-//     Birthday: birthday.value,
-//   };
-
-//   // Nếu có ảnh → upload
-//   if (CURRENT_IMAGE_FILE) {
-//     const url = await uploadAvatar(CURRENT_ID, CURRENT_IMAGE_FILE);
-//     body.AvatarUrl = url;
-//   }
-
-//   const res = await updateUser(CURRENT_ID, body);
-//   alert(res.result);
-
-//   resetForm();
-//   loadUsersToUI();
-// });
+}
 
 
 // ---------------------------------------------------------------------------------------------------------------------------
-
+const CallAPIGetAllTemplate = async () => {
+  const container = document.getElementById("cac-mau-templates");
+  if (container && templates.length > 0) {
+    try {
+      await getAllTemplates();
+      const templateHtml = await fetch("../components/CardPortfolio.html").then(
+        (r) => r.text()
+      );
+      templates.map((e) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = templateHtml
+          .replace("{{TieuDe}}", e.TieuDe)
+          .replace("{{TacGia}}", e.TacGia)
+          .replace("{{TieuDePhu}}", e.MoTaNgan)
+          .replace("{{HinhAnh}}", e.LienKetAnh);
+        const card = tempDiv.firstElementChild;
+        card.addEventListener("click", () => {
+          window.location.href = `./templateDetail.html?id=${e.id}`;
+        });
+        container.appendChild(card);
+      });
+    } catch (e) {
+      console.log("Lỗi khi gọi API hiển thị mẫu - ", e);
+    }
+  }
+};
 const CallAPIGetInfoDeveloper = async () => {
   const developerDetail = document.getElementById("developer-detail");
   if (developerDetail)
