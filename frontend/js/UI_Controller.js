@@ -3,7 +3,9 @@ import {
   LoginAccount,
   CreateAccount,
   getAllTemplates,
-  getAllUsers, updateUser, deleteUser
+  getAllUsers,
+  updateUser,
+  deleteUser,
 } from "./Logic_Controller.js";
 
 // Navigation
@@ -69,10 +71,10 @@ let txtUserName,
   txtProfileSex,
   txtProfileBirthDay,
   txtTimeChangePass;
-  
+
 let frm_User;
 
-let desktopList; 
+let desktopList;
 let mobileList;
 let previewImg;
 let fileUpload;
@@ -122,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // trang thanh toán
   PaymentAction();
-  
+
   /// Hiển thị danh sách người dùng
   CallApiGetAllUser();
   handleDele_Upload();
@@ -133,7 +135,9 @@ window.fillForm = (user) => {
   document.getElementById("name").value = user.Hoten || "";
   document.getElementById("sex").value = user.GioiTinh || "";
   document.getElementById("birthday").value = user.NgaySinh || "";
-  document.getElementById("role").value = user.QuanLy ? "Quản lý" : "Người dùng";
+  document.getElementById("role").value = user.QuanLy
+    ? "Quản lý"
+    : "Người dùng";
 
   window.currentUserId = user.id;
 
@@ -145,10 +149,11 @@ window.fillForm = (user) => {
 };
 
 const CallApiGetAllUser = async () => {
+  if (tabTk) {
     const res = await getAllUsers();
     if (!res.state) {
-        console.error("Lỗi load users:", res.result);
-        return;
+      console.error("Lỗi load users:", res.result);
+      return;
     }
     const users = res.result;
 
@@ -156,95 +161,100 @@ const CallApiGetAllUser = async () => {
     mobileList.innerHTML = "";
 
     users.forEach((user, index) => {
-        const row = document.createElement("tr");
-        row.className = "border-b cursor-pointer hover:bg-gray-100";
+      const row = document.createElement("tr");
+      row.className = "border-b cursor-pointer hover:bg-gray-100";
 
-        row.innerHTML = `
+      row.innerHTML = `
             <td class="py-2 px-4 border-b">${index + 1}</td>
             <td class="py-2 px-4 border-b">${user.Email || ""}</td>
             <td class="py-2 px-4 border-b">${user.Hoten || ""}</td>
             <td class="py-2 px-4 border-b">${user.GioiTinh || ""}</td>
             <td class="py-2 px-4 border-b">${user.NgaySinh || ""}</td>
-            <td class="py-2 px-4 border-b">${user.QuanLy ? "Quản lý" : "Người dùng"}</td>
+            <td class="py-2 px-4 border-b">${
+              user.QuanLy ? "Quản lý" : "Người dùng"
+            }</td>
             <td class="py-2 px-4 border-b">
-              <button class="btnEdit text-blue-500 underline mr-2" data-id="${user.id}">
+              <button class="btnEdit text-blue-500 underline mr-2" data-id="${
+                user.id
+              }">
                 Sửa
               </button>
 
-              <button class="btnDelete text-red-600 underline" data-id="${user.id}">
+              <button class="btnDelete text-red-600 underline" data-id="${
+                user.id
+              }">
                 Xóa
               </button>
             </td>`;
 
-        row.querySelector(".btnEdit").addEventListener("click", () => fillForm(user));
+      row
+        .querySelector(".btnEdit")
+        .addEventListener("click", () => fillForm(user));
 
-        row.querySelector(".btnDelete").addEventListener("click", async () => {
-          if (!confirm("Bạn có chắc muốn xóa tài khoản này?")) 
-            return;
+      row.querySelector(".btnDelete").addEventListener("click", async () => {
+        if (!confirm("Bạn có chắc muốn xóa tài khoản này?")) return;
 
-          const result = await deleteUser(user.id);
-          alert(result.result);
+        const result = await deleteUser(user.id);
+        alert(result.result);
 
-          if (result.state) 
-          CallApiGetAllUser();
-        });
+        if (result.state) CallApiGetAllUser();
+      });
 
+      desktopList.appendChild(row);
 
-        desktopList.appendChild(row);
-
-        // Mobile layout
-        const mobileItem = `
+      // Mobile layout
+      const mobileItem = `
             <div class="border p-4 rounded cursor-pointer bg-white"
                 onclick='fillForm(${JSON.stringify(user)})'>
                 <p><strong>Email:</strong> ${user.Email}</p>
-                <p><strong>Họ và tên:</strong> ${user.Hoten }</p>
-                <p><strong>Giới tính:</strong> ${user.GioiTinh }</p>
-                <p><strong>Ngày sinh:</strong> ${user.NgaySinh }</p>
-                <p><strong>Loại tài khoản:</strong> ${user.QuanLy ? "Quản lý" : "Người dùng"}</p>
+                <p><strong>Họ và tên:</strong> ${user.Hoten}</p>
+                <p><strong>Giới tính:</strong> ${user.GioiTinh}</p>
+                <p><strong>Ngày sinh:</strong> ${user.NgaySinh}</p>
+                <p><strong>Loại tài khoản:</strong> ${
+                  user.QuanLy ? "Quản lý" : "Người dùng"
+                }</p>
             </div>
         `;
-        mobileList.innerHTML += mobileItem;
+      mobileList.innerHTML += mobileItem;
     });
+  }
 };
 //
 const handleDele_Upload = async () => {
-  if(btnCancel){
+  if (btnCancel) {
     btnCancel.addEventListener("click", () => {
-    window.currentUserId = null;
-    document.getElementById("email").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("sex").value = "";
-    document.getElementById("birthday").value = "";
-    document.getElementById("role").value = "";
-    //document.getElementById("previewAvatar").src = "";
+      window.currentUserId = null;
+      document.getElementById("email").value = "";
+      document.getElementById("name").value = "";
+      document.getElementById("sex").value = "";
+      document.getElementById("birthday").value = "";
+      document.getElementById("role").value = "";
+      //document.getElementById("previewAvatar").src = "";
     });
   }
-  if(btnSave){
+  if (btnSave) {
     btnSave.addEventListener("click", async () => {
-    const id = window.currentUserId;
-    if (!id) return alert("Bạn chưa chọn người dùng để sửa!");
+      const id = window.currentUserId;
+      if (!id) return alert("Bạn chưa chọn người dùng để sửa!");
 
-    const body = {
-      Email: document.getElementById("email").value,
-      Hoten: document.getElementById("name").value,
-      GioiTinh: document.getElementById("sex").value,
-      NgaySinh: document.getElementById("birthday").value,
-      QuanLy: document.getElementById("role").value === "Quản lý",
-    };
+      const body = {
+        Email: document.getElementById("email").value,
+        Hoten: document.getElementById("name").value,
+        GioiTinh: document.getElementById("sex").value,
+        NgaySinh: document.getElementById("birthday").value,
+        QuanLy: document.getElementById("role").value === "Quản lý",
+      };
 
-    const result = await updateUser(id, body);
-    alert(result.result);
+      const result = await updateUser(id, body);
+      alert(result.result);
 
-    if (result.state) {
-      CallApiGetAllUser();
-      btnCancel.click();     }
+      if (result.state) {
+        CallApiGetAllUser();
+        btnCancel.click();
+      }
     });
   }
-}
-
-
-
-
+};
 
 // export const CallApiGetAllUser = async () => {
 //   const { state, result } = await getAllUsers();
@@ -307,7 +317,6 @@ const handleDele_Upload = async () => {
 //   mobileList.appendChild(div);
 // }
 
-
 // function bindUserToForm(u) {
 //   CURRENT_ID = u.id;
 
@@ -361,7 +370,6 @@ const handleDele_Upload = async () => {
 //   resetForm();
 //   loadUsersToUI();
 // });
-
 
 // ---------------------------------------------------------------------------------------------------------------------------
 
@@ -798,7 +806,6 @@ function ValueInitalization() {
   fileUpload = document.getElementById("file-upload");
   btnSave = document.getElementById("btnSave");
   btnCancel = document.getElementById("btnCancel");
-
 }
 
 // Xử lý giao diện nếu người dùng đã đăng nhập khi truy cập

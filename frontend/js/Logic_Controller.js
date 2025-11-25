@@ -158,8 +158,6 @@ export const getInfoDeveloper = async () => {
   }
 };
 
-window.testHaha = testHaha;
-
 const CheckEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return email && emailRegex.test(email);
