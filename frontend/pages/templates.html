@@ -203,10 +203,13 @@
           )
             ? JSON.parse(localStorage.getItem("user")).HoTen
             : "Đăng nhập";
-
           const form_AuthForm = document.getElementById("auth-form");
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            btn_OpenAuthForm.textContent = user.Hoten;
+          }
           btn_OpenAuthForm.addEventListener("click", () => {
-            if (!localStorage.getItem("user")) {
+            if (!user) {
               form_AuthForm.classList.toggle("hidden");
             } else {
               window.location.href = "./user.html";

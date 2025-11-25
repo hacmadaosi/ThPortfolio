@@ -107,13 +107,7 @@
 
         <div id="user_formPaymentHistory" class="hidden bg-white rounded-2xl p-6">
           <span class="font-medium">Lịch sử mua hàng</span>
-          <div id="user_ShowAdvoice">
-            <div class="p-4 flex flex-col gap-4">
-              <div class="flex gap-4">
-                <p class="text-gray-400 tetx-sm">Đơn hàng: <span class="tetx-sm text-black">hahaha</span></p> 
-                <p class="text-gray-400 tetx-sm">Ngày thanh toán: <span class="tetx-sm text-black">hahaha</span></p> 
-              </div>
-            </div>
+          <div id="user_ShowAdvoice" class="mt-4">
             <script>
               const container = document.getElementById("user_ShowAdvoice") 
               const HoaDon = JSON.parse(localStorage.getItem("user")).HoaDon

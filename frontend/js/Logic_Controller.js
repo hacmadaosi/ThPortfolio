@@ -23,7 +23,6 @@ export const LoginAccount = async (userName, password) => {
     }
     // Lưu thông tin từ server sau khi người dùng đăng nhập thành công
     localStorage.setItem("user", JSON.stringify(data));
-    window.location.reload();
     return { state: true, result: "Đã đăng nhập thành công" };
   } catch (ex) {
     return { state: false, result: ex.message };
@@ -31,16 +30,17 @@ export const LoginAccount = async (userName, password) => {
 };
 
 export const getAllTemplates = async () => {
-  const res = await fetch("http://localhost:80/api/templates");
-  const data = await res.json();
-  if (!res.ok) {
+  try {
+    const res = await fetch("http://localhost:80/api/templates");
+    const data = await res.json();
+
+    localStorage.setItem("templates", JSON.stringify(data.result));
+  } catch (error) {
     return {
       state: false,
       result: data.message || "Lỗi khi gọi getAllTemplates",
     };
   }
-
-  localStorage.setItem("templates", JSON.stringify(data.result));
 };
 
 export const getAllUsers = async () => {
@@ -61,7 +61,7 @@ export const getAllUsers = async () => {
   }
 };
 
-export const updateUser = async (id, body) => {
+export const updateUser = async (body) => {
   try {
     const res = await fetch(`http://localhost:80/api/users`, {
       method: "PUT",
