@@ -145,9 +145,7 @@ export const CreateAccount = async (userName, password) => {
 // Gọi API lấy danh sách nhà phát triển
 export const getInfoDeveloper = async () => {
   try {
-    const res = await fetch(
-      base64ToString(END_POINTS.PROJECT.GET_INFO_DEVELOPER)
-    );
+    const res = await fetch("http://localhost:80/api/config/");
     const data = await res.json();
     if (!res.ok) {
       return { state: false, result: data.error || "Lỗi server" };

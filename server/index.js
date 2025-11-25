@@ -15,6 +15,9 @@ app.use("/api/users", userRoute);
 import templatesRoute from "./src/routes/templates.js";
 app.use("/api/templates", templatesRoute);
 
+import configRoute from "./src/routes/config.js";
+app.use("/api/config", configRoute);
+
 app.listen(PORT, () => {
   console.log(`Server đang lắng nghe trên cổng ${PORT}`);
 });

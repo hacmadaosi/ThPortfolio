@@ -246,13 +246,14 @@ const CallAPIGetInfoDeveloper = async () => {
       const txtDeveloperRole = document.querySelectorAll(".role-developer");
       const txtDeveloperContact =
         document.querySelectorAll(".contact-developer");
+      res.result.map((e, index) => {
+        imgDeveloperImage[index].src = e.hinhAnh;
+        txtDeveloperName[index].textContent = e.hoTen;
+        txtDeveloperRole[index].textContent = e.vaiTro;
+        txtDeveloperContact[index].textContent = e.lienHe;
+      });
 
-      for (let index = 0; index < res.result.length; index++) {
-        imgDeveloperImage[index].src = res.result[index].hinhAnh;
-        txtDeveloperName[index].textContent = res.result[index].hoTen;
-        txtDeveloperRole[index].textContent = res.result[index].vaiTro;
-        txtDeveloperContact[index].textContent = res.result[index].lienHe;
-      }
+      for (let index = 0; index < res.result.length; index++) {}
       developerDetail.classList.remove("hidden");
     } catch (e) {
       console.log("Lỗi khi gọi API hiển thị nhóm phát triển - ", e);
