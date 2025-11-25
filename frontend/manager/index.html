@@ -23,12 +23,15 @@
     />
 
     <script type="module" src="../js/UI_Controller.js"></script>
-    <script type="module" src="../js/Logic_Controller.js"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../data/data.js"></script>
   </head>
-  <body class="font-sans bg-gray-100">
+  <body id="manager-page" class="font-sans bg-gray-100">
+    <div
+      id="manager-toast"
+      class="hidden fixed right-4 top-20 bg-white shadow-lg border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-700 z-50"
+    ></div>
     <!-- Navigationbar -->
     <div
       id="naviagtion-bar"
@@ -52,7 +55,7 @@
             id="Account-button"
             class="text-sky-400 px-4 py-2 rounded-lg border border-sky-400 whitespace-nowrap text-xs transition-all duration-[200ms]"
           >
-            Lê khánh Vinh
+            <a href="../pages/user.html">Lê khánh Vinh</a>
           </button>
         </li>
       </ul>
@@ -87,7 +90,7 @@
           id="dang-xuat-button"
           class="border rounded text-white w-[188px] h-[47px] px-8 py-2 text-sm lg:text-base font-bold w-fit bg-sky-400 hover:bg-blue-600 active:scale-95 mt-auto"
         >
-          Quay lại
+          <a href="../pages/user.html">Quay lại</a>
         </button>
       </div>
 
@@ -103,57 +106,79 @@
           <section class="flex flex-col gap-2 lg:gap-4">
             <div class="flex flex-col sm:flex-row sm:w-full lg:gap-4 gap-2">
               <input
+                id="template-title"
                 type="text"
                 placeholder="Tiêu đề"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
               <input
-                type="email"
-                placeholder="Email"
+                id="template-author"
+                type="text"
+                placeholder="Tác giả"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
             </div>
             <input
+              id="template-description"
               placeholder="Mô tả"
               class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
             />
             <input
-              placeholder="Ảnh minh họa"
-              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              id="template-image"
+              type="file"
+              accept="image/*"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full cursor-pointer"
             />
+            <small
+              id="template-image-helper"
+              class="text-xs text-gray-500 italic"
+              >Chưa chọn tệp ảnh.</small
+            >
             <input
               placeholder="Thư mục dữ liệu"
               type="file"
+              id="template-folder"
+              type="file"
+              webkitdirectory
+              directory
+              multiple
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full cursor-pointer"
+            />
+            <small
+              id="template-folder-helper"
+              class="text-xs text-gray-500 italic"
+              >Chưa chọn thư mục.</small
+            >
+            <input
+              id="template-price"
+              type="number"
+              min="0"
+              placeholder="Giá (vnđ)"
               class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
             />
             <div
               class="flex lg:justify-end justify-between sm:space-x-4 mt-4 lg:mt-6"
             >
               <button
+                id="template-reset"
                 class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95"
               >
                 Hủy bỏ
               </button>
-              <!-- Nút xóa -->
               <button
-                id="manager_MauXoa"
+                id="template-delete"
                 class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:scale-95"
               >
                 Xóa
               </button>
-              <script>
-                document
-                  .getElementById("manager_MauXoa")
-                  .addEventListener("click", () => {
-                    testHaha();
-                  });
-              </script>
               <button
+                id="template-update"
                 class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95"
               >
                 Thay đổi
               </button>
               <button
+                id="template-add"
                 class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 active:scale-95"
               >
                 Thêm
@@ -181,54 +206,8 @@
                   <p class="basis-[20%] text-center">Ngày đăng</p>
                   <p class="basis-[20%] text-center">Thao tác</p>
                 </div>
+                <div id="template-list" class="flex flex-col"></div>
               </div>
-              <script>
-                const container = document.getElementById("quanly_HuongDan");
-                let templates = JSON.parse(localStorage.getItem("templates"));
-
-                container.innerHTML += `${templates
-                  .map((e, index) => {
-                    return `<div
-                  class="border border-black p-4 lg:p-2 rounded-lg lg:flex lg:justify-evenly lg:border-0 lg:border-t-2 lg:rounded-none"
-                >
-                  <div
-                    class="flex gap-1 lg:basis-[10%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">STT:</p>
-                    <p>${index}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[30%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Tiêu Đề:</p>
-                    <p>${e.TieuDe}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Tác Giả:</p>
-                    <p>${e.TacGia}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Ngày Đăng:</p>
-                    <p>${e.NgayDang}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Thao tác:</p>
-                    <p>
-                      <a href="#" class="hover:underline text-sky-400"
-                        >Xem chi tiết</a
-                      >
-                    </p>
-                  </div>
-                </div>`;
-                  })
-                  .join("")}`;
-              </script>
             </div>
           </div>
         </div>
@@ -240,69 +219,49 @@
           </h3>
 
           <section class="flex flex-col gap-4 lg:gap-8">
-            <!-- Hàng 1 -->
-            <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
-              <input id="name"
+            <div
+              class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]"
+            >
+              <input
+                id="account-username"
                 type="text"
                 placeholder="Họ tên"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
-              <input id="email"
+
+              <input
+                id="account-email"
                 type="email"
                 placeholder="Email"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
             </div>
-
-            <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
-              <input id="role"
-                placeholder="Loại tài khoản"
-                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-              />
-            </div>
-            <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
-              <select id="sex" class="border border-black rounded px-4 py-2 text-sm sm:text-base w-1/2">
-                  <option value="">Chọn giới tính</option>
-                  <option value="Nam">Nam</option>
-                  <option value="Nữ">Nữ</option>
-              </select>
-              <!-- <input id="sex"
-                placeholder="Giới tính"
-                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-              /> -->
-              <input id="birthday"
-                placeholder="Ngày sinh"
-                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-              />
-            </div>
-
-            <div class="flex-1 w-full">
-            <label for="file-upload" class="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Tải lên hình đại diện mới
-            </label>
             <input
-              id="fileInput"
-              type="file" 
-              accept="image/*"
-              class="block w-full text-sm text-gray-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-md file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100"
+              id="account-password"
+              placeholder="Mật khẩu"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
             />
-           <img id="previewAvatar" class="w-24 h-24 rounded-full mt-3 object-cover" 
-           />
-          </div>
-
-            <div class="flex flex-col border-2 py-2 px-2 sm:flex-row justify-end gap-2 sm:space-x-4">
-              <button id="btnCancel"
-                class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95">
+            <select
+              id="account-type"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full bg-white"
+            >
+              <option value="" disabled selected>Chọn loại tài khoản</option>
+              <option value="Quản lý">Quản lý</option>
+              <option value="Khách hàng">Khách hàng</option>
+            </select>
+            <div
+              class="flex flex-col sm:flex-row justify-end gap-2 sm:space-x-4"
+            >
+              <button
+                id="account-cancel"
+                class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95"
+              >
                 Hủy bỏ
               </button>
-              <button id="btnSave"
-                class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95">
+              <button
+                id="account-save"
+                class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95"
+              >
                 Thay đổi
               </button>
             </div>
@@ -315,9 +274,10 @@
             </h2>
 
             <div class="overflow-x-auto">
-
               <!-- Desktop table -->
-              <table class="w-full min-w-[600px] text-left border-2 border-black hidden sm:table">
+              <table
+                class="w-full min-w-[600px] text-left border-2 border-black hidden sm:table"
+              >
                 <thead class="border-2 border-black">
                   <tr>
                     <th class="py-2 px-4 border-b font-semibold">STT</th>
@@ -325,21 +285,22 @@
                     <th class="py-2 px-4 border-b font-semibold">Họ và tên</th>
                     <th class="py-2 px-4 border-b font-semibold">giới tính</th>
                     <th class="py-2 px-4 border-b font-semibold">Ngày sinh</th>
-                    <th class="py-2 px-4 border-b font-semibold">Loại tài khoản</th>
+                    <th class="py-2 px-4 border-b font-semibold">
+                      Loại tài khoản
+                    </th>
                     <th class="py-2 px-4 border-b font-semibold">Thao tác</th>
                   </tr>
                 </thead>
-
-                <tbody id="desktopList"></tbody>
+                <tbody id="account-table-body"></tbody>
               </table>
 
-              <!-- Mobile list -->
-              <div id="mobileList" class="sm:hidden space-y-4"></div>
-
+              <!-- Danh sách Tài khoản (mobile) -->
+              <div id="account-mobile-list" class="sm:hidden space-y-4"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script type="module" src="../js/manager.js"></script>
   </body>
 </html>

@@ -54,13 +54,12 @@ export const getAllUsers = async () => {
 
     return {
       state: true,
-      result: data, 
+      result: data,
     };
   } catch (err) {
     return { state: false, result: err.message };
   }
 };
-
 
 export const updateUser = async (id, body) => {
   try {
@@ -83,9 +82,9 @@ export const updateUser = async (id, body) => {
 
 export const deleteUser = async (id) => {
   try {
-    const res = await fetch(`${"http://localhost:80/api/users"}/${id}`, { 
-      method: "DELETE"
-     });
+    const res = await fetch(`${"http://localhost:80/api/users"}/${id}`, {
+      method: "DELETE",
+    });
     const data = await res.json();
 
     return {
@@ -124,7 +123,6 @@ export const deleteUser = async (id) => {
 //   }
 // };
 
-
 // Gọi API tạo tài khoản
 export const CreateAccount = async (userName, password) => {
   try {
@@ -160,10 +158,6 @@ export const getInfoDeveloper = async () => {
   }
 };
 
-const testHaha = () => {
-  alert("hahahah");
-  window.location.reload();
-};
 window.testHaha = testHaha;
 
 const CheckEmail = (email) => {
