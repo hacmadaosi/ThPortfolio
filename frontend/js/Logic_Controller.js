@@ -43,6 +43,88 @@ export const getAllTemplates = async () => {
   localStorage.setItem("templates", JSON.stringify(data.result));
 };
 
+export const getAllUsers = async () => {
+  try {
+    const res = await fetch("http://localhost:80/api/users");
+    const data = await res.json();
+
+    if (!res.ok) {
+      return { state: false, result: "Lỗi khi tải danh sách người dùng" };
+    }
+
+    return {
+      state: true,
+      result: data, 
+    };
+  } catch (err) {
+    return { state: false, result: err.message };
+  }
+};
+
+
+export const updateUser = async (id, body) => {
+  try {
+    const res = await fetch(`${"http://localhost:80/api/users"}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    const data = await res.json();
+
+    return {
+      state: res.ok,
+      result: data.message || "Cập nhật thành công",
+    };
+  } catch (err) {
+    return { state: false, result: err.message };
+  }
+};
+
+export const deleteUser = async (id) => {
+  try {
+    const res = await fetch(`${"http://localhost:80/api/users"}/${id}`, { 
+      method: "DELETE"
+     });
+    const data = await res.json();
+
+    return {
+      state: res.ok,
+      result: data.message || "Xóa thành công",
+    };
+  } catch (err) {
+    return { state: false, result: err.message };
+  }
+};
+
+// Upload avatar lên server và trả về URL trên Firebase
+// export const uploadAvatar = async (file) => {
+//   try {
+//     const formData = new FormData();
+//     formData.append("file", file);
+
+//     const res = await fetch(`http://localhost:80/api/upload-avatar/${id}`, {
+//       method: "POST",
+//       body: formData,
+//     });
+
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//       return { state: false, result: data.message || "Upload thất bại" };
+//     }
+
+//     // Trả về URL đầy đủ để lưu vào HinhAnh
+//     const fileName = file.name;
+//     const url = `https://firebasestorage.googleapis.com/v0/b/thportfolio-9ae4b.firebasestorage.app/o/${fileName}?alt=media`;
+
+//     return { state: true, result: url };
+//   } catch (err) {
+//     return { state: false, result: err.message };
+//   }
+// };
+
+
 // Gọi API tạo tài khoản
 export const CreateAccount = async (userName, password) => {
   try {

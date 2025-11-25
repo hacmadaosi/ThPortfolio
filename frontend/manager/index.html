@@ -238,40 +238,71 @@
           <h3 class="text-[16px] font-semibold mb-[20px] sm:mb-[30px]">
             Chi tiết thông tin
           </h3>
+
           <section class="flex flex-col gap-4 lg:gap-8">
-            <div
-              class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]"
-            >
-              <input
+            <!-- Hàng 1 -->
+            <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
+              <input id="name"
                 type="text"
-                placeholder="Tên đăng nhập"
+                placeholder="Họ tên"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
-              <input
+              <input id="email"
                 type="email"
                 placeholder="Email"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
             </div>
-            <input
-              placeholder="Mật khẩu"
-              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-            />
-            <input
-              placeholder="Loại tài khoản"
-              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-            />
-            <div
-              class="flex flex-col sm:flex-row justify-end gap-2 sm:space-x-4"
+
+            <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
+              <input id="role"
+                placeholder="Loại tài khoản"
+                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              />
+            </div>
+            <div class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]">
+              <select id="sex" class="border border-black rounded px-4 py-2 text-sm sm:text-base w-1/2">
+                  <option value="">Chọn giới tính</option>
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+              </select>
+              <!-- <input id="sex"
+                placeholder="Giới tính"
+                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              /> -->
+              <input id="birthday"
+                placeholder="Ngày sinh"
+                class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              />
+            </div>
+
+            <div class="flex-1 w-full">
+            <label for="file-upload" class="block text-sm font-medium text-gray-700 mb-1"
             >
-              <button
-                class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95"
-              >
+              Tải lên hình đại diện mới
+            </label>
+            <input
+              id="fileInput"
+              type="file" 
+              accept="image/*"
+              class="block w-full text-sm text-gray-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-md file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-blue-50 file:text-blue-700
+                    hover:file:bg-blue-100"
+            />
+           <img id="previewAvatar" class="w-24 h-24 rounded-full mt-3 object-cover" 
+           />
+          </div>
+
+            <div class="flex flex-col border-2 py-2 px-2 sm:flex-row justify-end gap-2 sm:space-x-4">
+              <button id="btnCancel"
+                class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95">
                 Hủy bỏ
               </button>
-              <button
-                class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95"
-              >
+              <button id="btnSave"
+                class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95">
                 Thay đổi
               </button>
             </div>
@@ -282,71 +313,29 @@
             <h2 class="text-[16px] font-semibold mb-[20px] sm:mb-[30px]">
               Danh sách
             </h2>
+
             <div class="overflow-x-auto">
-              <!-- Danh sách Tài khoản (desktop) -->
-              <table
-                class="w-full min-w-[600px] text-left border-2 border-black hidden sm:table"
-              >
+
+              <!-- Desktop table -->
+              <table class="w-full min-w-[600px] text-left border-2 border-black hidden sm:table">
                 <thead class="border-2 border-black">
                   <tr>
                     <th class="py-2 px-4 border-b font-semibold">STT</th>
                     <th class="py-2 px-4 border-b font-semibold">Email</th>
-                    <th class="py-2 px-4 border-b font-semibold">
-                      Tên Đăng Nhập
-                    </th>
-                    <th class="py-2 px-4 border-b font-semibold">Mật Khẩu</th>
+                    <th class="py-2 px-4 border-b font-semibold">Họ và tên</th>
+                    <th class="py-2 px-4 border-b font-semibold">giới tính</th>
+                    <th class="py-2 px-4 border-b font-semibold">Ngày sinh</th>
+                    <th class="py-2 px-4 border-b font-semibold">Loại tài khoản</th>
                     <th class="py-2 px-4 border-b font-semibold">Thao tác</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr class="border-2 border-black">
-                    <td class="py-2 px-4">0</td>
-                    <td class="py-2 px-4">khanhvinh228@gmail.com</td>
-                    <td class="py-2 px-4">khanhvinh</td>
-                    <td class="py-2 px-4">$2b$12$jruwOIO...</td>
-                    <td class="py-2 px-4">
-                      <a href="#" class="hover:underline">Thay đổi</a>
-                      <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                    </td>
-                  </tr>
-                  <tr class="border-2 border-black">
-                    <td class="py-2 px-4">1</td>
-                    <td class="py-2 px-4">khanhvinh224@gmail.com</td>
-                    <td class="py-2 px-4">khanhvinh</td>
-                    <td class="py-2 px-4">$2b$12$jruwOIO...</td>
-                    <td class="py-2 px-4">
-                      <a href="#" class="hover:underline">Thay đổi</a>
-                      <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                    </td>
-                  </tr>
-                </tbody>
+
+                <tbody id="desktopList"></tbody>
               </table>
 
-              <!-- Danh sách Tài khoản (mobile) -->
-              <div class="sm:hidden space-y-4">
-                <div class="border-2 border-black p-4 rounded-lg">
-                  <p class="font-semibold">STT: 0</p>
-                  <p>Email: khanhvinh228@gmail.com</p>
-                  <p>Tên Đăng Nhập: khanhvinh</p>
-                  <p>Mật Khẩu: $2b$12$jruwOIO...</p>
-                  <p class="mt-2">
-                    Thao tác:
-                    <a href="#" class="hover:underline">Thay đổi</a>
-                    <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                  </p>
-                </div>
-                <div class="border-2 border-black p-4 rounded-lg">
-                  <p class="font-semibold">STT: 1</p>
-                  <p>Email: khanhvinh224@gmail.com</p>
-                  <p>Tên Đăng Nhập: khanhvinh</p>
-                  <p>Mật Khẩu: $2b$12$jruwOIO...</p>
-                  <p class="mt-2">
-                    Thao tác:
-                    <a href="#" class="hover:underline">Thay đổi</a>
-                    <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                  </p>
-                </div>
-              </div>
+              <!-- Mobile list -->
+              <div id="mobileList" class="sm:hidden space-y-4"></div>
+
             </div>
           </div>
         </div>
