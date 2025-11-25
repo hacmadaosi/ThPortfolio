@@ -80,6 +80,7 @@ export const getInfoDeveloper = async () => {
 
 const testHaha = () => {
   alert("hahahah");
+  window.location.reload();
 };
 window.testHaha = testHaha;
 
