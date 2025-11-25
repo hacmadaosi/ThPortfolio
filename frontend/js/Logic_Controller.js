@@ -79,7 +79,7 @@ export const getInfoDeveloper = async () => {
 };
 
 const testHaha = () => {
-  alert("hahahah");
+  alert("Bạn có chắc muốn xóa không?");
 };
 window.testHaha = testHaha;
 

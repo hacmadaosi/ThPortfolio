@@ -23,12 +23,15 @@
     />
 
     <script type="module" src="../js/UI_Controller.js"></script>
-    <script type="module" src="../js/Logic_Controller.js"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../data/data.js"></script>
   </head>
-  <body class="font-sans bg-gray-100">
+  <body id="manager-page" class="font-sans bg-gray-100">
+    <div
+      id="manager-toast"
+      class="hidden fixed right-4 top-20 bg-white shadow-lg border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-700 z-50"
+    ></div>
     <!-- Navigationbar -->
     <div
       id="naviagtion-bar"
@@ -52,7 +55,7 @@
             id="Account-button"
             class="text-sky-400 px-4 py-2 rounded-lg border border-sky-400 whitespace-nowrap text-xs transition-all duration-[200ms]"
           >
-            Lê khánh Vinh
+            <a href="../pages/user.html">Lê khánh Vinh</a>
           </button>
         </li>
       </ul>
@@ -87,7 +90,7 @@
           id="dang-xuat-button"
           class="border rounded text-white w-[188px] h-[47px] px-8 py-2 text-sm lg:text-base font-bold w-fit bg-sky-400 hover:bg-blue-600 active:scale-95 mt-auto"
         >
-          Quay lại
+          <a href="../pages/user.html">Quay lại</a>
         </button>
       </div>
 
@@ -103,56 +106,77 @@
           <section class="flex flex-col gap-2 lg:gap-4">
             <div class="flex flex-col sm:flex-row sm:w-full lg:gap-4 gap-2">
               <input
+                id="template-title"
                 type="text"
                 placeholder="Tiêu đề"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
               <input
-                type="email"
-                placeholder="Email"
+                id="template-author"
+                type="text"
+                placeholder="Tác giả"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
             </div>
             <input
+              id="template-description"
               placeholder="Mô tả"
               class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
             />
             <input
-              placeholder="Ảnh minh họa"
-              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
+              id="template-image"
+              type="file"
+              accept="image/*"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full cursor-pointer"
             />
+            <small
+              id="template-image-helper"
+              class="text-xs text-gray-500 italic"
+              >Chưa chọn tệp ảnh.</small
+            >
             <input
-              placeholder="Thư mục dữ liệu"
+              id="template-folder"
+              type="file"
+              webkitdirectory
+              directory
+              multiple
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full cursor-pointer"
+            />
+            <small
+              id="template-folder-helper"
+              class="text-xs text-gray-500 italic"
+              >Chưa chọn thư mục.</small
+            >
+            <input
+              id="template-price"
+              type="number"
+              min="0"
+              placeholder="Giá (vnđ)"
               class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
             />
             <div
               class="flex lg:justify-end justify-between sm:space-x-4 mt-4 lg:mt-6"
             >
               <button
+                id="template-reset"
                 class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95"
               >
                 Hủy bỏ
               </button>
-              <!-- Nút xóa -->
               <button
-                id="manager_MauXoa"
+                id="template-delete"
                 class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:scale-95"
               >
                 Xóa
               </button>
-              <script>
-                document
-                  .getElementById("manager_MauXoa")
-                  .addEventListener("click", () => {
-                    testHaha();
-                  });
-              </script>
               <button
+                id="template-update"
                 class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95"
               >
                 Thay đổi
               </button>
               <button
+                id="template-add"
                 class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 active:scale-95"
               >
                 Thêm
@@ -180,54 +204,8 @@
                   <p class="basis-[20%] text-center">Ngày đăng</p>
                   <p class="basis-[20%] text-center">Thao tác</p>
                 </div>
+                <div id="template-list" class="flex flex-col"></div>
               </div>
-              <script>
-                const container = document.getElementById("quanly_HuongDan");
-                let templates = JSON.parse(localStorage.getItem("templates"));
-
-                container.innerHTML += `${templates
-                  .map((e, index) => {
-                    return `<div
-                  class="border border-black p-4 lg:p-2 rounded-lg lg:flex lg:justify-evenly lg:border-0 lg:border-t-2 lg:rounded-none"
-                >
-                  <div
-                    class="flex gap-1 lg:basis-[10%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">STT:</p>
-                    <p>${index}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[30%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Tiêu Đề:</p>
-                    <p>${e.TieuDe}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Tác Giả:</p>
-                    <p>${e.TacGia}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Ngày Đăng:</p>
-                    <p>${e.NgayDang}</p>
-                  </div>
-                  <div
-                    class="flex gap-1 lg:basis-[20%] lg:items-center lg:justify-center"
-                  >
-                    <p class="lg:hidden">Thao tác:</p>
-                    <p>
-                      <a href="#" class="hover:underline text-sky-400"
-                        >Xem chi tiết</a
-                      >
-                    </p>
-                  </div>
-                </div>`;
-                  })
-                  .join("")}`;
-              </script>
             </div>
           </div>
         </div>
@@ -242,33 +220,42 @@
               class="flex flex-col sm:flex-row sm:w-full gap-4 sm:gap-[30px]"
             >
               <input
+                id="account-username"
                 type="text"
                 placeholder="Tên đăng nhập"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
               <input
+                id="account-email"
                 type="email"
                 placeholder="Email"
                 class="flex-1 border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
               />
             </div>
             <input
+              id="account-password"
               placeholder="Mật khẩu"
               class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
             />
-            <input
-              placeholder="Loại tài khoản"
-              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full"
-            />
+            <select
+              id="account-type"
+              class="border border-black rounded px-4 py-2 text-sm sm:text-base w-full bg-white"
+            >
+              <option value="" disabled selected>Chọn loại tài khoản</option>
+              <option value="Quản lý">Quản lý</option>
+              <option value="Khách hàng">Khách hàng</option>
+            </select>
             <div
               class="flex flex-col sm:flex-row justify-end gap-2 sm:space-x-4"
             >
               <button
+                id="account-cancel"
                 class="bg-white border rounded text-black px-4 py-2 hover:bg-red-600 active:scale-95"
               >
                 Hủy bỏ
               </button>
               <button
+                id="account-save"
                 class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-yellow-600 active:scale-95"
               >
                 Thay đổi
@@ -297,59 +284,16 @@
                     <th class="py-2 px-4 border-b font-semibold">Thao tác</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr class="border-2 border-black">
-                    <td class="py-2 px-4">0</td>
-                    <td class="py-2 px-4">khanhvinh228@gmail.com</td>
-                    <td class="py-2 px-4">khanhvinh</td>
-                    <td class="py-2 px-4">$2b$12$jruwOIO...</td>
-                    <td class="py-2 px-4">
-                      <a href="#" class="hover:underline">Thay đổi</a>
-                      <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                    </td>
-                  </tr>
-                  <tr class="border-2 border-black">
-                    <td class="py-2 px-4">1</td>
-                    <td class="py-2 px-4">khanhvinh224@gmail.com</td>
-                    <td class="py-2 px-4">khanhvinh</td>
-                    <td class="py-2 px-4">$2b$12$jruwOIO...</td>
-                    <td class="py-2 px-4">
-                      <a href="#" class="hover:underline">Thay đổi</a>
-                      <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody id="account-table-body"></tbody>
               </table>
 
               <!-- Danh sách Tài khoản (mobile) -->
-              <div class="sm:hidden space-y-4">
-                <div class="border-2 border-black p-4 rounded-lg">
-                  <p class="font-semibold">STT: 0</p>
-                  <p>Email: khanhvinh228@gmail.com</p>
-                  <p>Tên Đăng Nhập: khanhvinh</p>
-                  <p>Mật Khẩu: $2b$12$jruwOIO...</p>
-                  <p class="mt-2">
-                    Thao tác:
-                    <a href="#" class="hover:underline">Thay đổi</a>
-                    <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                  </p>
-                </div>
-                <div class="border-2 border-black p-4 rounded-lg">
-                  <p class="font-semibold">STT: 1</p>
-                  <p>Email: khanhvinh224@gmail.com</p>
-                  <p>Tên Đăng Nhập: khanhvinh</p>
-                  <p>Mật Khẩu: $2b$12$jruwOIO...</p>
-                  <p class="mt-2">
-                    Thao tác:
-                    <a href="#" class="hover:underline">Thay đổi</a>
-                    <a href="#" class="text-red-600 hover:underline">| Xóa</a>
-                  </p>
-                </div>
-              </div>
+              <div id="account-mobile-list" class="sm:hidden space-y-4"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <script type="module" src="../js/manager.js"></script>
   </body>
 </html>

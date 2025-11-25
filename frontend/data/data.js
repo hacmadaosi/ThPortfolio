@@ -113,3 +113,8 @@ Rates = [
     date: "2025-11-01",
   },
 ];
+
+if (typeof window !== "undefined") {
+  window.LegacyTemplates = Templates;
+  window.LegacyUsers = Users;
+}
