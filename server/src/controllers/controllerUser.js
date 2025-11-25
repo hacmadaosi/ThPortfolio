@@ -61,7 +61,7 @@ export const CreateAccount = async (req, res) => {
     }
     // Kiểm tra userName đã tồn tại chưa
     const snapshot = await db
-      .collection("users")
+      .collection("NguoiDung")
       .where("TenDangNhap", "==", userName)
       .limit(1)
       .get();
@@ -83,7 +83,7 @@ export const CreateAccount = async (req, res) => {
       HoaDon: [],
       QuanLy: false,
     };
-    await db.collection("users").doc().set(newUser);
+    await db.collection("NguoiDung").doc().set(newUser);
     res
       .status(201)
       .json({ message: "Tạo tài khoản thành công", user: newUser });
@@ -93,3 +93,93 @@ export const CreateAccount = async (req, res) => {
       .json({ message: `Lỗi khi gọi hàm CreateAccount - ${error.message}` });
   }
 };
+
+// Lấy danh sách tất cả người dùng
+export const GetAllUsers = async (req, res) => {
+  try {
+        const snapshot = await db.collection("NguoiDung").get();
+        const data = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const formattedData = data.map(user => {
+            const { MatKhau, TenDangNhap, HoaDon, ThoiGianCapNhatMatKhau, ...safeUser } = user;
+            return safeUser;
+        })
+        res.json(formattedData);
+    } catch (error) {
+        res
+      .status(500)
+      .json({ message: `Lỗi khi gọi hàm GetAllUsers - ${error.message}` });
+    }
+};
+  
+// upload-avatar
+// router.post("/upload-avatar/:id", UploadAvatar);
+
+// export const UploadAvatar = async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const { AvatarURL } = req.body;
+
+//     if (!id || !AvatarURL)
+//       return res.status(400).json({ state: false, result: "Thất bại" });
+
+//     await db.collection("NguoiDung").doc(id).update({ HinhAnh: AvatarURL });
+//     res.json({ state: true, result: "Cập nhật hình đại diện thành công!" });
+//   } catch (error) {
+//     res.status(500).json({ state: false, result: `Lỗi UploadAvatar: ${error.message}` });
+//   }
+// };
+
+
+
+
+// Lấy thông tin người dùng theo ID
+
+// export const GetUserById = async (req, res) => {   
+//   try {
+//     const userId = req.params.id;
+//     const userDoc = await db.collection("NguoiDung").doc(userId).get(); 
+//     if (!userDoc.exists) {
+//       return res.status(404).json({ message: "Người dùng không tồn tại" });
+//     }
+//     res.json({ id: userDoc.id, ...userDoc.data() });
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: `Lỗi khi gọi hàm GetUserById - ${error.message}` });
+//   }
+// };
+// Cập nhật thông tin người dùng
+export const UpdateUser = async (req, res) => {
+  try {
+    await db.collection("NguoiDung").doc(req.params.id).update(req.body);
+    res.json({ state: true, result: "Cập nhật thành công!" });
+  } catch (error) {
+    res.status(500).json({ 
+      state: false,
+      result: `Lỗi UpdateUser: ${error.message}` 
+    });
+  }
+};
+// Xóa user
+export const DeleteUser = async (req, res) => {
+  try {
+    await db.collection("NguoiDung").doc(req.params.id).delete();
+    res.json({ state: true, result: "Xóa thành công!" });
+  } catch (error) {
+    res.status(500).json({ 
+      state: false,
+      result: `Lỗi DeleteUser: ${error.message}` 
+    });
+  }
+};
+
+export const upLoadAvatar = async (file, UserID) => {
+  const ref = storage.ref().child(`avatars/${UserID}.jpg`);
+  await ref.put(file);
+  return await ref.getDownloadURL();
+}
+
