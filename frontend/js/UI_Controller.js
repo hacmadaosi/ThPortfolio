@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Gọi API hiện thị thông tin nhà phát triển
   CallAPIGetInfoDeveloper();
 
-  //CallAPIGetAllTemplate();
+  CallAPIGetAllTemplate();
 
   // Xử lý sự kiện trang templates
   TemplatesAction();
@@ -147,7 +147,32 @@ window.fillForm = (user) => {
     document.getElementById("previewAvatar").src = "";
   }
 };
-
+const CallAPIGetAllTemplate = async () => {
+  const container = document.getElementById("cac-mau-templates");
+  if (container && templates.length > 0) {
+    try {
+      await getAllTemplates();
+      const templateHtml = await fetch("../components/CardPortfolio.html").then(
+        (r) => r.text()
+      );
+      templates.map((e) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = templateHtml
+          .replace("{{TieuDe}}", e.TieuDe)
+          .replace("{{TacGia}}", e.TacGia)
+          .replace("{{TieuDePhu}}", e.MoTaNgan)
+          .replace("{{HinhAnh}}", e.LienKetAnh);
+        const card = tempDiv.firstElementChild;
+        card.addEventListener("click", () => {
+          window.location.href = `./templateDetail.html?id=${e.id}`;
+        });
+        container.appendChild(card);
+      });
+    } catch (e) {
+      console.log("Lỗi khi gọi API hiển thị mẫu - ", e);
+    }
+  }
+};
 const CallApiGetAllUser = async () => {
   if (tabTk) {
     const res = await getAllUsers();
